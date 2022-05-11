@@ -57,7 +57,7 @@ var routes = [
   },
   {
     path: "/edit-profile",
-    name: "Hospital Profile",
+    name: "Edit Profile",
     icon: "ni ni-single-02 text-yellow",
     component: EditProfile,
     layout: "/admin",
