@@ -76,7 +76,7 @@ const Profile = () => {
           .once("value")
           .then((snapshot) => {
             var data = snapshot.val();
-            console.log(data);
+            console.log(data.username);
             setUserData(data);
           })
           .then(() => { 
@@ -217,13 +217,13 @@ const Profile = () => {
                           >
                             Hospital Name
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="lucky.jesse"
-                            id="input-username"
-                            placeholder="Username"
-                            type="text"
-                          />
+                        <Input
+                          className="form-control-alternative"
+                          defaultValue={userData.username}
+                          id="input-username"
+                          placeholder={userData.username}
+                          type="text"
+                        />
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -237,7 +237,7 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            placeholder={userData.email}
                             type="email"
                           />
                         </FormGroup>
@@ -297,9 +297,9 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            defaultValue={userData.Address}
                             id="input-address"
-                            placeholder="Home Address"
+                            placeholder={userData.Address}
                             type="text"
                           />
                         </FormGroup>
@@ -316,9 +316,9 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="New York"
+                            defaultValue={userData.city}
                             id="input-city"
-                            placeholder="City"
+                            placeholder={userData.city}
                             type="text"
                           />
                         </FormGroup>
@@ -333,9 +333,9 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="United States"
+                            defaultValue={userData.country}
                             id="input-country"
-                            placeholder="Country"
+                            placeholder={userData.country}
                             type="text"
                           />
                         </FormGroup>
@@ -351,7 +351,7 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-postal-code"
-                            placeholder="Postal code"
+                            placeholder={userData.postalCode}
                             type="number"
                           />
                         </FormGroup>
@@ -366,11 +366,11 @@ const Profile = () => {
                       <label>About Me</label>
                       <Input
                         className="form-control-alternative"
-                        placeholder="A few words about you ..."
+                        placeholder={userData.about}
                         rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
+                        defaultValue={userData.about}
                         type="textarea"
+                       
                       />
                     </FormGroup>
                   </div>
