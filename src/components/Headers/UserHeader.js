@@ -18,7 +18,7 @@
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-
+import Link from "react-router-dom/Link";
 const UserHeader = ({userData}) => {
   return (
     <>
@@ -44,13 +44,14 @@ const UserHeader = ({userData}) => {
 {userData?<p className="text-white mt-0 mb-5">
               {userData.about}
             </p>:null}
+              <Link to="/admin/edit-profile">
               <Button
                 color="info"
-                href="/admin/editProfile"
-                onClick={(e) => e.preventDefault()}
+                // href="/admin/editProfile"
+                // onClick={(e) => e.preventDefault()}
               >
                 Edit profile
-              </Button>
+              </Button></Link>
             </Col>
           </Row>
         </Container>
