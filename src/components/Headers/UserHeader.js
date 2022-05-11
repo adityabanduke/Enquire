@@ -39,11 +39,10 @@ const UserHeader = () => {
         {/* Header container */}
         <Container className="d-flex align-items-center" fluid>
           <Row>
-            <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+            <Col lg="8" md="10">
+              <h1 className="display-2 text-white">Hospital Name</h1>
               <p className="text-white mt-0 mb-5">
-                This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quia voluptatem sit optio repudiandae nam, dolore vitae, et, laboriosam qui eaque? Optio natus cumque mollitia beatae hic eos dignissimos saepe?
               </p>
               <Button
                 color="info"
