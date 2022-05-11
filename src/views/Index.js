@@ -49,6 +49,12 @@
 // import Header from "components/Headers/Header.js";
 import React from "react";
 
+import {
+    Button,
+    
+  
+  } from "reactstrap";
+  import {Link} from 'react';
  import "dist/css/style.scss";
  import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
@@ -76,7 +82,8 @@ const Index = (props) => {
   <div className="body-wrap boxed-container">
       <header className="site-header">
           <div className="container">
-              <div className="site-header-inner">
+          <nav class="navbar">
+          <div className="site-header-inner">
                   <div className="brand header-brand">
                       <h1 className="m-0">
                           <a href="#">
@@ -85,6 +92,31 @@ const Index = (props) => {
                       </h1>
                   </div>
               </div>
+                <a href="#" className="nav-logo">Enquire</a>
+                <ul className="nav-menu">
+                    <li className="nav-item">
+                        <a href="#" className="nav-link">Home
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="hotel.html" className="nav-link">Services</a>
+                    </li>
+                  
+                    <li className="nav-item">
+                        <a href="contact.html" className="nav-link">Contact</a>
+                    </li>
+
+                  
+                </ul>
+                <Link to="views/userLogin.js"> <Button className="my-2 nav-button button-text" color="primary" type="button">
+                  Login
+                </Button></Link>
+               
+                {/* <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
+                  Sign Up
+                </Button> */}
+                </nav>
+           
           </div>
       </header>
 
