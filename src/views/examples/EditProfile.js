@@ -221,7 +221,7 @@ import {
                             className="form-control-alternative"
                             // defaultValue={userData.username}
                             id="input-username"
-                            // placeholder={userData.username}
+                            placeholder={userData.username}
                             type="text"
                           />
                           </FormGroup>
