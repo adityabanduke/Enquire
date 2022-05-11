@@ -31,15 +31,70 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
+// import React from "react";
+import react,{useState,useEffect} from "react";
+import firebase from '../../config/firebase-enquire'
 
 const Profile = () => {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     userData: {},
+  //   };
+  // }
+
+
+  // componentDidMount() {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       firebase
+  //         .database()
+  //         .ref("users/" + user.uid)
+  //         .once("value")
+  //         .then((snapshot) => {
+  //           var data = snapshot.val();
+  //           console.log(data);
+  //           this.setState({ userData: data });
+  //         })
+  //         .then(() => { 
+  //           document.getElementById("userHeaderNameId").innerHTML =
+  //             "Hello " + this.state.userData.username;
+  //         });
+  //     } else {
+  //       window.location.href = "/";
+  //     }
+  //   });
+  // }
+  const [userData, setUserData] = useState({});
+  
+  useEffect(() => {
+  // firebase.auth().onAuthStateChanged((user) => {
+     // if (user) {
+        firebase
+          .database()
+          .ref("users/" + 'user1')
+          .once("value")
+          .then((snapshot) => {
+            var data = snapshot.val();
+            console.log(data);
+            setUserData(data);
+          })
+          .then(() => { 
+            document.getElementById("userHeaderNameId").innerHTML =userData.username;
+          });
+      // } else {
+      //   window.location.href = "/";
+      // }
+    // });
+  }, [])
+  
   return (
     <>
       <UserHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
-          <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+           {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
@@ -127,8 +182,8 @@ const Profile = () => {
                 </div>
               </CardBody>
             </Card>
-          </Col>
-          <Col className="order-xl-1" xl="8">
+          </Col> */}
+          <Col className="order-xl-1" xl="12">
             <Card className="bg-secondary shadow">
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
@@ -136,21 +191,21 @@ const Profile = () => {
                     <h3 className="mb-0">My account</h3>
                   </Col>
                   <Col className="text-right" xs="4">
-                    <Button
+                    {/* <Button
                       color="primary"
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
                       size="sm"
                     >
                       Settings
-                    </Button>
+                    </Button> */}
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
-                    User information
+                    Hospital Details
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -160,7 +215,7 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Username
+                            Hospital Name
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -188,7 +243,7 @@ const Profile = () => {
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                       <Col lg="6">
                         <FormGroup>
                           <label
@@ -223,7 +278,7 @@ const Profile = () => {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
+                    </Row> */}
                   </div>
                   <hr className="my-4" />
                   {/* Address */}
