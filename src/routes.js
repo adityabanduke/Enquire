@@ -22,6 +22,7 @@ import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import editProfile from "views/examples/EditProfile";
 
 var routes = [
   {
@@ -50,6 +51,13 @@ var routes = [
     name: "Hospital Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
+    layout: "/admin",
+  },
+  {
+    path: "/edit-profile",
+    name: "edit-Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: editProfile,
     layout: "/admin",
   },
   {
