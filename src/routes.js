@@ -16,7 +16,7 @@
 
 */
 
-import Index from "views/Index.js";
+// import Index from "views/Index.js";
 import Profile from "views/Admin/Profile.js";
 import Maps from "views/Admin/Maps.js";
 import Register from "views/Admin/Register.js";
@@ -27,13 +27,7 @@ import EditProfile from "views/Admin/EditProfile.js";
 // import Landing from "views/Admin/Landing.js";
 
 var routes = [
-  {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
-    layout: "/admin",
-  },
+
   {
     path: "/icons",
     name: "Icons",
