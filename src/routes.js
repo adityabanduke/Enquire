@@ -17,13 +17,14 @@
 */
 
 import Index from "views/Index.js";
-// import Profile from "views/examples/Profile.js";
-// import Maps from "views/examples/Maps.js";
-// import Register from "views/examples/Register.js";
-// import Login from "views/examples/Login.js";
-// import Tables from "views/examples/Tables.js";
-// import Icons from "views/examples/Icons.js";
-
+import Profile from "views/Admin/Profile.js";
+import Maps from "views/Admin/Maps.js";
+import Register from "views/Admin/Register.js";
+import Login from "views/Admin/Login.js";
+import Tables from "views/Admin/Tables.js";
+import Icons from "views/Admin/Icons.js";
+import EditProfile from "views/Admin/EditProfile.js";
+// import Landing from "views/Admin/Landing.js";
 
 var routes = [
   {
@@ -33,55 +34,54 @@ var routes = [
     component: Index,
     layout: "/admin",
   },
- 
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: Icons,
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: "ni ni-pin-3 text-orange",
-  //   component: Maps,
-  //   layout: "/admin",
-  // },
-  // // {
-  // //   path: "/user-profile",
-  // //   name: "User Profile",
-  // //   icon: "ni ni-single-02 text-yellow",
-  // //   component: Profile,
-  // //   layout: "/admin",
-  // // },
-  // {
-  //   path: "/edit-profile",
-  //   name: "edit-Profile",
-  //   icon: "ni ni-single-02 text-yellow",
-  //   component: editProfile,
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/tables",
-  //   name: "Tables",
-  //   icon: "ni ni-bullet-list-67 text-red",
-  //   component: Tables,
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   icon: "ni ni-key-25 text-info",
-  //   component: Login,
-  //   layout: "/auth",
-  // },
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   icon: "ni ni-circle-08 text-pink",
-  //   component: Register,
-  //   layout: "/auth",
-  // },
+  {
+    path: "/icons",
+    name: "Icons",
+    icon: "ni ni-planet text-blue",
+    component: Icons,
+    layout: "/admin",
+  },
+  {
+    path: "/maps",
+    name: "Maps",
+    icon: "ni ni-pin-3 text-orange",
+    component: Maps,
+    layout: "/admin",
+  },
+  {
+    path: "/user-profile",
+    name: "Hospital Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: Profile,
+    layout: "/admin",
+  },
+  {
+    path: "/edit-profile",
+    name: "Hospital Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: EditProfile,
+    layout: "/admin",
+  },
+  {
+    path: "/tables",
+    name: "Tables",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: Tables,
+    layout: "/admin",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: Login,
+    layout: "/auth",
+  },
+  {
+    path: "/register",
+    name: "Register",
+    icon: "ni ni-circle-08 text-pink",
+    component: Register,
+    layout: "/auth",
+  },
 ];
 export default routes;
