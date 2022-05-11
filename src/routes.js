@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import Index from "views/Index.js";
 import Profile from "views/Admin/Profile.js";
 import Maps from "views/Admin/Maps.js";
@@ -22,7 +23,8 @@ import Register from "views/Admin/Register.js";
 import Login from "views/Admin/Login.js";
 import Tables from "views/Admin/Tables.js";
 import Icons from "views/Admin/Icons.js";
-import editProfile from "views/Admin/EditProfile";
+import EditProfile from "views/Admin/EditProfile.js";
+// import Landing from "views/Admin/Landing.js";
 
 var routes = [
   {
@@ -55,9 +57,9 @@ var routes = [
   },
   {
     path: "/edit-profile",
-    name: "edit-Profie",
+    name: "Hospital Profile",
     icon: "ni ni-single-02 text-yellow",
-    component: editProfile,
+    component: EditProfile,
     layout: "/admin",
   },
   {
