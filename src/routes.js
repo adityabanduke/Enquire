@@ -53,6 +53,13 @@ var routes = [
   //   layout: "/admin",
   // },
   {
+    path: "/edit-profile",
+    name: "edit-Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: editProfile,
+    layout: "/admin",
+  },
+  {
     path: "/tables",
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",

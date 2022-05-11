@@ -18,8 +18,8 @@
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-
-const UserHeader = () => {
+import Link from "react-router-dom/Link";
+const UserHeader = ({userData}) => {
   return (
     <>
       <div
@@ -39,19 +39,19 @@ const UserHeader = () => {
         {/* Header container */}
         <Container className="d-flex align-items-center" fluid>
           <Row>
-            <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
-              <p className="text-white mt-0 mb-5">
-                This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
-              </p>
+            <Col lg="8" md="10">
+              {userData? <h1 className="display-2 text-white">{userData.username}</h1>:null}
+{userData?<p className="text-white mt-0 mb-5">
+              {userData.about}
+            </p>:null}
+              <Link to="/admin/edit-profile">
               <Button
                 color="info"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                // href="/admin/editProfile"
+                // onClick={(e) => e.preventDefault()}
               >
                 Edit profile
-              </Button>
+              </Button></Link>
             </Col>
           </Row>
         </Container>
