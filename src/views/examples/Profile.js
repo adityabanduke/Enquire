@@ -217,7 +217,7 @@ const Profile = () => {
                           >
                             Hospital Name
                           </label>
-                        <Input
+                        <Input disabled
                           className="form-control-alternative"
                           defaultValue={userData.username}
                           id="input-username"
@@ -234,7 +234,7 @@ const Profile = () => {
                           >
                             Email address
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             id="input-email"
                             placeholder={userData.email}
@@ -252,7 +252,7 @@ const Profile = () => {
                           >
                             First name
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             defaultValue="Lucky"
                             id="input-first-name"
@@ -269,7 +269,7 @@ const Profile = () => {
                           >
                             Last name
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             defaultValue="Jesse"
                             id="input-last-name"
@@ -295,7 +295,7 @@ const Profile = () => {
                           >
                             Address
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             defaultValue={userData.Address}
                             id="input-address"
@@ -314,7 +314,7 @@ const Profile = () => {
                           >
                             City
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             defaultValue={userData.city}
                             id="input-city"
@@ -331,7 +331,7 @@ const Profile = () => {
                           >
                             Country
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             defaultValue={userData.country}
                             id="input-country"
@@ -348,7 +348,7 @@ const Profile = () => {
                           >
                             Postal code
                           </label>
-                          <Input
+                          <Input disabled
                             className="form-control-alternative"
                             id="input-postal-code"
                             placeholder={userData.postalCode}
@@ -364,7 +364,7 @@ const Profile = () => {
                   <div className="pl-lg-4">
                     <FormGroup>
                       <label>About Me</label>
-                      <Input
+                      <Input disabled
                         className="form-control-alternative"
                         placeholder={userData.about}
                         rows="4"
