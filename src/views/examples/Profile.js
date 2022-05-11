@@ -90,7 +90,7 @@ const Profile = () => {
   
   return (
     <>
-      <UserHeader />
+      <UserHeader userData={userData} />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

@@ -19,7 +19,7 @@
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
-const UserHeader = () => {
+const UserHeader = ({userData}) => {
   return (
     <>
       <div
@@ -40,10 +40,10 @@ const UserHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="8" md="10">
-              <h1 className="display-2 text-white">Hospital Name</h1>
-              <p className="text-white mt-0 mb-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam quia voluptatem sit optio repudiandae nam, dolore vitae, et, laboriosam qui eaque? Optio natus cumque mollitia beatae hic eos dignissimos saepe?
-              </p>
+              {userData? <h1 className="display-2 text-white">{userData.username}</h1>:null}
+{userData?<p className="text-white mt-0 mb-5">
+              {userData.about}
+            </p>:null}
               <Button
                 color="info"
                 href="#pablo"
