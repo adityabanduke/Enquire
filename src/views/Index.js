@@ -49,9 +49,9 @@
 // import Header from "components/Headers/Header.js";
 import React from "react";
 
- import "dist/css/style.css";
+ import "dist/css/style.scss";
  import logoLight from "../dist/images/logo-light.svg";
-import illustration from "../dist/images/header-illustration-dark.svg";
+import illustration from "../dist/images/header-illustration-light.svg";
 import heroIllustration from "../dist/images/hero-media-illustration-light.svg";
 import heroMedia from "../dist/images/hero-media-light.svg";
 import featureIllustration from "../dist/images/features-illustration-light.svg";
@@ -72,7 +72,7 @@ const Index = (props) => {
   
   return (
   <>
-  <body className="is-boxed has-animations">
+  <body className="is-boxed has-animations BaapClass">
   <div className="body-wrap boxed-container">
       <header className="site-header">
           <div className="container">
