@@ -55,7 +55,7 @@ var routes = [
   },
   {
     path: "/edit-profile",
-    name: "edit-Profile",
+    name: "edit-Profie",
     icon: "ni ni-single-02 text-yellow",
     component: editProfile,
     layout: "/admin",
