@@ -16,7 +16,7 @@
 
 */
 
-// import Index from "views/Index.js";
+import dashboard from "views/Admin/dashboard.js";
 import Profile from "views/Admin/Profile.js";
 import Maps from "views/Admin/Maps.js";
 import Register from "views/Admin/Register.js";
@@ -27,7 +27,13 @@ import EditProfile from "views/Admin/EditProfile.js";
 // import Landing from "views/Admin/Landing.js";
 
 var routes = [
-
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "ni ni-tv-2 text-primary",
+    component: dashboard,
+    layout: "/admin",
+  },
   {
     path: "/icons",
     name: "Icons",
@@ -51,7 +57,7 @@ var routes = [
   },
   {
     path: "/edit-profile",
-    name: "Hospital Profile",
+    name: "Edit Profile",
     icon: "ni ni-single-02 text-yellow",
     component: EditProfile,
     layout: "/admin",

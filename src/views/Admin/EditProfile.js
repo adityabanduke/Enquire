@@ -90,7 +90,7 @@ import {
     
     return (
       <>
-        <UserHeader userData={userData} />
+        <UserHeader userData={userData} bool={1} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
