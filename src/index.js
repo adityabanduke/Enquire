@@ -30,7 +30,7 @@ import Index from "views/Index";
 import UserLogin from "views/userLogin.js"
 import UserRegister from "views/userRegister"
 
-
+import HospitalRegister from "views/hospitalRegister"
 
 ReactDOM.render(
   <BrowserRouter>
@@ -53,6 +53,9 @@ ReactDOM.render(
       </Route>
       <Route path="/register" exact >
         <UserRegister/>
+      </Route>
+      <Route path="/admin-register" exact >
+        <HospitalRegister/>
       </Route>
 
 
