@@ -75,10 +75,7 @@ const User = (props) => {
         }}
       />
       <div className="main-content" ref={mainContent}>
-        <UserNavbar
-          {...props}
-          brandText={getBrandText(props.location.pathname)}
-        />
+       
         <Switch>
           {getRoutes(routes)}
           <Redirect from="*" to="/user/index" />

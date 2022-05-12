@@ -45,19 +45,19 @@
   ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.3",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "axios": "^0.27.2",
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",
     "classnames": "2.3.1",
-
     "firebase": "^8.7.1",
-
     "moment": "2.29.1",
     "node-sass": "6.0.1",
     "node-sass-package-importer": "5.3.2",
     "nouislider": "15.2.0",
     "progress": "^2.0.3",
     "react": "17.0.2",
-   
     "react-chartjs-2": "2.11.1",
     "react-copy-to-clipboard": "5.0.3",
     "react-dom": "17.0.2",

@@ -17,7 +17,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -28,6 +28,10 @@ import AuthLayout from "layouts/Auth.js";
 import UserLayout from "layouts/User.js";
 import Index from "views/Index";
 import HospitalRegister from "views/hospitalRegister";
+import UserLogin from "views/userLogin"
+import UserRegister from "views/userRegister"
+
+
 
 ReactDOM.render(
   <BrowserRouter>
@@ -36,7 +40,10 @@ ReactDOM.render(
       <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
       <Route path="/user" render={(props) => <UserLayout {...props} />} />
       <Route path="/home" render={(props) => <Index {...props} />} />
-      <Route path="/register" render={(props) => <HospitalRegister {...props} />} />
+      <Route path="/admin-register" render={(props) => <HospitalRegister {...props} />} />
+      <Route path="/login" render={(props) => <UserLogin {...props} />} />
+      <Route path="/register" render={(props) => <UserRegister {...props} />} />
+
 
 
     </Switch>
