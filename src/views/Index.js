@@ -54,7 +54,6 @@ import {
     
   
   } from "reactstrap";
-  import {Link} from 'react-router-dom';
  import "dist/css/style.scss";
  import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
@@ -68,7 +67,7 @@ import feature02 from "../dist/images/feature-02-light.svg";
 
 import feature03 from "../dist/images/feature-03-light.svg";
 
-
+import { Link } from 'react-router-dom'
 
 
 
@@ -83,6 +82,7 @@ const Index = (props) => {
       <header className="site-header">
           <div className="container">
           {/* <nav class="navbar">
+          <nav className="navbar">
           <div className="site-header-inner">
                   <div className="brand header-brand">
                       <h1 className="m-0">
@@ -109,6 +109,7 @@ const Index = (props) => {
                   
                 </ul>
                <Button className="my-2 nav-button button-text" color="primary" type="button">
+                <Link to='views/userLogin'><Button className="my-2 nav-button button-text" color="primary" type="button">
                   Login
                 </Button>
                
