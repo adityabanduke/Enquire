@@ -25,7 +25,7 @@
 
 var userroutes = [
   {
-    path: "/dashboard",
+    path: "/Dashboard",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
