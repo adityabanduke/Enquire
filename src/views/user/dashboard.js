@@ -15,16 +15,20 @@ const getDataFromAPI = () => {
   .ref("search_tags")
   .once("value")
   .then((snapshot) => {
-	  if(data.length)
+	
      data = snapshot.val();
     // console.log(data);
-	
+	if(data.length !== 0){
  let currentMyOptions = [];
     for (var i = 0; i < data.length; i++) {
 		currentMyOptions.push(data[i])
 	  console.log(data[i]);
     }
-	setMyOptions( currentMyOptions);
+	setMyOptions( currentMyOptions);}
+  }).then((err) => {
+	  if(err){
+		  console.log(err);
+	  }
   })
   };
 
