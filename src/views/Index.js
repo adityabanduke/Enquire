@@ -54,7 +54,7 @@ import {
     
   
   } from "reactstrap";
-//   import {Link} from 'react';
+  import {Link} from 'react-router-dom';
  import "dist/css/style.scss";
  import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
