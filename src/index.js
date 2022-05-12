@@ -27,7 +27,7 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import UserLayout from "layouts/User.js";
 import Index from "views/Index";
-
+import HospitalRegister from "views/hospitalRegister";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -35,7 +35,8 @@ ReactDOM.render(
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
       <Route path="/user" render={(props) => <UserLayout {...props} />} />
-      <Route path="" render={(props) => <Index {...props} />} />
+      <Route path="/home" render={(props) => <Index {...props} />} />
+      <Route path="/register" render={(props) => <HospitalRegister {...props} />} />
 
 
     </Switch>
