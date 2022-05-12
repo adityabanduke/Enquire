@@ -16,6 +16,7 @@
 
 */
  import Index from "views/user/Dashboard.js";
+
 //  import Profile from "views/user/Profile.js";
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
@@ -31,6 +32,7 @@ var userroutes = [
     component: Index,
     layout: "/user",
   },
+
 
 ];
 export default userroutes;

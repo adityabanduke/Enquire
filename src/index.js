@@ -27,7 +27,7 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import UserLayout from "layouts/User.js";
 import Index from "views/Index";
-import UserLogin from "views/userLogin"
+import UserLogin from "views/userLogin.js"
 import UserRegister from "views/userRegister"
 
 
@@ -35,12 +35,25 @@ import UserRegister from "views/userRegister"
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
-      <Route path="/user" render={(props) => <UserLayout {...props} />} />
-      <Route path="" render={(props) => <Index {...props} />} />
-      <Route path="/login" render={(props) => <UserLogin {...props} />} />
-      <Route path="/register" render={(props) => <UserRegister {...props} />} />
+    <Route path="/"  exact>
+        <Index/>
+      </Route>
+      <Route path="/admin">
+        <AdminLayout/>
+        </Route> 
+      <Route path="/auth" >
+        <AuthLayout/>
+      </Route>
+      <Route path="/user">
+        <UserLayout/>
+      </Route>
+   
+      <Route path="/login" exact >
+        <UserLogin/>
+      </Route>
+      <Route path="/register" exact >
+        <UserRegister/>
+      </Route>
 
 
 

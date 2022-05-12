@@ -18,7 +18,7 @@ const getDataFromAPI = () => {
 	
      data = snapshot.val();
     // console.log(data);
-	if(data.length != 0){
+	if(data.length !== 0){
  let currentMyOptions = [];
     for (var i = 0; i < data.length; i++) {
 		currentMyOptions.push(data[i])
