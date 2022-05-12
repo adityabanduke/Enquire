@@ -1,7 +1,6 @@
 import React from "react";
 import firebase from "config/firebase-enquire";
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
-import AuthFooter from "components/Footers/AuthFooter.js";
+
 // import axios from "axios";
 // reactstrap components
 import {
@@ -25,7 +24,7 @@ import {
   Label,
 } from "reactstrap";
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,11 +44,10 @@ class Login extends React.Component {
     this.handleRePassword = this.handleRePassword.bind(this);
     this.handleRegisterEmailPassword = this.handleRegisterEmailPassword.bind(this);
     this.manageGoogleRegister = this.manageGoogleRegister.bind(this);
-    this.manageGithubRegisters = this.manageGithubRegisters.bind(this);
     this.keyModalFunction = this.keyModalFunction.bind(this);
-    this.sendEmailFunction = this.sendEmailFunction.bind(this);
-    this.checkUserVerification = this.checkUserVerification.bind(this);
-    this.resendEmailFunction = this.resendEmailFunction.bind(this);
+    // this.sendEmailFunction = this.sendEmailFunction.bind(this);
+     this.checkUserVerification = this.checkUserVerification.bind(this);
+    // this.resendEmailFunction = this.resendEmailFunction.bind(this);
     this.showPassFunction = this.showPassFunction.bind(this);
   }
 
@@ -261,56 +259,18 @@ class Login extends React.Component {
       .catch((error) => {});
   };
 
-  manageGithubRegisters = () => {
-    var provider = new firebase.auth.GithubAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        /** @type {firebase.auth.OAuthCredential} */
-        var user = result.user;
-        console.log(user);
-        var id = user.uid;
-        console.log(user);
-        firebase
-          .database()
-          .ref("users/" + id)
-          .once("value")
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-            } else {
-              firebase
-                .database()
-                .ref("users/" + id)
-                .set({
-                  email: user.email,
-                  user_uid: id,
-                  profilepic: user.photoURL,
-                  verification: 1,
-                });
-            }
-          })
-          .then(() => {
-            window.location.href = "/user/dashboard";
-          });
-      })
-      .catch((error) => {});
-  };
+ 
   render() {
     return (
       <>
         <div className="main-content login-back">
-          <AuthNavbar />
           <div className="header py-7 py-lg-8"></div>
           {/* Page content */}
           <Container className="mt--8 pb-5">
             <Row className="justify-content-start">
               <div>
-                <Modal
-                  isOpen={this.state.keyModal}
-                  toggle={this.keyModalFunction}
-                >
-                  {this.state.checkCorrectOtp ? (
+               
+                  {/* {this.state.checkCorrectOtp ? (
                     <Form
                       role="form"
                       onSubmit={(e) => {
@@ -357,8 +317,8 @@ class Login extends React.Component {
                         </Button>
                       </ModalBody>
                     </>
-                  )}
-                </Modal>
+                  )} */}
+                
               </div>
               <Col lg="6" md="8">
                 <Card className="bg-secondary shadow border-0">
@@ -371,7 +331,6 @@ class Login extends React.Component {
                         className="btn-neutral btn-icon mr-4"
                         color="default"
                         href="#pablo"
-                        onClick={this.manageGithubRegisters}
                       >
                         <span className="btn-inner--icon">
                           <img
@@ -540,10 +499,9 @@ class Login extends React.Component {
             </Row>
           </Container>
         </div>
-        <AuthFooter />
       </>
     );
   }
 }
 
-export default Login;
+export default Register;
