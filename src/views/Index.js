@@ -81,6 +81,7 @@ const Index = (props) => {
   <div className="body-wrap boxed-container">
       <header className="site-header">
           <div className="container">
+          {/* <nav class="navbar">
           <nav className="navbar">
           <div className="site-header-inner">
                   <div className="brand header-brand">
@@ -107,15 +108,16 @@ const Index = (props) => {
 
                   
                 </ul>
+               <Button className="my-2 nav-button button-text" color="primary" type="button">
                 <Link to='views/userLogin'><Button className="my-2 nav-button button-text" color="primary" type="button">
                   Login
-                </Button></Link>
+                </Button>
                
                 <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
                   Sign Up
                 </Button>
                 </nav>
-           
+            */}
           </div>
       </header>
 
