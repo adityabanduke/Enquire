@@ -16,7 +16,7 @@
 
 */
  import Index from "views/user/Dashboard.js";
- import Profile from "views/user/Profile.js";
+//  import Profile from "views/user/Profile.js";
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 // import Login from "views/examples/Login.js";
@@ -32,13 +32,5 @@ var userroutes = [
     layout: "/user",
   },
 
- 
-  {
-    path: "/Profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/user",
-  },
 ];
 export default userroutes;

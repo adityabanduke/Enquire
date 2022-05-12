@@ -54,7 +54,7 @@ import {
     
   
   } from "reactstrap";
-  import {Link} from 'react';
+  import {Link} from 'react-router-dom';
  import "dist/css/style.scss";
  import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
@@ -112,9 +112,9 @@ const Index = (props) => {
                   Login
                 </Button></Link>
                
-                {/* <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
+                <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
                   Sign Up
-                </Button> */}
+                </Button>
                 </nav>
            
           </div>
