@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
- import Index from "views/user/Dashboard.js";
+ import Index from "views/user/dashboard.js";
  import Profile from "views/user/Profile.js";
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";

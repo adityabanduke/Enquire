@@ -54,7 +54,7 @@ import {
     
   
   } from "reactstrap";
-  import {Link} from 'react';
+//   import {Link} from 'react';
  import "dist/css/style.scss";
  import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
@@ -82,7 +82,7 @@ const Index = (props) => {
   <div className="body-wrap boxed-container">
       <header className="site-header">
           <div className="container">
-          <nav class="navbar">
+          {/* <nav class="navbar">
           <div className="site-header-inner">
                   <div className="brand header-brand">
                       <h1 className="m-0">
@@ -108,15 +108,15 @@ const Index = (props) => {
 
                   
                 </ul>
-                <Link to="views/userLogin.js"> <Button className="my-2 nav-button button-text" color="primary" type="button">
+               <Button className="my-2 nav-button button-text" color="primary" type="button">
                   Login
-                </Button></Link>
+                </Button>
                
-                {/* <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
+                <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
                   Sign Up
-                </Button> */}
+                </Button>
                 </nav>
-           
+            */}
           </div>
       </header>
 

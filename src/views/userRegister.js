@@ -2,7 +2,7 @@ import React from "react";
 import firebase from "config/firebase-enquire";
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
-import axios from "axios";
+// import axios from "axios";
 // reactstrap components
 import {
   Button,
