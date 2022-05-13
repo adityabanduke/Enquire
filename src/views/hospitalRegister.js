@@ -15,29 +15,41 @@ import {
   import UserHeader from "components/Headers/UserHeader.js";
   // import React from "react";
   import react,{useState,useEffect} from "react";
-  import firebase from '../config/firebase-enquire'
+  import firebase from '../config/firebase-enquire';
+  import {db} from "../config/firebase-enquire"
+import { EndOfLineState } from "typescript";
+  
 
   
   const hospitalRegister = () => {
     const [userData, setUserData] = react.useState({});
     const [name, setName] = react.useState();
     const [email, setEmail] = react.useState();
+    const [password, setPassword] = react.useState();
     const [address, setAddress] = react.useState();
     const [city, setCity] = react.useState();
     const [country, setCountry] = react.useState();
     const [postalCode, setPostalCode] = react.useState();
     const [about, setAbout] = react.useState();
-    const [KEY, setKey] = react.useState();
 
 
 
 const submit=()=>{
-  firebase
-  .database()
-  .ref("admin")
-  .set({
-    name , email , address , city , country , postalCode , about
+
+  firebase.auth().createUserWithEmailAndPassword(email,password).then((userCredential)=>{
+    var user = userCredential.user;
+    db.collection("Admin").doc(user.uid).set({
+      name , email , address , city , country , postalCode , about , password
+    })
+  }).then( (err) => {
+    if(err){
+      console.log(err);
+    }else{
+      console.log("success!!");
+    }
+  
   })
+  
 }
     return (
       <>
@@ -233,6 +245,25 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                          
                         />
                       </FormGroup>
+
+                      <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-password"
+                            >
+                              Password
+                            </label>
+                            <Input  
+                              className="form-control-alternative"
+                              id="input-password"
+                              placeholder="password"
+                              type="password"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setPassword(e.target.value);
+                               }}
+                            />
+                          </FormGroup>
                     </div>
                   </Form>
                 </CardBody>

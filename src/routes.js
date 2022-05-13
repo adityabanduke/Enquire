@@ -24,7 +24,6 @@ import Login from "views/Admin/Login.js";
 import Tables from "views/Admin/Tables.js";
 import Icons from "views/Admin/Icons.js";
 import EditProfile from "views/Admin/EditProfile.js";
-import hospitalRegister from "views/hospitalRegister";
 // import Landing from "views/Admin/Landing.js";
 
 var routes = [
