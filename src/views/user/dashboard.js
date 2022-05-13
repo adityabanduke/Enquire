@@ -1,13 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState , Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import firebase from '../../config/firebase-enquire'
+import firebase from '../../config/firebase-enquire';
+import {Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText} from 'reactstrap';
 
-const Dashboard = () => {
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 
-const [myOptions, setMyOptions] = useState([])
+export default class dashboard extends Component {
+	constructor(props){
+		super(props);
+		this.state={
+           myOptions:[],
+		}
 
-const getDataFromAPI = () => {
+		this.getDataFromAPI = this.getDataFromAPI.bind(this);
+
+	}
+
+	componentDidMount(){
+		firebase.auth().onAuthStateChanged((user)=>{
+			if(user)
+        {  firebase.database().ref("users/"+ user.uid).once('value').then((snapshot)=>{
+			  var userData = snapshot.val();
+			  console.log(userData);
+		  })}
+		  else{
+			  window.location.href("/login");
+		  }
+		})
+	}
+
+
+
+// const Dashboard = () => {
+
+// const [myOptions, setMyOptions] = useState([])
+
+ getDataFromAPI = () => {
 	console.log("Options Fetched from API")
   let data;
   firebase
@@ -24,7 +54,10 @@ const getDataFromAPI = () => {
 		currentMyOptions.push(data[i])
 	  console.log(data[i]);
     }
-	setMyOptions( currentMyOptions);}
+	// setMyOptions( currentMyOptions);
+	this.setState({myOptions: currentMyOptions})
+
+}
   }).then((err) => {
 	  if(err){
 		  console.log(err);
@@ -63,26 +96,57 @@ const getDataFromAPI = () => {
 //     // });
 //   }, [])
   
+render() {
+	return (
+	  
+ 
 
-return (
-	<div style={{ marginLeft: '40%', marginTop: '60px' }}>
-	
+	// Navbar
+	<>
+	<div>
+  <Navbar style={{ "width":"100%" }}
+    color="transparent"
+    
+    expand="md"
+    
+  >
+    <NavbarBrand href="/">
+      Enquire
+    </NavbarBrand>
+
+		
 	<Autocomplete
-		style={{ width: 500 }}
+		style={{"width" : "50%", "color":"white", 'margin':'auto', 'borderRadius':'8'}}
 		freeSolo
 		autoComplete
 		autoHighlight
-		options={myOptions}
+		options={this.state.myOptions}
 		renderInput={(params) => (
 		<TextField {...params}
-			onChange={getDataFromAPI}
+			onChange={this.getDataFromAPI}
 			variant="outlined"
 			label="Search Box"
+			// startAdornment={
+			// 	<InputAdornment position="start">
+			// 	  <SearchIcon />
+			// 	</InputAdornment>
+			//   }
 		/>
+
 		)}
 	/>
-	</div>
+
+   
+  </Navbar>
+</div>
+<p>
+	lorem1000
+</p>
+
+
+	</>
 );
 }
+}
 
-export default Dashboard;
+

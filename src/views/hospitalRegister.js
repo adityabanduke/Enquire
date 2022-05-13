@@ -15,7 +15,10 @@ import {
   import UserHeader from "components/Headers/UserHeader.js";
   // import React from "react";
   import react,{useState,useEffect} from "react";
-  import firebase from '../config/firebase-enquire'
+  import firebase from '../config/firebase-enquire';
+  import {db} from "../config/firebase-enquire"
+import { EndOfLineState } from "typescript";
+  
 
   
   const hospitalRegister = () => {
@@ -35,12 +38,16 @@ const submit=()=>{
 
   firebase.auth().createUserWithEmailAndPassword(email,password).then((userCredential)=>{
     var user = userCredential.user;
-      firebase
-    .database()
-    .ref("admin/"+ user.uid)
-    .set({
+    db.collection("Admin").doc(user.uid).set({
       name , email , address , city , country , postalCode , about , password
     })
+  }).then( (err) => {
+    if(err){
+      console.log(err);
+    }else{
+      console.log("success!!");
+    }
+  
   })
   
 }
@@ -270,6 +277,14 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                   </Form>
                 </CardBody>
               </Card>
+              {/* <Select
+              multi
+              options={DATA}
+              onChange={(value) => {
+                setValue(value);
+              }}
+             
+            /> */}
             </Col>
           </Row>
         </Container>

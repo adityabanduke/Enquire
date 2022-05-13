@@ -3,3 +3,4 @@
 package-lock.json
 /build
 .eslintcache
+src/views/user/Navbar.js
