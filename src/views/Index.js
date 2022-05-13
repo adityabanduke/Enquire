@@ -113,10 +113,11 @@ const Index = (props) => {
                   Login
                 </Button>
                 </Link>
-               
-                <Button className="my-2 nav-button button-text" color="primary" href="views/userRegister.js" type="button">
+                <Link to="/register">
+                <Button className="my-2 nav-button button-text" color="primary"  type="button">
                   Sign Up
                 </Button>
+                </Link>
                 </nav>
             
           </div>
