@@ -12,8 +12,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
 
-export default class Dashboard extends Component {
-	constructor(props) {
+export default class dashboard extends Component {
+	constructor(props){
 		super(props);
 		this.state = {
 			myOptions: [],

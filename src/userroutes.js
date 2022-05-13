@@ -29,7 +29,7 @@
 var userroutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/user",
