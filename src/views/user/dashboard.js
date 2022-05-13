@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import firebase from '../../config/firebase-enquire'
+import firebase from '../../config/firebase-enquire';
+import {Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText} from 'reactstrap';
+
+
+
 
 const Dashboard = () => {
 
@@ -65,10 +69,23 @@ const getDataFromAPI = () => {
   
 
 return (
-	<div style={{ marginLeft: '40%', marginTop: '60px' }}>
-	
+
+	// Navbar
+	<>
+	<div>
+  <Navbar style={{ "width":"100%" }}
+    color="transparent"
+    
+    expand="md"
+    
+  >
+    <NavbarBrand href="/">
+      Enquire
+    </NavbarBrand>
+
+		
 	<Autocomplete
-		style={{ width: 500 }}
+		style={{"width" : "50%", "color":"white", "marginLeft":"auto"}}
 		freeSolo
 		autoComplete
 		autoHighlight
@@ -81,7 +98,16 @@ return (
 		/>
 		)}
 	/>
-	</div>
+
+   
+  </Navbar>
+</div>
+<p>
+	lorem1000
+</p>
+
+
+	</>
 );
 }
 
