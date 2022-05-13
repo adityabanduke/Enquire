@@ -1,17 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState , Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import firebase from '../../config/firebase-enquire';
 import {Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText} from 'reactstrap';
 
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
+
+export default class Dashboard extends Component {
+	constructor(props){
+		super(props);
+		this.state={
+           myOptions:[],
+		}
+
+		this.getDataFromAPI = this.getDataFromAPI.bind(this);
+
+	}
+
+	componentDidMount(){
+		firebase.auth().onAuthStateChanged((user)=>{
+          firebase.database().ref("users/"+ user.uid).once('value').then((snapshot)=>{
+			  var userData = snapshot.val();
+			  console.log(userData);
+		  })
+		})
+	}
 
 
 
-const Dashboard = () => {
+// const Dashboard = () => {
 
-const [myOptions, setMyOptions] = useState([])
+// const [myOptions, setMyOptions] = useState([])
 
-const getDataFromAPI = () => {
+ getDataFromAPI = () => {
 	console.log("Options Fetched from API")
   let data;
   firebase
@@ -28,7 +50,10 @@ const getDataFromAPI = () => {
 		currentMyOptions.push(data[i])
 	  console.log(data[i]);
     }
-	setMyOptions( currentMyOptions);}
+	// setMyOptions( currentMyOptions);
+	this.setState({myOptions: currentMyOptions})
+
+}
   }).then((err) => {
 	  if(err){
 		  console.log(err);
@@ -67,8 +92,10 @@ const getDataFromAPI = () => {
 //     // });
 //   }, [])
   
-
-return (
+render() {
+	return (
+	  
+ 
 
 	// Navbar
 	<>
@@ -85,17 +112,23 @@ return (
 
 		
 	<Autocomplete
-		style={{"width" : "50%", "color":"white", "marginLeft":"auto"}}
+		style={{"width" : "50%", "color":"white", 'margin':'auto', 'borderRadius':'8'}}
 		freeSolo
 		autoComplete
 		autoHighlight
-		options={myOptions}
+		options={this.state.myOptions}
 		renderInput={(params) => (
 		<TextField {...params}
-			onChange={getDataFromAPI}
+			onChange={this.getDataFromAPI}
 			variant="outlined"
 			label="Search Box"
+			// startAdornment={
+			// 	<InputAdornment position="start">
+			// 	  <SearchIcon />
+			// 	</InputAdornment>
+			//   }
 		/>
+
 		)}
 	/>
 
@@ -110,5 +143,6 @@ return (
 	</>
 );
 }
+}
 
-export default Dashboard;
+
