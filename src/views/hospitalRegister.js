@@ -1,22 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import {
     Button,
     Card,
@@ -34,133 +16,51 @@ import {
   // import React from "react";
   import react,{useState,useEffect} from "react";
   import firebase from '../config/firebase-enquire'
+
   
   const hospitalRegister = () => {
-    // constructor(props) {
-    //   super(props);
-    //   this.state = {
-    //     userData: {},
-    //   };
-    // }
-  
-  
-    // componentDidMount() {
-    //   firebase.auth().onAuthStateChanged((user) => {
-    //     if (user) {
-    //       firebase
-    //         .database()
-    //         .ref("users/" + user.uid)
-    //         .once("value")
-    //         .then((snapshot) => {
-    //           var data = snapshot.val();
-    //           console.log(data);
-    //           this.setState({ userData: data });
-    //         })
-    //         .then(() => { 
-    //           document.getElementById("userHeaderNameId").innerHTML =
-    //             "Hello " + this.state.userData.username;
-    //         });
-    //     } else {
-    //       window.location.href = "/";
-    //     }
-    //   });
-    // }
+    const [userData, setUserData] = react.useState({});
+    const [name, setName] = react.useState();
+    const [email, setEmail] = react.useState();
+    const [password, setPassword] = react.useState();
+    const [address, setAddress] = react.useState();
+    const [city, setCity] = react.useState();
+    const [country, setCountry] = react.useState();
+    const [postalCode, setPostalCode] = react.useState();
+    const [about, setAbout] = react.useState();
 
+
+
+const submit=()=>{
+
+  firebase.auth().createUserWithEmailAndPassword(email,password).then((userCredential)=>{
+    var user = userCredential.user;
+      firebase
+    .database()
+    .ref("admin/"+ user.uid)
+    .set({
+      name , email , address , city , country , postalCode , about , password
+    })
+  })
+  
+}
     return (
       <>
         {/* Page content */}
+        <div  style={{background:" #000046",
+background: "-webkit-linear-gradient(to right, #1CB5E0, #000046)",
+background: "linear-gradient(to right, #1CB5E0, #000046)",width:"100vw",
+height:"100vh",position:"fixed",top:"0",left:"0"
+}}>
+          
+        </div>
         <Container className="mt-7" fluid>
-          <Row>
-             {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-              <Card className="card-profile shadow">
-                <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={
-                            require("../../assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </a>
-                    </div>
-                  </Col>
-                </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="pt-0 pt-md-4">
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Row>
-                  <div className="text-center">
-                    <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
-                    </h3>
-                    <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div>
-                    <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
-                    </div>
-                    <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      Show more
-                    </a>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col> */}
+          <Row className="d-flex justify-content-center">
+             {
+           }
             <Col className="order-xl-1" xl="8">
+            <button onClick={submit}>submit</button>
+
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -194,11 +94,15 @@ import {
                             >
                               Hospital Name
                             </label>
-                          <Input disabled
+                          <Input  
                             className="form-control-alternative"
                             id="input-username"
                             placeholder='name'
                             type="text"
+                             onChange={(e)=>{
+                              console.log(e.target.value);
+                              setName(e.target.value);
+                             }}
                           />
                           </FormGroup>
                         </Col>
@@ -210,51 +114,20 @@ import {
                             >
                               Email address
                             </label>
-                            <Input disabled
+                            <Input  
                               className="form-control-alternative"
                               id="input-email"
                               placeholder="email"
                               type="email"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setEmail(e.target.value);
+                               }}
                             />
                           </FormGroup>
                         </Col>
                       </Row>
-                      {/* <Row>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-first-name"
-                            >
-                              First name
-                            </label>
-                            <Input disabled
-                              className="form-control-alternative"
-                              defaultValue="Lucky"
-                              id="input-first-name"
-                              placeholder="First name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-last-name"
-                            >
-                              Last name
-                            </label>
-                            <Input disabled
-                              className="form-control-alternative"
-                              defaultValue="Jesse"
-                              id="input-last-name"
-                              placeholder="Last name"
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row> */}
+                  
                     </div>
                     <hr className="my-4" />
                     {/* Address */}
@@ -271,11 +144,15 @@ import {
                             >
                               Address
                             </label>
-                            <Input disabled
+                            <Input  
                               className="form-control-alternative"
                               id="input-address"
                               placeholder="address"
                               type="text"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setAddress(e.target.value);
+                               }}
                             />
                           </FormGroup>
                         </Col>
@@ -289,11 +166,15 @@ import {
                             >
                               City
                             </label>
-                            <Input disabled
+                            <Input  
                               className="form-control-alternative"
                               id="input-city"
                               placeholder="city"
                               type="text"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setCity(e.target.value);
+                               }}
                             />
                           </FormGroup>
                         </Col>
@@ -305,11 +186,15 @@ import {
                             >
                               Country
                             </label>
-                            <Input disabled
+                            <Input  
                               className="form-control-alternative"
                               id="input-country"
                               placeholder="country"
                               type="text"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setCountry(e.target.value);
+                               }}
                             />
                           </FormGroup>
                         </Col>
@@ -321,11 +206,15 @@ import {
                             >
                               Postal code
                             </label>
-                            <Input disabled
+                            <Input  
                               className="form-control-alternative"
                               id="input-postal-code"
                               placeholder="postalCode"
                               type="number"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setPostalCode(e.target.value);
+                               }}
                             />
                           </FormGroup>
                         </Col>
@@ -337,14 +226,37 @@ import {
                     <div className="pl-lg-4">
                       <FormGroup>
                         <label>About Me</label>
-                        <Input disabled
+                        <Input  
                           className="form-control-alternative"
                           placeholder="about"
                           rows="4"
                           type="textarea"
+                          onChange={(e)=>{
+                            console.log(e.target.value);
+                            setAbout(e.target.value);
+                           }}
                          
                         />
                       </FormGroup>
+
+                      <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-password"
+                            >
+                              Password
+                            </label>
+                            <Input  
+                              className="form-control-alternative"
+                              id="input-password"
+                              placeholder="password"
+                              type="password"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setPassword(e.target.value);
+                               }}
+                            />
+                          </FormGroup>
                     </div>
                   </Form>
                 </CardBody>
@@ -352,6 +264,7 @@ import {
             </Col>
           </Row>
         </Container>
+
       </>
     );
   };
