@@ -34,11 +34,8 @@ import {
   // import React from "react";
   import react,{useState,useEffect, Component} from "react";
   import firebase from '../../config/firebase-enquire'
-  import Link from "react-router-dom/Link";
-
-
-
-  export default class Profile extends Component {
+  
+  export default class EditProfile extends Component {
 	constructor(props){
 		super(props);
 		this.state={
@@ -51,47 +48,28 @@ import {
 	
   
     componentDidMount() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          firebase
-            .database()
-            .ref("users/" + user.uid)
-            .once("value")
-            .then((snapshot) => {
-              var data = snapshot.val();
-              console.log(data);
-              this.setState({ userData: data });
-            })
-            .then(() => { 
-              document.getElementById("userHeaderNameId").innerHTML =
-                "Hello " + this.state.userData.username;
-            });
-        } else {
-          window.location.href = "/";
-        }
-      });
-    }
-    
-    // useEffect(() => {
-    // // firebase.auth().onAuthStateChanged((user) => {
-    //    // if (user) {
+    //   firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
     //       firebase
     //         .database()
-    //         .ref("users/" + 'user1')
+    //         .ref("users/" + user.uid)
     //         .once("value")
     //         .then((snapshot) => {
     //           var data = snapshot.val();
-    //           console.log(data.username);
-    //           setUserData(data);
+    //           console.log(data);
+    //           this.setState({ userData: data });
     //         })
     //         .then(() => { 
-    //           document.getElementById("userHeaderNameId").innerHTML =userData.username;
+    //           document.getElementById("userHeaderNameId").innerHTML =
+    //             "Hello " + this.state.userData.username;
     //         });
-    //     // } else {
-    //     //   window.location.href = "/";
-    //     // }
-    //   // });
-    // }, [])
+    //     } else {
+    //       window.location.href = "/";
+    //     }
+    //   });
+    }
+    
+   
     render(){
     return (
       <>
@@ -99,8 +77,8 @@ import {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-              <Card className="card-profile shadow">
+             {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+              <Card className="card-Editprofile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
@@ -108,48 +86,87 @@ import {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={this.state.userData.profilepic}
-                          height='100'
-                          width='100'
-                          
+                          src={
+                            require("../../assets/img/theme/team-4-800x800.jpg")
+                              .default
+                          }
                         />
                       </a>
                     </div>
                   </Col>
                 </Row>
-             
-                <CardBody className="mt-5 pt-5 pt-md-4">
-                 
+                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                  <div className="d-flex justify-content-between">
+                    <Button
+                      className="mr-4"
+                      color="info"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                      size="sm"
+                    >
+                      Connect
+                    </Button>
+                    <Button
+                      className="float-right"
+                      color="default"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                      size="sm"
+                    >
+                      Message
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardBody className="pt-0 pt-md-4">
+                  <Row>
+                    <div className="col">
+                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
+                        <div>
+                          <span className="heading">22</span>
+                          <span className="description">Friends</span>
+                        </div>
+                        <div>
+                          <span className="heading">10</span>
+                          <span className="description">Photos</span>
+                        </div>
+                        <div>
+                          <span className="heading">89</span>
+                          <span className="description">Comments</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Row>
                   <div className="text-center">
                     <h3>
-                    {this.state.userData.username}
+                      Jessica Jones
+                      <span className="font-weight-light">, 27</span>
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      {this.state.userData.Address}
+                      Bucharest, Romania
                     </div>
-                    {/* <div className="h5 mt-4">
+                    <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
                       Solution Manager - Creative Tim Officer
                     </div>
                     <div>
                       <i className="ni education_hat mr-2" />
                       University of Computer Science
-                    </div> */}
+                    </div>
                     <hr className="my-4" />
-                    <a  style={{color:"#fff"}} href="/user/UserEditProfile">
-                    <Button
-                      color="info"
-                     
-
-                    > Edit profile
-                    </Button></a>
-                  
+                    <p>
+                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
+                      Nick Murphy — writes, performs and records all of his own
+                      music.
+                    </p>
+                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                      Show more
+                    </a>
                   </div>
                 </CardBody>
               </Card>
-            </Col>
-            <Col className="order-xl-1" xl="8">
+            </Col> */}
+            <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -171,7 +188,7 @@ import {
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
-                      Your Profile
+                      Hospital Details
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -181,7 +198,7 @@ import {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                             Name
+                              Hospital Name
                             </label>
                           <Input disabled
                             className="form-control-alternative"
