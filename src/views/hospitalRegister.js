@@ -59,7 +59,7 @@ height:"100vh",position:"fixed",top:"0",left:"0"
              {
            }
             <Col className="order-xl-1" xl="8">
-            <button onClick={submit}>submit</button>
+            {/* <button onClick={submit}>submit</button> */}
 
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
@@ -126,6 +126,25 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                             />
                           </FormGroup>
                         </Col>
+                        <Col lg={6}>
+                        <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-password"
+                            >
+                              Password
+                            </label>
+                            <Input  
+                              className="form-control-alternative"
+                              id="input-password"
+                              placeholder="password"
+                              type="password"
+                              onChange={(e)=>{
+                                console.log(e.target.value);
+                                setPassword(e.target.value);
+                               }}
+                            />
+                          </FormGroup></Col>
                       </Row>
                   
                     </div>
@@ -239,24 +258,14 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                         />
                       </FormGroup>
 
-                      <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-password"
-                            >
-                              Password
-                            </label>
-                            <Input  
-                              className="form-control-alternative"
-                              id="input-password"
-                              placeholder="password"
-                              type="password"
-                              onChange={(e)=>{
-                                console.log(e.target.value);
-                                setPassword(e.target.value);
-                               }}
-                            />
-                          </FormGroup>
+                    
+                          <Button onClick={submit}
+                color="info"
+                // href="/admin/editProfile"
+                // onClick={(e) => e.preventDefault()}
+              >
+                Submit
+              </Button>
                     </div>
                   </Form>
                 </CardBody>
