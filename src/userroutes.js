@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
- import Index from "views/user/Dashboard.js";
+ import Index from "views/user/dashboard.js";
 
  import Profile from "views/user/Profile.js";
 // import Maps from "views/examples/Maps.js";
@@ -26,8 +26,8 @@
 
 var userroutes = [
   {
-    path: "/Dashboard",
-    name: "Dashboard",
+    path: "/dashboard",
+    name: "dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/user",

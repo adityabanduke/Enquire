@@ -7,7 +7,7 @@ import {Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Unc
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 
-export default class Dashboard extends Component {
+export default class dashboard extends Component {
 	constructor(props){
 		super(props);
 		this.state={
