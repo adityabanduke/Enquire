@@ -237,6 +237,14 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                   </Form>
                 </CardBody>
               </Card>
+              {/* <Select
+              multi
+              options={DATA}
+              onChange={(value) => {
+                setValue(value);
+              }}
+             
+            /> */}
             </Col>
           </Row>
         </Container>
