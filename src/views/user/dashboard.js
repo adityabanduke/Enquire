@@ -20,10 +20,14 @@ export default class Dashboard extends Component {
 
 	componentDidMount(){
 		firebase.auth().onAuthStateChanged((user)=>{
-          firebase.database().ref("users/"+ user.uid).once('value').then((snapshot)=>{
+			if(user)
+        {  firebase.database().ref("users/"+ user.uid).once('value').then((snapshot)=>{
 			  var userData = snapshot.val();
 			  console.log(userData);
-		  })
+		  })}
+		  else{
+			  window.location.href("/login");
+		  }
 		})
 	}
 
