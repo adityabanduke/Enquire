@@ -31,6 +31,7 @@ import UserLogin from "views/userLogin.js"
 import UserRegister from "views/userRegister.js";
 
 import HospitalRegister from "views/hospitalRegister"
+import UserEditProfile from "views/user/UserEditProfile.js";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -38,12 +39,12 @@ ReactDOM.render(
     <Route path="/"  exact>
         <Index/>
       </Route>
-      <Route path="/admin">
-        <AdminLayout/>
-        </Route> 
+     
       <Route path="/auth" >
         <AuthLayout/>
       </Route>
+
+ // ************ User Routing ***********
       <Route path="/user">
         <UserLayout/>
       </Route>
@@ -54,10 +55,26 @@ ReactDOM.render(
       <Route path="/register" exact >
         <UserRegister/>
       </Route>
+
+      <Route path="/UserEditProfile" exact >
+        <UserEditProfile/>
+      </Route>
+
+
+
+// ************ Admin Routing ***********
+
+      <Route path="/admin">
+        <AdminLayout/>
+        </Route> 
+
+
+
+
       <Route path="/admin-register" exact >
         <HospitalRegister/>
       </Route>
-      <Redirect to="/" />
+      {/* <Redirect to="/" /> */}
 
 
 
