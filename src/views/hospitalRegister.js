@@ -101,17 +101,7 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                   </Row>
                 </CardHeader>
                 <CardBody>
-                <Select
-              multi
-              clearable
-              create
-      onCreateNew={(item) => console.log('%c New item created ', 'background: #555; color: tomato', item)}
-              options={DATA}
-              onChange={(value)=>{
-                console.log(value);
-              }}
-             
-            />
+                
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
                       Hospital Details
@@ -271,6 +261,20 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                         </Col>
                       </Row>
                     </div>
+                    <hr className="my-4" />
+                    <h6 className="heading-small text-muted mb-4">Specialities</h6>
+                    <Col lg={6}>
+                    <Select
+              multi
+              clearable
+              create
+      onCreateNew={(item) => console.log('%c New item created ', 'background: #555; color: tomato', item)}
+              options={DATA}
+              onChange={(value)=>{
+                console.log(value);
+              }}
+             
+            /></Col>
                     <hr className="my-4" />
                     {/* Description */}
                     <h6 className="heading-small text-muted mb-4">About me</h6>
