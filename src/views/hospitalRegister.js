@@ -43,6 +43,7 @@ const submit=()=>{
     })
   }).then( (err) => {
     if(err){
+      console.log("Eroor caught!!");
       console.log(err);
     }else{
       console.log("success!!");
