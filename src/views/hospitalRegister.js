@@ -18,7 +18,7 @@ import {
   import firebase from '../config/firebase-enquire';
   import {db} from "../config/firebase-enquire"
 import { EndOfLineState } from "typescript";
-  
+import Select from "react-dropdown-select";
 
   
   const hospitalRegister = () => {
@@ -31,7 +31,21 @@ import { EndOfLineState } from "typescript";
     const [country, setCountry] = react.useState();
     const [postalCode, setPostalCode] = react.useState();
     const [about, setAbout] = react.useState();
-
+    const DATA=[
+      {
+        value: "ea575dff5-4701-4a33-94e7-16ebde428484",
+        label: "Louie Eichmann",
+      },
+      {
+        value: "ea575d4ff-4701-4a33-94e7-16ebde428484",
+        label: "Louie Eichmann",
+      },
+      {
+        value: "ea5735d4ff-4701-4a33-94e7-16ebde428484",
+        label: "Louie Eichmann",
+      },
+      
+    ]
 
 
 const submit=()=>{
@@ -87,6 +101,17 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                   </Row>
                 </CardHeader>
                 <CardBody>
+                <Select
+              multi
+              clearable
+              create
+      onCreateNew={(item) => console.log('%c New item created ', 'background: #555; color: tomato', item)}
+              options={DATA}
+              onChange={(value)=>{
+                console.log(value);
+              }}
+             
+            />
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
                       Hospital Details
@@ -277,14 +302,6 @@ height:"100vh",position:"fixed",top:"0",left:"0"
                   </Form>
                 </CardBody>
               </Card>
-              {/* <Select
-              multi
-              options={DATA}
-              onChange={(value) => {
-                setValue(value);
-              }}
-             
-            /> */}
             </Col>
           </Row>
         </Container>
