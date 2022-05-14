@@ -23,7 +23,7 @@ import { Container, Navbar } from "reactstrap";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import UserNavbar from "components/Navbars/UserNavbar.js";
 // import UserFooter from "components/Footers/UserFooter.js";
-import routes from "userroutes.js";
+import userroutes from "userroutes.js";
 
 const User = (props) => {
   const mainContent = React.useRef(null);
@@ -35,8 +35,8 @@ const User = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
+  const getRoutes = (userroutes) => {
+    return userroutes.map((prop, key) => {
       if (prop.layout === "/user") {
         return (
           <Route
@@ -52,12 +52,12 @@ const User = (props) => {
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < routes.length; i++) {
+    for (let i = 0; i < userroutes.length; i++) {
       if (
-        props.location.pathname.indexOf(routes[i].layout + routes[i].path) !==
+        props.location.pathname.indexOf(userroutes[i].layout + userroutes[i].path) !==
         -1
       ) {
-        return routes[i].name;
+        return userroutes[i].name;
       }
     }
     return "Brand";
@@ -67,7 +67,7 @@ const User = (props) => {
     <>
       <Sidebar
         {...props}
-        routes={routes}
+        routes={userroutes}
         logo={{
           innerLink: "/user/index",
           imgSrc: require("../assets/img/brand/argon-react.png").default,
@@ -77,7 +77,7 @@ const User = (props) => {
       <div className="main-content" ref={mainContent}>
       <UserNavbar/>
         <Switch>
-          {getRoutes(routes)}
+          {getRoutes(userroutes)}
           <Redirect from="*" to="/user/index" />
         </Switch>
         <Container fluid>
