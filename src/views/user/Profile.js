@@ -18,111 +18,114 @@
 
 // reactstrap components
 import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col,
-  } from "reactstrap";
-  // core components
-  import UserHeader from "components/Headers/UserHeader.js";
-  // import React from "react";
-  import react,{useState,useEffect, Component} from "react";
-  import firebase from '../../config/firebase-enquire'
-  import Link from "react-router-dom/Link";
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  Container,
+  Row,
+  Col,
+} from "reactstrap";
+// core components
+import UserHeader from "components/Headers/UserHeader.js";
+// import React from "react";
+import react, { useState, useEffect, Component } from "react";
+import firebase from '../../config/firebase-enquire'
+import Link from "react-router-dom/Link";
 
 
 
-  export default class Profile extends Component {
-	constructor(props){
-		super(props);
-		this.state={
-           userData:{},
-		}
-
-
-	}
-
-	
-  
-    componentDidMount() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          firebase
-            .database()
-            .ref("users/" + user.uid)
-            .once("value")
-            .then((snapshot) => {
-              var data = snapshot.val();
-              console.log(data);
-              this.setState({ userData: data });
-            })
-            .then(() => { 
-              document.getElementById("userHeaderNameId").innerHTML =
-                "Hello " + this.state.userData.username;
-            });
-        } else {
-          window.location.href = "/";
-        }
-      });
+export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {},
     }
-    
-    // useEffect(() => {
-    // // firebase.auth().onAuthStateChanged((user) => {
-    //    // if (user) {
-    //       firebase
-    //         .database()
-    //         .ref("users/" + 'user1')
-    //         .once("value")
-    //         .then((snapshot) => {
-    //           var data = snapshot.val();
-    //           console.log(data.username);
-    //           setUserData(data);
-    //         })
-    //         .then(() => { 
-    //           document.getElementById("userHeaderNameId").innerHTML =userData.username;
-    //         });
-    //     // } else {
-    //     //   window.location.href = "/";
-    //     // }
-    //   // });
-    // }, [])
-    render(){
+
+
+  }
+
+
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase
+          .database()
+          .ref("users/" + user.uid)
+          .once("value")
+          .then((snapshot) => {
+            var data = snapshot.val();
+
+            console.log(data);
+            this.setState({ userData: data });
+          })
+          .then(() => {
+            document.getElementById("userHeaderNameId").innerHTML =
+              "Hello " + this.state.userData.username;
+          });
+      } else {
+        window.location.href = "/";
+      }
+    });
+  }
+
+  // useEffect(() => {
+  // // firebase.auth().onAuthStateChanged((user) => {
+  //    // if (user) {
+  //       firebase
+  //         .database()
+  //         .ref("users/" + 'user1')
+  //         .once("value")
+  //         .then((snapshot) => {
+  //           var data = snapshot.val();
+  //           console.log(data.username);
+  //           setUserData(data);
+  //         })
+  //         .then(() => { 
+  //           document.getElementById("userHeaderNameId").innerHTML =userData.username;
+  //         });
+  //     // } else {
+  //     //   window.location.href = "/";
+  //     // }
+  //   // });
+  // }, [])
+  render() {
     return (
       <>
         <UserHeader userData={this.state.userData} />
         {/* Page content */}
+        {this.state.userData && 
         <Container className="mt--7" fluid>
           <Row>
-             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+            <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
+                        {this.state.userData && <img
                           alt="..."
                           className="rounded-circle"
+
                           src={this.state.userData.profilepic}
                           height='100'
                           width='100'
-                          
-                        />
+
+                        />}
                       </a>
                     </div>
                   </Col>
                 </Row>
-             
+
                 <CardBody className="mt-5 pt-5 pt-md-4">
-                 
+
                   <div className="text-center">
                     <h3>
-                    {this.state.userData.username}
+                      {this.state.userData.username}
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
@@ -137,14 +140,14 @@ import {
                       University of Computer Science
                     </div> */}
                     <hr className="my-4" />
-                    <a  style={{color:"#fff"}} href="/user/UserEditProfile">
-                    <Button
-                      color="info"
-                     
+                    <a style={{ color: "#fff" }} href="/user/UserEditProfile">
+                      <Button
+                        color="info"
 
-                    > Edit profile
-                    </Button></a>
-                  
+
+                      > Edit profile
+                      </Button></a>
+
                   </div>
                 </CardBody>
               </Card>
@@ -181,15 +184,15 @@ import {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                             Name
+                              Name
                             </label>
-                          <Input disabled
-                            className="form-control-alternative"
-                            defaultValue={this.state.userData.username}
-                            id="input-username"
-                            placeholder={this.state.userData.username}
-                            type="text"
-                          />
+                            <Input disabled
+                              className="form-control-alternative"
+                              defaultValue={this.state.userData.username}
+                              id="input-username"
+                              placeholder={this.state.userData.username}
+                              type="text"
+                            />
                           </FormGroup>
                         </Col>
                         <Col lg="6">
@@ -336,7 +339,7 @@ import {
                           rows="4"
                           defaultValue={this.state.userData.about}
                           type="textarea"
-                         
+
                         />
                       </FormGroup>
                     </div>
@@ -345,10 +348,11 @@ import {
               </Card>
             </Col>
           </Row>
-        </Container>
+        </Container>}
+
+        
       </>
     );
-                    }
-  };
-  
-  
+  }
+};
+
