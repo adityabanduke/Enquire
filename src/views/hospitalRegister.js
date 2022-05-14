@@ -19,9 +19,8 @@ import firebase from '../config/firebase-enquire';
 import { db } from "../config/firebase-enquire"
 import { EndOfLineState } from "typescript";
 import Select from "react-dropdown-select";
-
-import { doc, setDoc, Timestamp } from "firebase/firestore";
 const hospitalRegister = () => {
+
   const [userData, setUserData] = react.useState({});
   const [name, setName] = react.useState();
   const [email, setEmail] = react.useState();
@@ -52,7 +51,7 @@ const hospitalRegister = () => {
   ]
 
 
-  const submit = async () => {
+  const submit = () => {
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
       var user = userCredential.user;
@@ -64,8 +63,8 @@ const hospitalRegister = () => {
         console.log(err);
       } else {
         console.log("success!!");
+        window.location.href ='/';
       }
-
     })
 
   }
