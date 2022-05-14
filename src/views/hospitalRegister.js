@@ -19,9 +19,10 @@ import firebase from '../config/firebase-enquire';
 import { db } from "../config/firebase-enquire";
 import { EndOfLineState } from "typescript";
 import Select from "react-dropdown-select";
-
 import { doc, setDoc, Timestamp } from "firebase/firestore";
+
 const hospitalRegister = () => {
+
   const [userData, setUserData] = react.useState({});
   const [name, setName] = react.useState();
   const [email, setEmail] = react.useState();
@@ -61,11 +62,12 @@ const hospitalRegister = () => {
       })
     }).then((err) => {
       if (err) {
+        console.log('first');
         console.log(err);
       } else {
         console.log("success!!");
+        
       }
-
     })
 
   }
