@@ -129,7 +129,7 @@ export default class Profile extends Component {
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      {this.state.userData.Address}
+                      {this.state.userData.address}
                     </div>
                     {/* <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
@@ -255,7 +255,23 @@ export default class Profile extends Component {
                       Contact information
                     </h6>
                     <div className="pl-lg-4">
-                      <Row>
+                      <Row> <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-city"
+                            >
+                              Contact Number
+                            </label>
+                            <Input disabled
+                              className="form-control-alternative"
+                              defaultValue={this.state.userData.contact}
+                              id="input-contact"
+                              placeholder={this.state.userData.contact}
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
                         <Col md="12">
                           <FormGroup>
                             <label
@@ -266,9 +282,9 @@ export default class Profile extends Component {
                             </label>
                             <Input disabled
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.Address}
+                              defaultValue={this.state.userData.address}
                               id="input-address"
-                              placeholder={this.state.userData.Address}
+                              placeholder={this.state.userData.address}
                               type="text"
                             />
                           </FormGroup>
@@ -298,13 +314,13 @@ export default class Profile extends Component {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Country
+                              State
                             </label>
                             <Input disabled
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.country}
+                              defaultValue={this.state.userData.state}
                               id="input-country"
-                              placeholder={this.state.userData.country}
+                              placeholder={this.state.userData.state}
                               type="text"
                             />
                           </FormGroup>
@@ -329,20 +345,7 @@ export default class Profile extends Component {
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>About Me</label>
-                        <Input disabled
-                          className="form-control-alternative"
-                          placeholder={this.state.userData.about}
-                          rows="4"
-                          defaultValue={this.state.userData.about}
-                          type="textarea"
-
-                        />
-                      </FormGroup>
-                    </div>
+                  
                   </Form>
                 </CardBody>
               </Card>

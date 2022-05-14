@@ -33,6 +33,8 @@ var userroutes = [
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/user",
+    class: "",
+
   },
   {
     path: "/Profile",
@@ -40,14 +42,18 @@ var userroutes = [
     icon: "ni ni-tv-2 text-primary",
     component: Profile,
     layout: "/user",
+    class: "",
+
   },
   {
     path: "/UserEditProfile",
-    name: "UserEditProfile",
+    name: "userEp",
     icon: "ni ni-tv-2 text-primary",
     component: UserEditProfile,
     layout: "/user",
-    className:'d-none',
+    invisible: true,
+
+    
   },
 
 ];
