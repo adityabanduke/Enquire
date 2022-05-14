@@ -18,6 +18,8 @@
  import Index from "views/user/dashboard.js";
 
  import Profile from "views/user/Profile.js";
+ import UserEditProfile from "views/user/UserEditProfile.js";
+
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 // import Login from "views/examples/Login.js";
@@ -31,6 +33,8 @@ var userroutes = [
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/user",
+    class: "",
+
   },
   {
     path: "/Profile",
@@ -38,6 +42,18 @@ var userroutes = [
     icon: "ni ni-tv-2 text-primary",
     component: Profile,
     layout: "/user",
+    class: "",
+
+  },
+  {
+    path: "/UserEditProfile",
+    name: "userEp",
+    icon: "ni ni-tv-2 text-primary",
+    component: UserEditProfile,
+    layout: "/user",
+    invisible: true,
+
+    
   },
 
 ];

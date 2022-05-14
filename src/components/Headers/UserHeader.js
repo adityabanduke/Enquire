@@ -18,7 +18,6 @@
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-import Link from "react-router-dom/Link";
 const UserHeader = ({userData,bool}) => {
   return (
     <>
@@ -41,21 +40,7 @@ const UserHeader = ({userData,bool}) => {
 {userData?<p className="text-white mt-0 mb-5">
               {userData.about}
             </p>:null}
-              {!bool ?<Link to="/admin/edit-profile">
-              <Button
-                color="info"
-                // href="/admin/editProfile"
-                // onClick={(e) => e.preventDefault()}
-              >
-                Edit profile
-              </Button></Link>:              
-              <Button
-                color="info"
-                // href="/admin/editProfile"
-                // onClick={(e) => e.preventDefault()}
-              >
-                Save Changes
-              </Button>}
+             
             </Col>
           </Row>
         </Container>

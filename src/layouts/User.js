@@ -18,11 +18,11 @@
 import React from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
-import { Container } from "reactstrap";
+import { Container, Navbar } from "reactstrap";
 // core compone
 import Sidebar from "components/Sidebar/Sidebar.js";
 import UserNavbar from "components/Navbars/UserNavbar.js";
-import UserFooter from "components/Footers/UserFooter.js";
+// import UserFooter from "components/Footers/UserFooter.js";
 import routes from "userroutes.js";
 
 const User = (props) => {
@@ -75,13 +75,12 @@ const User = (props) => {
         }}
       />
       <div className="main-content" ref={mainContent}>
-       
+      <UserNavbar/>
         <Switch>
           {getRoutes(routes)}
           <Redirect from="*" to="/user/index" />
         </Switch>
         <Container fluid>
-          <UserFooter />
         </Container>
       </div>
     </>

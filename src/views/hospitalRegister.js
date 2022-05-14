@@ -16,9 +16,11 @@ import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
 import react, { useState, useEffect } from "react";
 import firebase from '../config/firebase-enquire';
-import { db } from "../config/firebase-enquire"
+import { db } from "../config/firebase-enquire";
 import { EndOfLineState } from "typescript";
 import Select from "react-dropdown-select";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+
 const hospitalRegister = () => {
 
   const [userData, setUserData] = react.useState({});
@@ -60,10 +62,12 @@ const hospitalRegister = () => {
       })
     }).then((err) => {
       if (err) {
+        console.log('first');
         console.log(err);
       } else {
         console.log("success!!");
         window.location.href ='/';
+        
       }
     })
 
