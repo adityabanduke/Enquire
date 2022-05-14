@@ -33,7 +33,8 @@ import {
 import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
 import react,{useState,useEffect} from "react";
-import firebase from '../../config/firebase-enquire'
+import firebase from '../../config/firebase-enquire';
+import Link from "react-router-dom/Link";
 
 const Profile = () => {
   // constructor(props) {
@@ -190,15 +191,15 @@ const Profile = () => {
                   <Col xs="8">
                     <h3 className="mb-0">My account</h3>
                   </Col>
+                  
                   <Col className="text-right" xs="4">
-                    {/* <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
+                  <Link to="/admin/edit-profile"><Button 
+                      color="info"
+                    // href="/admin/editProfile"
+                    // onClick={(e) => e.preventDefault()}
                     >
-                      Settings
-                    </Button> */}
+                      Edit Profile
+                    </Button></Link>
                   </Col>
                 </Row>
               </CardHeader>
