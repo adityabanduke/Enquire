@@ -26,6 +26,8 @@ import {
     Form,
     Input,
     Container,
+    Modal,
+
     Row,
     Col,
   } from "reactstrap";
@@ -34,13 +36,48 @@ import {
   // import React from "react";
   import react,{useState,useEffect, Component} from "react";
   import firebase from '../../config/firebase-enquire'
-  
+  import getCroppedImg from "utils/cropImage";
+import Cropper from "react-easy-crop";
+
   export default class EditProfile extends Component {
 	constructor(props){
 		super(props);
 		this.state={
            userData:{},
+           name: "",
+           contact: "",
+city:'',
+state:'',
+          address:"",
+           sameP: false,
+          
+           profilepic: '',
+           newprofilepic: null,
+           mentorModal: false,
+           submitModal: false,
+           Modal: false,
+           profile: '',
+           croppedArea: null,
+           croppedAreaPixels: null,
+           crop: {
+               x: 0,
+               y: 0,
+               width: 250,
+               height: 250,
+           },
+           zoom: 1,
+
+
 		}
+
+    this.setCropFunction = this.setCropFunction.bind(this);
+    this.setZoomFunction = this.setZoomFunction.bind(this);
+    this.onCropCompleteFunction = this.onCropCompleteFunction.bind(this);
+    this.getNewImg = this.getNewImg.bind(this);
+    this.uploadNewProfilePic = this.uploadNewProfilePic.bind(this);
+            this.submitmodal = this.submitmodal.bind(this);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
 
 
 	}
@@ -48,32 +85,237 @@ import {
 	
   
     componentDidMount() {
-    //   firebase.auth().onAuthStateChanged((user) => {
-    //     if (user) {
-    //       firebase
-    //         .database()
-    //         .ref("users/" + user.uid)
-    //         .once("value")
-    //         .then((snapshot) => {
-    //           var data = snapshot.val();
-    //           console.log(data);
-    //           this.setState({ userData: data });
-    //         })
-    //         .then(() => { 
-    //           document.getElementById("userHeaderNameId").innerHTML =
-    //             "Hello " + this.state.userData.username;
-    //         });
-    //     } else {
-    //       window.location.href = "/";
-    //     }
-    //   });
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          firebase
+            .database()
+            .ref("users/" + user.uid)
+            .once("value")
+            .then((snapshot) => {
+              var data = snapshot.val();
+              console.log(data);
+              this.setState({ userData: data });
+            })
+            .then(() => { 
+              document.getElementById("userHeaderNameId").innerHTML =
+                "Hello " + this.state.userData.username;
+            });
+        } else {
+          window.location.href = "/";
+        }
+      });
     }
+
+    
+    handleName = (e) => {
+      this.setState({ name: e.target.value });
+  };
+  handleContact = (e) => {
+      this.setState({ contact: e.target.value });
+  };
+
+ 
+
+  handleCity = (e) => {
+      this.setState({ city: e.target.value });
+  };
+
+  handleState = (e) => {
+      this.setState({ state: e.target.value });
+  };
+
+
+
+  handleAddress = (e) => {
+      this.setState({ address: e.target.value });
+  };
+ 
+  handlePostalcode = (e) => {
+      this.setState({ postalCode: e.target.value });
+  };
+ 
+
+ 
+
+  getNewImg = (e) => {
+      this.setState({
+          newprofilepic: URL.createObjectURL(e.target.files[0]),
+      });
+              this.setState({mentorModal: true});
+
+  };
+
+  setCropFunction = (newcrop) => {
+      this.setState({
+          crop: newcrop,
+      });
+  };
+  setZoomFunction = (newzoom) => {
+      this.setState({
+          zoom: newzoom,
+      });
+  };
+  onCropCompleteFunction = (croppedArea, croppedAreaPixels) => {
+      this.setState({
+          croppedArea: croppedArea,
+          croppedAreaPixels: croppedAreaPixels,
+      });
+   
+  };
+  uploadNewProfilePic = () => {
+      getCroppedImg(
+          this.state.newprofilepic,
+          this.state.croppedAreaPixels,
+          0
+      ).then((result) => {
+          this.setState({
+              newprofilepic: null,
+              profilepic: result,
+          })
+      }).then(() => {
+          console.log(this.state.profilepic);
+      })
+  };
+
+
+  toggleMentor = () => {
+      if (this.state.mentorModal) {
+          console.log("Modal Close");
+          this.setState({
+              mentorModal: false,
+          });
+      } else {
+          console.log("Modal Open");
+          this.setState({
+              mentorModal: true,
+              
+          });
+      }
+  };
+
+  // openModal = () =>{
+      
+  //     this.setState({mentorModal: true});
+  // }
+
+submitmodal = ()=>{
+    this.setState({submitModal: true})
+}
+
+  handleSubmit = (e) => {
+      e.preventDefault();
+
+      firebase.auth().onAuthStateChanged((user) => {
+          firebase.database().ref(`users/${user.uid}`).once("value")
+              .then((snap) => {
+
+                  if (this.state.profilepic !== this.state.profile) {
+                      firebase
+                          .storage()
+                          .ref("users/" + user.uid + "/profile.jpeg")
+                          .putString(this.state.profilepic, "data_url")
+                          .then((snapshot) => {
+
+                              firebase
+                                  .storage()
+                                  .ref("users")
+                                  .child(user.uid + "/profile.jpeg")
+                                  .getDownloadURL()
+                                  .then((urls) => {
+
+                                      const db = firebase.database();
+                                      db.ref("users/" + user.uid)
+                                          .update({
+                                              profilepic: urls,
+                                          })
+
+                                  })
+                          })
+                  }
+                  
+
+                  const db = firebase.database();
+                  db.ref("users/" + user.uid)
+                      .update({
+                          username: this.state.name,
+
+                          contact: this.state.contact,
+
+                          address: this.state.address,
+                          city: this.state.city,
+                          state: this.state.state,
+                          postalCode: this.state.postalCode,
+
+
+                      })
+                     
+
+
+              }) .then(() => {
+                          //   alert("Mentor Updated Successfully!");
+                          // window.location.href = "/mentor/Profile";
+                          this.submitmodal();
+                      });
+      })
+
+  };
+
+
+
     
    
     render(){
     return (
-      <>
-        <UserHeader userData={this.state.userData} />
+      <>   {this.state.newprofilepic ? (
+        <>
+            <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
+                <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent:"center" , position:'relative'}}>
+                    {/* <CardHeader> */}
+                    <Button size="lg" onClick={this.toggleMentor} style={{ position: "absolute", top: "0", left: "0", margin: "5px" }}>
+                        {/* <FontAwesomeIcon
+                            icon={faWindowClose}
+                            style={{
+                                color: "rgb(185, 185, 185)",
+                                marginLeft: "auto",
+                                cursor: "pointer",
+                                fontSize: "20px",
+                                zIndex:'100',
+                            }}
+                        /> */}
+                    </Button>
+                    {/* </CardHeader> */}
+                    <div className="imgCropperParentDiv">
+                        <Cropper
+                            className="cropperClass"
+                            image={this.state.newprofilepic}
+                            crop={this.state.crop}
+                            zoom={this.state.zoom}
+                            aspect={1 / 1}
+                            onCropChange={this.setCropFunction}
+                            onCropComplete={this.onCropCompleteFunction}
+                            onZoomChange={this.setZoomFunction}
+                        />
+                       
+                    </div>
+<Button color="primary" className="cancel" onClick={this.uploadNewProfilePic}>
+                            Upload
+                        </Button>
+                    {/* </CardFooter> */}
+                </Card>
+            </Modal>
+        </>
+    ) : null}
+
+
+    <Modal isOpen={this.state.submitModal} toggle={this.toggleSubmit}>
+                <Card  style={{ width: '100%', height: "30vh", alignItems: "center",justifyContent:'center', position:'relative'}}>
+                 
+                 <h2>Profile Succesfully Updated</h2>
+                 
+                 <a href="/user/Profile"><Button color="info">Return To Profile</Button></a>
+                 </Card>
+                 </Modal>
+        <UserHeader userData={this.state.userData}  />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -188,7 +430,7 @@ import {
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
-                      Hospital Details
+                      Edit Details
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -198,30 +440,35 @@ import {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Hospital Name
+                               Name
                             </label>
-                          <Input disabled
+                          <Input
                             className="form-control-alternative"
                             defaultValue={this.state.userData.username}
                             id="input-username"
+                            onChange={this.handleName}
+
                             placeholder={this.state.userData.username}
                             type="text"
                           />
                           </FormGroup>
                         </Col>
+                      
                         <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Email address
+                              Contact No.
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder={this.state.userData.email}
+                              placeholder={this.state.userData.contact}
                               type="email"
+                              onChange={this.handleContact}
+
                             />
                           </FormGroup>
                         </Col>
@@ -235,7 +482,7 @@ import {
                             >
                               First name
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
                               defaultValue="Lucky"
                               id="input-first-name"
@@ -252,7 +499,7 @@ import {
                             >
                               Last name
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
                               defaultValue="Jesse"
                               id="input-last-name"
@@ -278,12 +525,14 @@ import {
                             >
                               Address
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.Address}
+                              defaultValue={this.state.userData.address}
                               id="input-address"
-                              placeholder={this.state.userData.Address}
+                              placeholder={this.state.userData.address}
                               type="text"
+                              onChange={this.handleAddress}
+
                             />
                           </FormGroup>
                         </Col>
@@ -297,12 +546,14 @@ import {
                             >
                               City
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
                               defaultValue={this.state.userData.city}
                               id="input-city"
                               placeholder={this.state.userData.city}
                               type="text"
+                              onChange={this.handleCity}
+
                             />
                           </FormGroup>
                         </Col>
@@ -312,14 +563,16 @@ import {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Country
+                              State
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.country}
-                              id="input-country"
-                              placeholder={this.state.userData.country}
+                              defaultValue={this.state.userData.state}
+                              id="input-state"
+                              placeholder={this.state.userData.state}
                               type="text"
+                              onChange={this.handleState}
+
                             />
                           </FormGroup>
                         </Col>
@@ -331,11 +584,13 @@ import {
                             >
                               Postal code
                             </label>
-                            <Input disabled
+                            <Input
                               className="form-control-alternative"
                               id="input-postal-code"
                               placeholder={this.state.userData.postalCode}
                               type="number"
+                              onChange={this.handlePostalcode}
+
                             />
                           </FormGroup>
                         </Col>
@@ -343,22 +598,15 @@ import {
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>About Me</label>
-                        <Input disabled
-                          className="form-control-alternative"
-                          placeholder={this.state.userData.about}
-                          rows="4"
-                          defaultValue={this.state.userData.about}
-                          type="textarea"
-                         
-                        />
-                      </FormGroup>
-                    </div>
+                  
                   </Form>
                 </CardBody>
+                <Button
+                      color="info"
+                     onClick={this.handleSubmit}
+
+                    > Edit profile
+                    </Button>
               </Card>
             </Col>
           </Row>
