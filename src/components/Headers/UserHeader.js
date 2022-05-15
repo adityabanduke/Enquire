@@ -18,8 +18,7 @@
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-import Link from "react-router-dom/Link";
-const UserHeader = ({userData,bool}) => {
+const UserHeader = ({adminData,bool}) => {
   return (
     <>
       <div
@@ -37,25 +36,11 @@ const UserHeader = ({userData,bool}) => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="8" md="10">
-              {userData? <h1 className="display-2 text-white">{userData.username}</h1>:null}
-{userData?<p className="text-white mt-0 mb-5">
-              {userData.about}
+              {adminData? <h1 className="display-2 text-white">{adminData.name}</h1>:null}
+{adminData?<p className="text-white mt-0 mb-5">
+              {adminData.about}
             </p>:null}
-              {!bool ?<Link to="/admin/edit-profile">
-              <Button
-                color="info"
-                // href="/admin/editProfile"
-                // onClick={(e) => e.preventDefault()}
-              >
-                Edit profile
-              </Button></Link>:              
-              <Button
-                color="info"
-                // href="/admin/editProfile"
-                // onClick={(e) => e.preventDefault()}
-              >
-                Save Changes
-              </Button>}
+             
             </Col>
           </Row>
         </Container>

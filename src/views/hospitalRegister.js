@@ -16,13 +16,15 @@ import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
 import react, { useState, useEffect } from "react";
 import firebase from '../config/firebase-enquire';
-import { db } from "../config/firebase-enquire"
+import { db } from "../config/firebase-enquire";
 import { EndOfLineState } from "typescript";
 import Select from "react-dropdown-select";
-
 import { doc, setDoc, Timestamp } from "firebase/firestore";
+
 const hospitalRegister = () => {
+
   const [userData, setUserData] = react.useState({});
+  const [uniTags, setUniTags] = react.useState([]);
   const [name, setName] = react.useState();
   const [email, setEmail] = react.useState();
   const [password, setPassword] = react.useState();
@@ -32,42 +34,72 @@ const hospitalRegister = () => {
   const [postalCode, setPostalCode] = react.useState();
   const [about, setAbout] = react.useState();
   const [tags, setTags] = react.useState([]);
-  const DATA = [
-    {
-      value: "Ekansh",
-      label: "Ekansh",
-    },
-    {
-      value: "Ekansh ki gand",
-      label: "Ekansh ki gand",
-    },
-    {
-      value: "Ekansh ki chut",
-      label: "Ekansh ki chut",
-    },
-    {
-      value: "Ekansh ka nunnu",
-      label: "Ekansh ka nunnu",
-    },
-  ]
+  const [DATA, setDATA] = react.useState([]);
+  // const DATA = [
+  //   {
+  //     value: "Ekansh",
+  //     label: "Ekansh",
+  //   },
+  //   {
+  //     value: "Ekansh ki gand",
+  //     label: "Ekansh ki gand",
+  //   },
+  //   {
+  //     value: "Ekansh ki chut",
+  //     label: "Ekansh ki chut",
+  //   },
+  //   {
+  //     value: "Ekansh ka nunnu",
+  //     label: "Ekansh ka nunnu",
+  //   },
+  // ]
+  react.useEffect(() => {
+    firebase
+      .database()
+      .ref("search_tags/")
+      .once("value")
+      .then((snapshot) => {
+        var data = snapshot.val();
+        console.log(data);
+        setUniTags(data);
+        for (let i = 0; i < data.length; i++) {
+          DATA.push({value:data[i],label:data[i]});
+          console.log(DATA);
+        }
+      })
 
+  }, [])
 
-  const submit = async () => {
+  const submit = () => {
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
       var user = userCredential.user;
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password,tags
+        name, email, address, city, country, postalCode, about, password, tags
       })
     }).then((err) => {
       if (err) {
+        console.log('first');
         console.log(err);
       } else {
         console.log("success!!");
+        window.location.href = '/';
+
+      }
+    })
+    if (uniTags.length) {
+      for (let i = 0; i < tags.length; i++) {
+        if (!uniTags.includes(tags[i])) {
+          uniTags.push(tags[i]);
+        }
       }
 
-    })
-
+    }
+    firebase
+    .database()
+    .ref("search_tags")
+    .set(uniTags)
+    
   }
   return (
     <>
@@ -276,9 +308,9 @@ const hospitalRegister = () => {
                       onCreateNew={(item) => console.log('%c New item created ', 'background: #555; color: tomato', item)}
                       options={DATA}
                       onChange={(value) => {
-                        const array=value.map(item=>item.value);
+                        const array = value.map(item => item.value);
                         setTags(array);
-                        
+
                       }}
 
                     /></Col>

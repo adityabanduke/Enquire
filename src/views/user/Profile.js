@@ -1,191 +1,140 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Row,
-    Col,
-  } from "reactstrap";
-  // core components
-  import UserHeader from "components/Headers/UserHeader.js";
-  // import React from "react";
-  import react,{useState,useEffect, Component} from "react";
-  import firebase from '../../config/firebase-enquire'
-  
-  export default class Profile extends Component {
-	constructor(props){
-		super(props);
-		this.state={
-           userData:{},
-		}
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  Container,
+  Row,
+  Col,
+} from "reactstrap";
+// core components
+import UserHeader from "components/Headers/UserHeader.js";
+// import React from "react";
+import react, { useState, useEffect, Component } from "react";
+import firebase from '../../config/firebase-enquire'
+import Link from "react-router-dom/Link";
 
 
-	}
 
-	
-  
-    componentDidMount() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          firebase
-            .database()
-            .ref("users/" + user.uid)
-            .once("value")
-            .then((snapshot) => {
-              var data = snapshot.val();
-              console.log(data);
-              this.setState({ userData: data });
-            })
-            .then(() => { 
-              document.getElementById("userHeaderNameId").innerHTML =
-                "Hello " + this.state.userData.username;
-            });
-        } else {
-          window.location.href = "/";
-        }
-      });
+export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {},
     }
-    
-    // useEffect(() => {
-    // // firebase.auth().onAuthStateChanged((user) => {
-    //    // if (user) {
-    //       firebase
-    //         .database()
-    //         .ref("users/" + 'user1')
-    //         .once("value")
-    //         .then((snapshot) => {
-    //           var data = snapshot.val();
-    //           console.log(data.username);
-    //           setUserData(data);
-    //         })
-    //         .then(() => { 
-    //           document.getElementById("userHeaderNameId").innerHTML =userData.username;
-    //         });
-    //     // } else {
-    //     //   window.location.href = "/";
-    //     // }
-    //   // });
-    // }, [])
-    render(){
+
+
+  }
+
+
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase
+          .database()
+          .ref("users/" + user.uid)
+          .once("value")
+          .then((snapshot) => {
+            var data = snapshot.val();
+
+            console.log(data);
+            this.setState({ userData: data });
+          })
+          .then(() => {
+            document.getElementById("userHeaderNameId").innerHTML =
+              "Hello " + this.state.userData.username;
+          });
+      } else {
+        window.location.href = "/";
+      }
+    });
+  }
+
+  // useEffect(() => {
+  // // firebase.auth().onAuthStateChanged((user) => {
+  //    // if (user) {
+  //       firebase
+  //         .database()
+  //         .ref("users/" + 'user1')
+  //         .once("value")
+  //         .then((snapshot) => {
+  //           var data = snapshot.val();
+  //           console.log(data.username);
+  //           setUserData(data);
+  //         })
+  //         .then(() => { 
+  //           document.getElementById("userHeaderNameId").innerHTML =userData.username;
+  //         });
+  //     // } else {
+  //     //   window.location.href = "/";
+  //     // }
+  //   // });
+  // }, [])
+  render() {
     return (
       <>
         <UserHeader userData={this.state.userData} />
         {/* Page content */}
+        {this.state.userData && 
         <Container className="mt--7" fluid>
           <Row>
-             {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+            <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
+                        {this.state.userData && <img
                           alt="..."
                           className="rounded-circle"
-                          src={
-                            require("../../assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
+
+                          src={this.state.userData.profilepic}
+                          height='100'
+                          width='100'
+
+                        />}
                       </a>
                     </div>
                   </Col>
                 </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="pt-0 pt-md-4">
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Row>
+
+                <CardBody className="mt-5 pt-5 pt-md-4">
+
                   <div className="text-center">
                     <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
+                      {this.state.userData.username}
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      {this.state.userData.address}
                     </div>
-                    <div className="h5 mt-4">
+                    {/* <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
                       Solution Manager - Creative Tim Officer
                     </div>
                     <div>
                       <i className="ni education_hat mr-2" />
                       University of Computer Science
-                    </div>
+                    </div> */}
                     <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      Show more
-                    </a>
+                    <a style={{ color: "#fff" }} href="/user/UserEditProfile">
+                      <Button
+                        color="info"
+
+
+                      > Edit profile
+                      </Button></a>
+
                   </div>
                 </CardBody>
               </Card>
-            </Col> */}
-            <Col className="order-xl-1" xl="12">
+            </Col>
+            <Col className="order-xl-1" xl="8">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -207,7 +156,7 @@ import {
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
-                      Hospital Details
+                      Your Profile
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -217,15 +166,15 @@ import {
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Hospital Name
+                              Name
                             </label>
-                          <Input disabled
-                            className="form-control-alternative"
-                            defaultValue={this.state.userData.username}
-                            id="input-username"
-                            placeholder={this.state.userData.username}
-                            type="text"
-                          />
+                            <Input disabled
+                              className="form-control-alternative"
+                              defaultValue={this.state.userData.username}
+                              id="input-username"
+                              placeholder={this.state.userData.username}
+                              type="text"
+                            />
                           </FormGroup>
                         </Col>
                         <Col lg="6">
@@ -288,7 +237,23 @@ import {
                       Contact information
                     </h6>
                     <div className="pl-lg-4">
-                      <Row>
+                      <Row> <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-city"
+                            >
+                              Contact Number
+                            </label>
+                            <Input disabled
+                              className="form-control-alternative"
+                              defaultValue={this.state.userData.contact}
+                              id="input-contact"
+                              placeholder={this.state.userData.contact}
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
                         <Col md="12">
                           <FormGroup>
                             <label
@@ -299,9 +264,9 @@ import {
                             </label>
                             <Input disabled
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.Address}
+                              defaultValue={this.state.userData.address}
                               id="input-address"
-                              placeholder={this.state.userData.Address}
+                              placeholder={this.state.userData.address}
                               type="text"
                             />
                           </FormGroup>
@@ -331,13 +296,13 @@ import {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Country
+                              State
                             </label>
                             <Input disabled
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.country}
+                              defaultValue={this.state.userData.state}
                               id="input-country"
-                              placeholder={this.state.userData.country}
+                              placeholder={this.state.userData.state}
                               type="text"
                             />
                           </FormGroup>
@@ -362,29 +327,17 @@ import {
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>About Me</label>
-                        <Input disabled
-                          className="form-control-alternative"
-                          placeholder={this.state.userData.about}
-                          rows="4"
-                          defaultValue={this.state.userData.about}
-                          type="textarea"
-                         
-                        />
-                      </FormGroup>
-                    </div>
+                  
                   </Form>
                 </CardBody>
               </Card>
             </Col>
           </Row>
-        </Container>
+        </Container>}
+
+        
       </>
     );
-                    }
-  };
-  
-  
+  }
+};
+
