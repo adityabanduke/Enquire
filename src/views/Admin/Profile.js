@@ -34,6 +34,7 @@ import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
 import react,{useState,useEffect} from "react";
 import firebase from '../../config/firebase-enquire';
+import { Chip } from "@material-ui/core";
 import Link from "react-router-dom/Link";
 import {db} from "../../config/firebase-enquire"
 const Profile = () => {
@@ -372,7 +373,19 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
+                  <hr className="my-4" />
+                  {/* Description */}
+                  <h6 className="heading-small text-muted mb-4">Specialities</h6>
                   
+                  <div className="pl-lg-4 ">
+                    <Row>
+                    
+                    { userData.tags && userData.tags.map((tag)=>(
+                      
+                    <Chip className="ml-2" label={tag} color="primary" />
+                 ) )}
+                    </Row>
+                  </div>
                   <hr className="my-4" />
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">About me</h6>

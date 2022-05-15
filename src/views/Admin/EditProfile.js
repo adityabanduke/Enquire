@@ -35,6 +35,9 @@ import {
   import react,{useState,useEffect} from "react";
   import firebase from '../../config/firebase-enquire'
   import {db} from '../../config/firebase-enquire'
+  import Select from "react-dropdown-select";
+  import { Chip } from "@mui/material";
+
 // import { Preview } from "@mui/icons-material";
   const EditProfile = () => {
     // constructor(props) {
@@ -66,7 +69,14 @@ import {
     //     }
     //   });
     // }
+
     const [userData, setUserData] = useState({});
+    const [adminData, setAdminData] = useState({});
+    const [tags, setTags] = react.useState([]);
+    const [DATA, setDATA] = react.useState([]);
+    const [uniTags, setUniTags] = react.useState([]);
+    const [selectBool,setSelectBool]=react.useState(true);
+    
     const UpdateData= ()=>{
       firebase.auth().onAuthStateChanged((user) =>{
         if(user){
@@ -78,6 +88,18 @@ import {
           console.log(userData);
         }
       })
+      if (uniTags.length) {
+        for (let i = 0; i < tags.length; i++) {
+          if (!uniTags.includes(tags[i])) {
+            uniTags.push(tags[i]);
+          }
+        }
+  
+      }
+      firebase
+      .database()
+      .ref("search_tags")
+      .set(uniTags)
     }
     
     useEffect(() => {
@@ -108,7 +130,22 @@ import {
             var hospitalData = snapshot.data();
             console.log(hospitalData.name);
              setUserData(hospitalData);
+             setAdminData(hospitalData);
             // console.log(userData);
+          })
+
+          firebase
+          .database()
+          .ref("search_tags/")
+          .once("value")
+          .then((snapshot) => {
+            var data = snapshot.val();
+            console.log(data);
+            setUniTags(data);
+            for (let i = 0; i < data.length; i++) {
+              DATA.push({value:data[i],label:data[i]});
+              console.log(DATA);
+            }
           })
         }
       
@@ -394,6 +431,52 @@ import {
                         </Col>
                       </Row>
                     </div>
+                    <hr className="my-4" />
+                  {/* Description */}
+                  {/* Description */}
+                  <h6 className="heading-small text-muted mb-4">Specialities</h6>
+                  <div className="pl-lg-4 ">
+                     <Button 
+                    color="info"
+                  // href="/admin/editProfile"
+                  onClick={()=>{
+                    setSelectBool(false);
+                  }}
+                  style={{float:"right"}}
+                  >
+                    Add Tags
+                  </Button>
+                  
+                  <Row>
+                  
+
+                  
+                  { adminData.tags && adminData.tags.map((tag)=>(
+                    
+                  <Chip className="m-1" label={tag} color="primary" />
+                ) )}
+                                  
+                                
+                  </Row>
+
+                </div>
+                  {selectBool?null:
+                <Col lg={6}>
+                  <Select
+                    multi
+                    clearable
+                    create
+                    onCreateNew={(item) => console.log('%c New item created ', 'background: #555; color: tomato', item)}
+                    options={DATA}
+                    onChange={(value) => {
+                      const array = value.map(item => item.value);
+                      setTags(array);
+                      setUserData ({...userData,tags:array})
+
+                    }}
+
+                  /></Col>}
+         
                     
                     <hr className="my-4" />
                     {/* Description */}
@@ -401,6 +484,7 @@ import {
                     <div className="pl-lg-4">
                       <FormGroup>
                         <label>About Me</label>
+
                         <Input
                           className="form-control-alternative"
                           placeholder={userData.about}
