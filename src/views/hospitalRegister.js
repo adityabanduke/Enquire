@@ -34,6 +34,9 @@ const hospitalRegister = () => {
   const [postalCode, setPostalCode] = react.useState();
   const [about, setAbout] = react.useState();
   const [tags, setTags] = react.useState([]);
+  const [h_id, setid] = react.useState("");
+  const [users, setUsers] = react.useState([]);
+
   const [DATA, setDATA] = react.useState([]);
   // const DATA = [
   //   {
@@ -74,8 +77,9 @@ const hospitalRegister = () => {
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
       var user = userCredential.user;
+      setid(user.uid);
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags
+        name, email, address, city, country, postalCode, about, password, tags, h_id,users
       })
     }).then((err) => {
       if (err) {
@@ -83,7 +87,7 @@ const hospitalRegister = () => {
         console.log(err);
       } else {
         console.log("success!!");
-        window.location.href = '/';
+        // window.location.href = '/';
 
       }
     })
