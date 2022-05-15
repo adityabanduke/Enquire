@@ -34,7 +34,8 @@ import {
   // import React from "react";
   import react,{useState,useEffect} from "react";
   import firebase from '../../config/firebase-enquire'
-  
+  import {db} from '../../config/firebase-enquire'
+// import { Preview } from "@mui/icons-material";
   const EditProfile = () => {
     // constructor(props) {
     //   super(props);
@@ -66,26 +67,53 @@ import {
     //   });
     // }
     const [userData, setUserData] = useState({});
+    const UpdateData= ()=>{
+      firebase.auth().onAuthStateChanged((user) =>{
+        if(user){
+          db.collection('Admin').doc(user.uid).update(userData).then((err) => {
+            if(err){
+              console.log(err);
+            }
+          });
+          console.log(userData);
+        }
+      })
+    }
     
     useEffect(() => {
     // firebase.auth().onAuthStateChanged((user) => {
        // if (user) {
-          firebase
-            .database()
-            .ref("users/" + 'user1')
-            .once("value")
-            .then((snapshot) => {
-              var data = snapshot.val();
-              console.log(data.username);
-              setUserData(data);
-            })
-            .then(() => { 
-              document.getElementById("userHeaderNameId").innerHTML =userData.username;
-            });
+          // firebase
+          //   .database()
+          //   .ref("admin/" + 'vKPqIB1VeuamDNStKzhfHLu6s7O2')
+          //   .once("value")
+          //   .then((snapshot) => {
+          //     var data = snapshot.val();
+          //     console.log(data.username);
+          //     setUserData(data);
+          //   })
+          //   .then(() => { 
+          //     document.getElementById("userHeaderNameId").innerHTML =userData.username;
+          //   });
+
         // } else {
         //   window.location.href = "/";
         // }
       // });
+      firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+          console.log(user.uid);
+          db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
+            console.log(snapshot.data());
+            var hospitalData = snapshot.data();
+            console.log(hospitalData.name);
+             setUserData(hospitalData);
+            // console.log(userData);
+          })
+        }
+      
+      }
+      )
     }, []);
     
     return (
@@ -146,7 +174,7 @@ import {
                           <span className="heading">10</span>
                           <span className="description">Photos</span>
                         </div>
-                        <div>
+                        <div> 
                           <span className="heading">89</span>
                           <span className="description">Comments</span>
                         </div>
@@ -191,14 +219,13 @@ import {
                       <h3 className="mb-0">My account</h3>
                     </Col>
                     <Col className="text-right" xs="4">
-                      {/* <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={(e) => e.preventDefault()}
-                        size="sm"
-                      >
-                        Settings
-                      </Button> */}
+                    <Button 
+                      color="info"
+                    // href="/admin/editProfile"
+                    onClick={UpdateData}
+                    >
+                      Submit Changes
+                    </Button>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -219,10 +246,12 @@ import {
                             </label>
                           <Input
                             className="form-control-alternative"
-                            // defaultValue={userData.username}
+                            defaultValue={userData.name}
                             id="input-username"
-                            placeholder={userData.username}
+                            placeholder={userData.name}
                             type="text"
+
+                            onChange={e =>setUserData ({...userData,name:e.target.value})}
                           />
                           </FormGroup>
                         </Col>
@@ -237,8 +266,10 @@ import {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
+                              defaultValue={userData.email}
                               placeholder={userData.email}
                               type="email"
+                              onChange={e =>setUserData ({...userData,email:e.target.value})}
                             />
                           </FormGroup>
                         </Col>
@@ -297,10 +328,11 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={userData.Address}
+                              defaultValue={userData.address}
                               id="input-address"
-                              placeholder={userData.Address}
+                              placeholder={userData.address}
                               type="text"
+                              onChange={e =>setUserData ({...userData,address:e.target.value})}
                             />
                           </FormGroup>
                         </Col>
@@ -319,6 +351,7 @@ import {
                               defaultValue={userData.city}
                               id="input-city"
                               placeholder={userData.city}
+                              onChange={e =>setUserData ({...userData,city:e.target.value})}
                               type="text"
                             />
                           </FormGroup>
@@ -336,6 +369,7 @@ import {
                               defaultValue={userData.country}
                               id="input-country"
                               placeholder={userData.country}
+                              onChange={e =>setUserData ({...userData,country:e.target.value})}
                               type="text"
                             />
                           </FormGroup>
@@ -351,13 +385,16 @@ import {
                             <Input
                               className="form-control-alternative"
                               id="input-postal-code"
+                              defaultValue={userData.postalCode}
                               placeholder={userData.postalCode}
+                              onChange={e =>setUserData ({...userData,postalCode:e.target.value})}
                               type="number"
                             />
                           </FormGroup>
                         </Col>
                       </Row>
                     </div>
+                    
                     <hr className="my-4" />
                     {/* Description */}
                     <h6 className="heading-small text-muted mb-4">About me</h6>
@@ -369,6 +406,7 @@ import {
                           placeholder={userData.about}
                           rows="4"
                           defaultValue={userData.about}
+                          onChange={e =>setUserData ({...userData,about:e.target.value})}
                           type="textarea"
                          
                         />

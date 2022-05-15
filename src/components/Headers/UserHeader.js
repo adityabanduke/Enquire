@@ -36,7 +36,7 @@ const UserHeader = ({userData,bool}) => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="8" md="10">
-              {userData? <h1 className="display-2 text-white">{userData.username}</h1>:null}
+              {userData? <h1 className="display-2 text-white">{userData.name}</h1>:null}
 {userData?<p className="text-white mt-0 mb-5">
               {userData.about}
             </p>:null}
