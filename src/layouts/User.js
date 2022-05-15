@@ -78,7 +78,7 @@ const User = (props) => {
       <UserNavbar/>
         <Switch>
           {getRoutes(userroutes)}
-          <Redirect from="*" to="/user/index" />
+          <Redirect from="*" to="/user/dashboard" />
         </Switch>
         <Container fluid>
         </Container>
