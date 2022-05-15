@@ -35,7 +35,7 @@ import UserHeader from "components/Headers/UserHeader.js";
 import react,{useState,useEffect} from "react";
 import firebase from '../../config/firebase-enquire';
 import Link from "react-router-dom/Link";
-
+import {db} from "../../config/firebase-enquire"
 const Profile = () => {
   // constructor(props) {
   //   super(props);
@@ -71,23 +71,36 @@ const Profile = () => {
   useEffect(() => {
   // firebase.auth().onAuthStateChanged((user) => {
      // if (user) {
-        firebase
-          .database()
-          .ref("users/" + 'user1')
-          .once("value")
-          .then((snapshot) => {
-            var data = snapshot.val();
-            console.log(data.username);
-            setUserData(data);
-          })
-          .then(() => { 
-            document.getElementById("userHeaderNameId").innerHTML =userData.username;
-          });
+        // firebase
+        //   .database()
+        //   .ref("users/" + 'user1')
+        //   .once("value")
+        //   .then((snapshot) => {
+        //     var data = snapshot.val();
+        //     console.log(data.username);
+        //     setUserData(data);
+        //   })
+        //   .then(() => { 
+        //     document.getElementById("userHeaderNameId").innerHTML =userData.username;
+        //   });
       // } else {
       //   window.location.href = "/";
       // }
     // });
-  }, [])
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        console.log(user.uid);
+        db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
+          console.log(snapshot.data());
+          var hospitalData = snapshot.data();
+          console.log(hospitalData.name);
+           setUserData(hospitalData);
+          // console.log(userData);
+        })
+      }
+    }
+    // db.collection("Admin").
+  )}, [])
   
   return (
     <>
@@ -220,9 +233,9 @@ const Profile = () => {
                           </label>
                         <Input disabled
                           className="form-control-alternative"
-                          defaultValue={userData.username}
+                          defaultValue={userData.name}
                           id="input-username"
-                          placeholder={userData.username}
+                          placeholder={userData.name}
                           type="text"
                         />
                         </FormGroup>
@@ -298,9 +311,9 @@ const Profile = () => {
                           </label>
                           <Input disabled
                             className="form-control-alternative"
-                            defaultValue={userData.Address}
+                            defaultValue={userData.address}
                             id="input-address"
-                            placeholder={userData.Address}
+                            placeholder={userData.address}
                             type="text"
                           />
                         </FormGroup>
@@ -359,6 +372,7 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
+                  
                   <hr className="my-4" />
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">About me</h6>
