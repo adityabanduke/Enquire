@@ -18,7 +18,7 @@
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-const UserHeader = ({userData,bool}) => {
+const UserHeader = ({adminData,bool}) => {
   return (
     <>
       <div
@@ -36,9 +36,9 @@ const UserHeader = ({userData,bool}) => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="8" md="10">
-              {userData? <h1 className="display-2 text-white">{userData.name}</h1>:null}
-{userData?<p className="text-white mt-0 mb-5">
-              {userData.about}
+              {adminData? <h1 className="display-2 text-white">{adminData.name}</h1>:null}
+{adminData?<p className="text-white mt-0 mb-5">
+              {adminData.about}
             </p>:null}
              
             </Col>

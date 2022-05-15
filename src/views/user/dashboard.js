@@ -179,9 +179,6 @@ export default class dashboard extends Component {
 
 								<Navbar style={{ "width": "40vw", 'margin': 'auto' }}
 									color="transparent"
-
-
-
 								>
 
 
