@@ -86,20 +86,20 @@ import {
             }
           });
           console.log(userData);
-        }
-      })
-      if (uniTags.length) {
-        for (let i = 0; i < tags.length; i++) {
-          if (!uniTags.includes(tags[i])) {
-            uniTags.push(tags[i]);
+          if (uniTags.length) {
+            for (let i = 0; i < tags.length; i++) {
+              if (!uniTags.includes(tags[i])) {
+                uniTags.push(tags[i]);
+              }
+            }
+      
           }
-        }
-  
-      }
-      firebase
-      .database()
-      .ref("search_tags")
-      .set(uniTags)
+          firebase
+          .database()
+          .ref("search_tags")
+          .set(uniTags)        }
+      })
+      
     }
     
     useEffect(() => {
@@ -470,12 +470,15 @@ import {
                     options={DATA}
                     onChange={(value) => {
                       const array = value.map(item => item.value);
-                      const arr1 = array.map(item =>(adminData.tags.includes(item)))
-                      setTags(array);
-
-                      setUserData ({...userData,tags:array.concat(adminData.tags)})
+                      const arr1 = [];
+                      for (let i = 0; i < array.length; i++) {
+                        if(!adminData.tags.includes(array[i])){
+                          arr1.push(array[i]);
+                        }
+                      }
+                      setTags(arr1);
+                      setUserData ({...userData,tags:arr1.concat(adminData.tags)})
                        console.log(arr1);
-
                     }}
 
                   /></Col>}
