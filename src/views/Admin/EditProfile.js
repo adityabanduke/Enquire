@@ -470,8 +470,11 @@ import {
                     options={DATA}
                     onChange={(value) => {
                       const array = value.map(item => item.value);
+                      const arr1 = array.map(item =>(adminData.tags.includes(item)))
                       setTags(array);
-                      setUserData ({...userData,tags:array})
+
+                      setUserData ({...userData,tags:array.concat(adminData.tags)})
+                       console.log(arr1);
 
                     }}
 
