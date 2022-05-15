@@ -68,7 +68,7 @@ const Profile = () => {
   //   });
   // }
   const [userData, setUserData] = useState({});
-  
+  const [adminData, setAdminData] = useState({});
   useEffect(() => {
   // firebase.auth().onAuthStateChanged((user) => {
      // if (user) {
@@ -96,6 +96,7 @@ const Profile = () => {
           var hospitalData = snapshot.data();
           console.log(hospitalData.name);
            setUserData(hospitalData);
+           setAdminData(hospitalData);
           // console.log(userData);
         })
       }
@@ -105,7 +106,7 @@ const Profile = () => {
   
   return (
     <>
-      <UserHeader userData={userData} />
+      <UserHeader adminData={adminData} />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>

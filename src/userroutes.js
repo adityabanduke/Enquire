@@ -16,6 +16,7 @@
 
 */
  import Index from "views/user/dashboard.js";
+import HospitalDetail from "views/user/HospitalDetail";
 
  import Profile from "views/user/Profile.js";
  import UserEditProfile from "views/user/UserEditProfile.js";
@@ -50,6 +51,16 @@ var userroutes = [
     name: "userEp",
     icon: "ni ni-tv-2 text-primary",
     component: UserEditProfile,
+    layout: "/user",
+    invisible: true,
+
+    
+  },
+  {
+    path: "/HospitalDetail",
+    name: "Details",
+    icon: "ni ni-tv-2 text-primary",
+    component: HospitalDetail,
     layout: "/user",
     invisible: true,
 

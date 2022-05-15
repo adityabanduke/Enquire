@@ -58,7 +58,7 @@ import {
  import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
 import heroIllustration from "../dist/images/hero-media-illustration-light.svg";
-import heroMedia from "../dist/images/hero-media-light.svg";
+import heroMedia from "../dist/images/hopital.jpg";
 import featureIllustration from "../dist/images/features-illustration-light.svg";
 import featureBox from "../dist/images/features-box-light.svg";
 import featureTop from "../dist/images/features-illustration-top-light.svg";
@@ -70,6 +70,7 @@ import feature03 from "../dist/images/feature-03-light.svg";
 import { Link } from 'react-router-dom';
 
 
+import logo from "../assets/img/enquirelogo.png";
 
 
 
@@ -87,13 +88,13 @@ const Index = (props) => {
                   <div className="brand header-brand">
                       <h1 className="m-0">
                           <a href="#">
-                              <img className="header-logo-image asset-light" src={logoLight} alt="Logo"/>
+                              {/* <img className="header-logo-image asset-light" src={logoLight} alt="Logo"/> */}
                           </a>
                       </h1>
                   </div>
               </div>
-                <a href="#" className="nav-logo">Enquire</a>
-                <ul className="nav-menu">
+                <a href="#" className="nav-logo"><img src={logo} style={{'height': '60px','width':'160px' , 'margin-left': '20px','margin-left': '20px'}} alt="" /></a>
+                <ul className="nav-menu" style={{'width': '0%'}}>
                     <li className="nav-item">
                         <a href="#" className="nav-link">Home
                         </a>
@@ -109,12 +110,12 @@ const Index = (props) => {
                   
                 </ul>
               <Link to="/login">
-              <Button className="my-2 nav-button button-text" color="primary" type="button">
+              <Button className=" nav-button button-text" color="primary" type="button">
                   Login
                 </Button>
                 </Link>
                 <Link to="/register">
-                <Button className="my-2 nav-button button-text" color="primary"  type="button">
+                <Button className=" nav-button button-text" color="primary"  type="button" >
                   Sign Up
  </Button></Link>
 
@@ -128,11 +129,11 @@ const Index = (props) => {
               <div className="container">
                   <div className="hero-inner">
                       <div className="hero-copy">
-                          <h1 className="hero-title mt-0">Enquire</h1>
-                          <p className="hero-paragraph">Book Appointments Easy.</p>
+                          <h1 className="hero-title mt-0" style={{'color':'DarkBlue'}}>Enquire</h1>
+                          <p className="hero-paragraph" style={{'color':'Blue'}}>Book Appointments Easy.</p>
                         
                       </div>
-                      <div className="hero-media">
+                      <div className="hero-media" style={{'width':'40%'}}>
                           <div className="header-illustration">
                               <img className="header-illustration-image asset-light" src={illustration} alt="Header illustration"/>
                             
@@ -141,8 +142,8 @@ const Index = (props) => {
                               <img className="hero-media-illustration-image asset-light" src={heroIllustration} alt="Hero media illustration"/>
                              
                           </div>
-                          <div className="hero-media-container">
-                              <img className="hero-media-image asset-light" src={heroMedia} alt="Hero media"/>
+                          <div className="hero-media-container" style={{'width': '100%' , 'margin':'0'}}>
+                              <img className=" asset-light" src={heroMedia} style={{'width': '80%', 'backgroundSize':'100% 100%', 'borderRadius':'15px'}} alt="Hero media"/>
                           </div>
                       </div>
                   </div>
@@ -217,12 +218,12 @@ const Index = (props) => {
           </section>
       </main>
 
-      <footer className="site-footer has-top-divider">
-          <div className="container">
+      <footer className="site-footer has-top-divider" >
+          <div className="container" style={{'height': '180px'}}>
               <div className="site-footer-inner">
                   <div className="brand footer-brand">
                       <a href="#">
-                          <img className="asset-light" src={logoLight} alt="Logo"/>
+                          {/* <img className="asset-light" src={logoLight} alt="Logo"/> */}
                       </a>
                   </div>
                   <ul className="footer-links list-reset">
