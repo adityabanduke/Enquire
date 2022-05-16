@@ -21,7 +21,7 @@ import Typography from '@mui/material/Typography';
 
 
 
-export default class dashboard extends Component {
+export default class SearchResult extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -36,8 +36,17 @@ export default class dashboard extends Component {
 	}
 
 	componentDidMount() {
+       
+		// const { myOptions, hospitalData } = this.state;
+        const temp = localStorage.getItem("hospitalData");
+        if(temp){
+        this.setState({ hospitalData: JSON.parse(temp) });
+        localStorage.clear();
+    }
+
 		firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
+            console.log("HI111111");
+			if (user != null) {
 				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
 					var userData = snapshot.val();
 					console.log(userData);
@@ -51,8 +60,8 @@ export default class dashboard extends Component {
 	}
 
 	handleKeyPress = (e) => {
-		let mytags;
-		// const { myOptions, hospitalData } = this.state;
+	
+        let mytags;
 		if (e.key === 'Enter') {
 			console.log("you hit enter...................");
 			console.log(e.target.value);
@@ -73,7 +82,7 @@ export default class dashboard extends Component {
 							})
 							this.setState({ hospitalData: tempData });
 							console.log(this.state.hospitalData);
-							localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
+							// localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
 
 						}
 					}).then(err => {
@@ -81,7 +90,6 @@ export default class dashboard extends Component {
 							console.log(err);
 						}else{
 							console.log("Success");
-							window.location.href = "/user/searchresult"
 							// localStorage.getItem("hospitalData");
 						}
 					})
@@ -225,35 +233,9 @@ export default class dashboard extends Component {
 
 
 				</div>
-				<Container fluid className='mt-5 p-3'>
-					<Stack direction="row" spacing={30} style={{ 'justifyContent': 'center', 'textAlign': 'center', 'padding': '5px' }}>
-						<div ><Avatar sx={{ bgcolor: pink[500], width: 120, height: 120 }}>
-							<FolderIcon sx={{ fontSize: 40 }} />
+				<Container  className='mt-4 mx-auto' >
 
-
-						</Avatar><h2>Profile</h2></div>
-						<div>
-							<Avatar sx={{ bgcolor: pink[500], width: 120, height: 120 }}>
-								<PageviewIcon sx={{ fontSize: 40 }} />
-
-
-							</Avatar>
-							<h2>Your Bookings</h2>
-						</div>
-
-						<div>
-							<Avatar sx={{ bgcolor: green[500], width: 120, height: 120 }}>
-								<AssignmentIcon sx={{ fontSize: 40 }} />
-
-
-							</Avatar>
-							<h2>History</h2>
-						</div>
-					</Stack>
-				</Container>
-				<Container  className='mt-1 mx-auto' >
-
-				{/* {   this.state.hospitalData && this.state.hospitalData.map((hospital) => (
+	 {   this.state.hospitalData && this.state.hospitalData.map((hospital) => (
 					
 					<Card  sx={{ display: 'flex', flexDirection: 'row', width: "80%" , marginBottom:'5vh' }}>
 						<CardMedia
@@ -286,7 +268,7 @@ BOOK NOW
 					</Card>
 
         
-      ))} */}
+      ))} 
 
 
 
