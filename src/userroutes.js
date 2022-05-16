@@ -20,7 +20,7 @@ import HospitalDetail from "views/user/HospitalDetail";
 
  import Profile from "views/user/Profile.js";
  import UserEditProfile from "views/user/UserEditProfile.js";
-import SearchResult from "views/user/SearchResult";
+import SearchResult from "views/user/SearchResult.js";
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 // import Login from "views/examples/Login.js";
@@ -58,9 +58,11 @@ var userroutes = [
   },
   {
     path: "/searchresult",
-    name: "result",
+    name: "searchresult",
     icon: "ni ni-tv-2 text-primary",
     component: SearchResult,
+    layout: "/user",
+    invisible: true,
   },
   {
     path: "/HospitalDetail",
