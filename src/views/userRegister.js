@@ -23,6 +23,7 @@ import {
   ModalFooter,
   Label,
 } from "reactstrap";
+import { db } from "../config/firebase-enquire";
 
 class Register extends React.Component {
   constructor(props) {
@@ -46,9 +47,11 @@ class Register extends React.Component {
     this.manageGoogleRegister = this.manageGoogleRegister.bind(this);
     this.keyModalFunction = this.keyModalFunction.bind(this);
     // this.sendEmailFunction = this.sendEmailFunction.bind(this);
-     this.checkUserVerification = this.checkUserVerification.bind(this);
+    this.checkUserVerification = this.checkUserVerification.bind(this);
     // this.resendEmailFunction = this.resendEmailFunction.bind(this);
     this.showPassFunction = this.showPassFunction.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   handleEmail = (e) => {
@@ -100,6 +103,7 @@ class Register extends React.Component {
           .createUserWithEmailAndPassword(this.state.email, this.state.password)
           .then((userCredential) => {
             var userObj = userCredential.user;
+
             firebase
               .database()
               .ref("users/" + userObj.uid)
@@ -142,87 +146,115 @@ class Register extends React.Component {
     }
   };
 
-//   resendEmailFunction = () => {
-//     var otp = this.state.otp;
-//     this.setState({
-//       checkCorrectOtp: true,
-//     });
-//     let formData = new FormData();
-//     formData.append("email", this.state.email);
-//     formData.append("otp", otp);
-//     const config = {
-//       headers: { "content-type": "multipart/form-data" },
-//     };
-//     axios
-//       .post("https://tdpvista.com/tiles/verifyemail", formData, config)
-//       .then((res) => {
-//         this.setState({ keyModal: true });
-//       });
-//   };
+  //   resendEmailFunction = () => {
+  //     var otp = this.state.otp;
+  //     this.setState({
+  //       checkCorrectOtp: true,
+  //     });
+  //     let formData = new FormData();
+  //     formData.append("email", this.state.email);
+  //     formData.append("otp", otp);
+  //     const config = {
+  //       headers: { "content-type": "multipart/form-data" },
+  //     };
+  //     axios
+  //       .post("https://tdpvista.com/tiles/verifyemail", formData, config)
+  //       .then((res) => {
+  //         this.setState({ keyModal: true });
+  //       });
+  //   };
 
-//   sendEmailFunction = () => {
-//     if (this.state.password === this.state.repassword) {
-//       firebase
-//         .auth()
-//         .signInWithEmailAndPassword(this.state.email, this.state.password)
-//         .then((userCredential) => {
-//           firebase
-//             .database()
-//             .ref("users/" + userCredential.user.uid)
-//             .once("value")
-//             .then((snapshot) => {
-//               var data = snapshot.val();
-//               if (data.verification) {
-//                 window.location.href = "/dashboard/index";
-//               } else {
-//                 var otp = Math.floor(100000 + Math.random() * 899999);
-//                 this.setState({
-//                   otp: otp,
-//                   checkCorrectOtp: true,
-//                 });
-//                 let formData = new FormData();
-//                 formData.append("email", this.state.email);
-//                 formData.append("otp", otp);
-//                 const config = {
-//                   headers: { "content-type": "multipart/form-data" },
-//                 };
-//                 axios
-//                   .post(
-//                     "https://tdpvista.com/tiles/verifyemail",
-//                     formData,
-//                     config
-//                   )
-//                   .then((res) => {
-//                     this.setState({ keyModal: true });
-//                     console.log("CHECK OTP");
-//                   });
-//               }
-//             });
-//         })
-//         .catch((error) => {
-//           var otp = Math.floor(100000 + Math.random() * 899999);
-//           this.setState({
-//             otp: otp,
-//             checkCorrectOtp: true,
-//           });
-//           let formData = new FormData();
-//           formData.append("email", this.state.email);
-//           formData.append("otp", otp);
-//           const config = {
-//             headers: { "content-type": "multipart/form-data" },
-//           };
-//           axios
-//             .post("https://tdpvista.com/tiles/verifyemail", formData, config)
-//             .then((res) => {
-//               this.setState({ keyModal: true });
-//             });
-//         });
-//     } else {
-//       this.setState({ checkRePassFunction: true });
-//       console.log("checking this");
-//     }
-//   };
+  //   sendEmailFunction = () => {
+  //     if (this.state.password === this.state.repassword) {
+  //       firebase
+  //         .auth()
+  //         .signInWithEmailAndPassword(this.state.email, this.state.password)
+  //         .then((userCredential) => {
+  //           firebase
+  //             .database()
+  //             .ref("users/" + userCredential.user.uid)
+  //             .once("value")
+  //             .then((snapshot) => {
+  //               var data = snapshot.val();
+  //               if (data.verification) {
+  //                 window.location.href = "/dashboard/index";
+  //               } else {
+  //                 var otp = Math.floor(100000 + Math.random() * 899999);
+  //                 this.setState({
+  //                   otp: otp,
+  //                   checkCorrectOtp: true,
+  //                 });
+  //                 let formData = new FormData();
+  //                 formData.append("email", this.state.email);
+  //                 formData.append("otp", otp);
+  //                 const config = {
+  //                   headers: { "content-type": "multipart/form-data" },
+  //                 };
+  //                 axios
+  //                   .post(
+  //                     "https://tdpvista.com/tiles/verifyemail",
+  //                     formData,
+  //                     config
+  //                   )
+  //                   .then((res) => {
+  //                     this.setState({ keyModal: true });
+  //                     console.log("CHECK OTP");
+  //                   });
+  //               }
+  //             });
+  //         })
+  //         .catch((error) => {
+  //           var otp = Math.floor(100000 + Math.random() * 899999);
+  //           this.setState({
+  //             otp: otp,
+  //             checkCorrectOtp: true,
+  //           });
+  //           let formData = new FormData();
+  //           formData.append("email", this.state.email);
+  //           formData.append("otp", otp);
+  //           const config = {
+  //             headers: { "content-type": "multipart/form-data" },
+  //           };
+  //           axios
+  //             .post("https://tdpvista.com/tiles/verifyemail", formData, config)
+  //             .then((res) => {
+  //               this.setState({ keyModal: true });
+  //             });
+  //         });
+  //     } else {
+  //       this.setState({ checkRePassFunction: true });
+  //       console.log("checking this");
+  //     }
+  //   };
+  handleSubmit = () => {
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((userCredential) => {
+      var user = userCredential.user;
+      var id = user.uid;
+      console.log(user);
+      firebase
+        .database()
+        .ref("users/" + id)
+        .once("value")
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+          } else {
+            firebase
+              .database()
+              .ref("users/" + id)
+              .set({
+                username: this.state.username,
+                email: user.email,
+                user_uid: id,
 
+                verification: 1,
+              });
+          }
+        })
+        
+    }).then(() => {
+      window.location.href = "/user/dashboard";
+    });
+  }
   manageGoogleRegister = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase
@@ -256,10 +288,10 @@ class Register extends React.Component {
             window.location.href = "/user/dashboard";
           });
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
- 
+
   render() {
     return (
       <>
@@ -269,8 +301,8 @@ class Register extends React.Component {
           <Container className="mt--8 pb-5">
             <Row className="justify-content-start">
               <div>
-               
-                  {/* {this.state.checkCorrectOtp ? (
+
+                {/* {this.state.checkCorrectOtp ? (
                     <Form
                       role="form"
                       onSubmit={(e) => {
@@ -318,7 +350,7 @@ class Register extends React.Component {
                       </ModalBody>
                     </>
                   )} */}
-                
+
               </div>
               <Col lg="6" md="8">
                 <Card className="bg-secondary shadow border-0">
@@ -488,7 +520,7 @@ class Register extends React.Component {
                         </Col>
                       </Row>
                       <div className="text-center">
-                        <Button className="mt-4" color="primary" type="submit">
+                        <Button className="mt-4" color="primary" type="submit" onClick={this.handleSubmit}>
                           Create account
                         </Button>
                       </div>
