@@ -35,9 +35,11 @@ const hospitalRegister = () => {
   const [about, setAbout] = react.useState();
   const [tags, setTags] = react.useState([]);
   const [h_id, setid] = react.useState("");
-  const [users, setUsers] = react.useState([]);
+
 
   const [DATA, setDATA] = react.useState([]);
+
+  const [users, setUsers] = react.useState([])
   // const DATA = [
   //   {
   //     value: "Ekansh",
@@ -77,9 +79,9 @@ const hospitalRegister = () => {
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
       var user = userCredential.user;
-      setid(user.uid);
+     const ID = user.uid;
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags, h_id,users
+        name, email, address, city, country, postalCode, about, password, tags , users, h_id:ID
       })
     }).then((err) => {
       if (err) {
@@ -94,7 +96,7 @@ const hospitalRegister = () => {
     if (uniTags.length) {
       for (let i = 0; i < tags.length; i++) {
         if (!uniTags.includes(tags[i])) {
-          uniTags.push(tags[i]);
+          uniTags.push(tags[i].toLowerCase());
         }
       }
 

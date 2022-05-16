@@ -29,14 +29,18 @@ import UserLayout from "layouts/User.js";
 import Index from "views/Index";
 import UserLogin from "views/userLogin.js"
 import UserRegister from "views/userRegister.js";
-
+// import MyProvider from "./context/MyProvider.js"
 import HospitalRegister from "views/hospitalRegister"
 import UserEditProfile from "views/user/UserEditProfile.js";
 import HospitalDetail from "views/user/HospitalDetail.js"
 
+
+
+
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
+    {/* <MyProvider> */}
     <Route path="/"  exact>
         <Index/>
       </Route>
@@ -78,7 +82,7 @@ ReactDOM.render(
       </Route>
       {/* <Redirect to="/" /> */}
 
-
+      {/* </MyProvider> */}
 
     </Switch>
   </BrowserRouter>,
