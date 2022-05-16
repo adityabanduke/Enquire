@@ -94,7 +94,7 @@ const hospitalRegister = () => {
     if (uniTags.length) {
       for (let i = 0; i < tags.length; i++) {
         if (!uniTags.includes(tags[i])) {
-          uniTags.push(tags[i]);
+          uniTags.push(tags[i].toLowerCase());
         }
       }
 

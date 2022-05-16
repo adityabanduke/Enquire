@@ -39,7 +39,19 @@ import {
   import { Chip } from "@mui/material";
 
 // import { Preview } from "@mui/icons-material";
-  const EditProfile = () => {
+export default class EditProfile extends react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {},
+      adminData:{},
+      tags: [],
+      uniTags:[],
+      DATA: [],
+      selectBool: true,
+    };
+  }
+
     // constructor(props) {
     //   super(props);
     //   this.state = {
@@ -47,7 +59,36 @@ import {
     //   };
     // }
   
-  
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        console.log(user.uid);
+        db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
+          console.log(snapshot.data());
+          var hospitalData = snapshot.data();
+          console.log(hospitalData.name);
+           this.setState({userData:hospitalData,adminData:hospitalData});
+          // console.log(userData);
+        })
+
+        firebase
+        .database()
+        .ref("search_tags/")
+        .once("value")
+        .then((snapshot) => {
+          var data = snapshot.val();
+          console.log(data);
+          this.setState({uniTags:data});
+          for (let i = 0; i < data.length; i++) {
+            this.state.DATA.push({value:data[i],label:data[i]});
+            console.log(this.state.DATA);
+          }
+        })
+      }
+    
+    }
+    )
+  }
     // componentDidMount() {
     //   firebase.auth().onAuthStateChanged((user) => {
     //     if (user) {
@@ -70,26 +111,20 @@ import {
     //   });
     // }
 
-    const [userData, setUserData] = useState({});
-    const [adminData, setAdminData] = useState({});
-    const [tags, setTags] = react.useState([]);
-    const [DATA, setDATA] = react.useState([]);
-    const [uniTags, setUniTags] = react.useState([]);
-    const [selectBool,setSelectBool]=react.useState(true);
     
-    const UpdateData= ()=>{
+    UpdateData= ()=>{
       firebase.auth().onAuthStateChanged((user) =>{
         if(user){
-          db.collection('Admin').doc(user.uid).update(userData).then((err) => {
+          db.collection('Admin').doc(user.uid).update(this.state.userData).then((err) => {
             if(err){
               console.log(err);
             }
           });
-          console.log(userData);
-          if (uniTags.length) {
-            for (let i = 0; i < tags.length; i++) {
-              if (!uniTags.includes(tags[i])) {
-                uniTags.push(tags[i]);
+          console.log(this.state.userData);
+          if (this.state.uniTags.length) {
+            for (let i = 0; i < this.state.tags.length; i++) {
+              if (!this.state.uniTags.includes(this.state.tags[i])) {
+                this.state.uniTags.push(this.state.tags[i]);
               }
             }
       
@@ -97,65 +132,16 @@ import {
           firebase
           .database()
           .ref("search_tags")
-          .set(uniTags)        }
+          .set(this.state.uniTags)}
       })
       
     }
     
-    useEffect(() => {
-    // firebase.auth().onAuthStateChanged((user) => {
-       // if (user) {
-          // firebase
-          //   .database()
-          //   .ref("admin/" + 'vKPqIB1VeuamDNStKzhfHLu6s7O2')
-          //   .once("value")
-          //   .then((snapshot) => {
-          //     var data = snapshot.val();
-          //     console.log(data.username);
-          //     setUserData(data);
-          //   })
-          //   .then(() => { 
-          //     document.getElementById("userHeaderNameId").innerHTML =userData.username;
-          //   });
-
-        // } else {
-        //   window.location.href = "/";
-        // }
-      // });
-      firebase.auth().onAuthStateChanged((user) => {
-        if(user){
-          console.log(user.uid);
-          db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
-            console.log(snapshot.data());
-            var hospitalData = snapshot.data();
-            console.log(hospitalData.name);
-             setUserData(hospitalData);
-             setAdminData(hospitalData);
-            // console.log(userData);
-          })
-
-          firebase
-          .database()
-          .ref("search_tags/")
-          .once("value")
-          .then((snapshot) => {
-            var data = snapshot.val();
-            console.log(data);
-            setUniTags(data);
-            for (let i = 0; i < data.length; i++) {
-              DATA.push({value:data[i],label:data[i]});
-              console.log(DATA);
-            }
-          })
-        }
-      
-      }
-      )
-    }, []);
+    render() {
     
     return (
       <>
-        <UserHeader adminData={adminData} bool={1} />
+        <UserHeader adminData={this.state.adminData} bool={1} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -259,7 +245,7 @@ import {
                     <Button 
                       color="info"
                     // href="/admin/editProfile"
-                    onClick={UpdateData}
+                    onClick={this.UpdateData}
                     >
                       Submit Changes
                     </Button>
@@ -283,12 +269,11 @@ import {
                             </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={userData.name}
+                            defaultValue={this.state.userData.name}
                             id="input-username"
-                            placeholder={userData.name}
+                            placeholder={this.state.userData.name}
                             type="text"
-
-                            onChange={e =>setUserData ({...userData,name:e.target.value})}
+                            onChange={e =>this.setState({userData:{...this.state.userData,name:e.target.value}})}
                           />
                           </FormGroup>
                         </Col>
@@ -303,10 +288,10 @@ import {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              defaultValue={userData.email}
-                              placeholder={userData.email}
+                              defaultValue={this.state.userData.email}
+                              placeholder={this.state.userData.email}
                               type="email"
-                              onChange={e =>setUserData ({...userData,email:e.target.value})}
+                              onChange={e =>this.setState({userData:{...this.state.userData,email:e.target.value}})}
                             />
                           </FormGroup>
                         </Col>
@@ -365,11 +350,11 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={userData.address}
+                              defaultValue={this.state.userData.address}
                               id="input-address"
-                              placeholder={userData.address}
+                              placeholder={this.state.userData.address}
                               type="text"
-                              onChange={e =>setUserData ({...userData,address:e.target.value})}
+                              onChange={e =>this.setState({userData:{...this.state.userData,address:e.target.value}})}
                             />
                           </FormGroup>
                         </Col>
@@ -385,10 +370,10 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={userData.city}
+                              defaultValue={this.state.userData.city}
                               id="input-city"
-                              placeholder={userData.city}
-                              onChange={e =>setUserData ({...userData,city:e.target.value})}
+                              placeholder={this.state.userData.city}
+                              onChange={e =>this.setState({userData:{...this.state.userData,city:e.target.value}})}
                               type="text"
                             />
                           </FormGroup>
@@ -403,10 +388,10 @@ import {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={userData.country}
+                              defaultValue={this.state.userData.country}
                               id="input-country"
-                              placeholder={userData.country}
-                              onChange={e =>setUserData ({...userData,country:e.target.value})}
+                              placeholder={this.state.userData.country}
+                              onChange={e =>this.setState({userData:{...this.state.userData,country:e.target.value}})}
                               type="text"
                             />
                           </FormGroup>
@@ -422,9 +407,9 @@ import {
                             <Input
                               className="form-control-alternative"
                               id="input-postal-code"
-                              defaultValue={userData.postalCode}
-                              placeholder={userData.postalCode}
-                              onChange={e =>setUserData ({...userData,postalCode:e.target.value})}
+                              defaultValue={this.state.userData.postalCode}
+                              placeholder={this.state.userData.postalCode}
+                              onChange={e =>this.setState({userData:{...this.state.userData,postalCode:e.target.value}})}
                               type="number"
                             />
                           </FormGroup>
@@ -440,7 +425,7 @@ import {
                     color="info"
                   // href="/admin/editProfile"
                   onClick={()=>{
-                    setSelectBool(false);
+                    this.setState({selectBool:false});
                   }}
                   style={{float:"right"}}
                   >
@@ -451,7 +436,7 @@ import {
                   
 
                   
-                  { adminData.tags && adminData.tags.map((tag)=>(
+                  { this.state.adminData.tags && this.state.adminData.tags.map((tag)=>(
                     
                   <Chip className="m-1" label={tag} color="primary" />
                 ) )}
@@ -460,24 +445,24 @@ import {
                   </Row>
 
                 </div>
-                  {selectBool?null:
+                  {this.state.selectBool?null:
                 <Col lg={6}>
                   <Select
                     multi
                     clearable
                     create
                     onCreateNew={(item) => console.log('%c New item created ', 'background: #555; color: tomato', item)}
-                    options={DATA}
+                    options={this.state.DATA}
                     onChange={(value) => {
                       const array = value.map(item => item.value);
                       const arr1 = [];
                       for (let i = 0; i < array.length; i++) {
-                        if(!adminData.tags.includes(array[i])){
+                        if(!this.state.adminData.tags.includes(array[i])){
                           arr1.push(array[i]);
                         }
                       }
-                      setTags(arr1);
-                      setUserData ({...userData,tags:arr1.concat(adminData.tags)})
+                      this.setState({tags:arr1});
+                    this.setState ({userData:{...this.state.userData,tags:arr1.concat(this.state.adminData.tags)}})
                        console.log(arr1);
                     }}
 
@@ -493,10 +478,10 @@ import {
 
                         <Input
                           className="form-control-alternative"
-                          placeholder={userData.about}
+                          placeholder={this.state.userData.about}
                           rows="4"
-                          defaultValue={userData.about}
-                          onChange={e =>setUserData ({...userData,about:e.target.value})}
+                          defaultValue={this.state.userData.about}
+                          onChange={e =>this.setState({userData:{...this.state.userData,about:e.target.value}})}
                           type="textarea"
                          
                         />
@@ -510,9 +495,9 @@ import {
         </Container>
       </>
     );
+   }
   };
   
-  export default EditProfile;
   
 //   /*!
 
