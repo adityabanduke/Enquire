@@ -34,6 +34,9 @@ const hospitalRegister = () => {
   const [postalCode, setPostalCode] = react.useState();
   const [about, setAbout] = react.useState();
   const [tags, setTags] = react.useState([]);
+  const [h_id, setid] = react.useState("");
+
+
   const [DATA, setDATA] = react.useState([]);
 
   const [users, setUsers] = react.useState([])
@@ -93,7 +96,7 @@ const hospitalRegister = () => {
     if (uniTags.length) {
       for (let i = 0; i < tags.length; i++) {
         if (!uniTags.includes(tags[i])) {
-          uniTags.push(tags[i]);
+          uniTags.push(tags[i].toLowerCase());
         }
       }
 

@@ -32,6 +32,7 @@ import UserRegister from "views/userRegister.js";
 // import MyProvider from "./context/MyProvider.js"
 import HospitalRegister from "views/hospitalRegister"
 import UserEditProfile from "views/user/UserEditProfile.js";
+import HospitalDetail from "views/user/HospitalDetail.js"
 
 
 
@@ -62,8 +63,10 @@ ReactDOM.render(
       <Route path="/UserEditProfile" exact >
         <UserEditProfile/>
       </Route>
-     
-    
+
+      <Route path="/HospitalDetail" exact >
+        <HospitalDetail/>
+</Route>
 
 {/* // ************ Admin Routing *********** */}
 

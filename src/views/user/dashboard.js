@@ -184,9 +184,6 @@ export default class dashboard extends Component {
 
 								<Navbar style={{ "width": "40vw", 'margin': 'auto' }}
 									color="transparent"
-
-
-
 								>
 
 
@@ -277,9 +274,9 @@ export default class dashboard extends Component {
 						<CardContent>
 							<CardActions sx={{ display: 'flex', flexDirection: 'column',  }}>
 							
-								<Button variant="contained" fullWidth color="success">
+							<a href={'/user/HospitalDetail?h_id='+hospital.h_id}><Button variant="contained" fullWidth color="success" >
 BOOK NOW
-</Button>
+</Button></a>	
 							</CardActions>
 						</CardContent>
 

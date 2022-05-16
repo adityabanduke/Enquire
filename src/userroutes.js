@@ -15,8 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "views/user/dashboard.js";
-// import HospitalDetail from "views/user/HospitalDetail";
+ import Index from "views/user/dashboard.js";
+import HospitalDetail from "views/user/HospitalDetail";
 
  import Profile from "views/user/Profile.js";
  import UserEditProfile from "views/user/UserEditProfile.js";
@@ -61,6 +61,12 @@ var userroutes = [
     name: "result",
     icon: "ni ni-tv-2 text-primary",
     component: SearchResult,
+  },
+  {
+    path: "/HospitalDetail",
+    name: "Details",
+    icon: "ni ni-tv-2 text-primary",
+    component: HospitalDetail,
     layout: "/user",
     invisible: true,
 
