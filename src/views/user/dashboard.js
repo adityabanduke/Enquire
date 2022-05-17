@@ -224,27 +224,26 @@ export default class dashboard extends Component {
 				</div>
 				<Container fluid className='mt-5 p-3'>
 					<Stack direction="row" spacing={30} style={{ 'justifyContent': 'center', 'textAlign': 'center', 'padding': '5px' }}>
-						<div ><Avatar sx={{ bgcolor: pink[500], width: 120, height: 120 }}>
+						<div ><Avatar sx={{ bgcolor: pink[500], width: 100, height: 100 , boxShadow:'0px 5px 15px 0px rgba(0, 0, 0, 0.35)'}}>
 							<FolderIcon sx={{ fontSize: 40 }} />
 
 
-						</Avatar><h2>Profile</h2></div>
+						</Avatar><h2 className=' py-3'>Profile</h2></div>
 						<div>
-							<Avatar sx={{ bgcolor: pink[500], width: 120, height: 120 }}>
+							<Avatar sx={{ bgcolor: pink[500], width: 100, height: 100 , boxShadow:'0px 5px 15px 0px rgba(0, 0, 0, 0.35)'}} >
 								<PageviewIcon sx={{ fontSize: 40 }} />
-
-
+								{/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */}
 							</Avatar>
-							<h2>Your Bookings</h2>
+							<h2 className=' py-3'>Your Bookings</h2>
 						</div>
 
 						<div>
-							<Avatar sx={{ bgcolor: green[500], width: 120, height: 120 }}>
+							<Avatar sx={{ bgcolor: green[500], width: 100, height: 100, boxShadow:'0px 5px 15px 0px rgba(0, 0, 0, 0.35)' }}>
 								<AssignmentIcon sx={{ fontSize: 40 }} />
 
 
 							</Avatar>
-							<h2>History</h2>
+							<h2 className=' py-3'>History</h2>
 						</div>
 					</Stack>
 				</Container>

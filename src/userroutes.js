@@ -15,7 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
- import Index from "views/user/dashboard.js";
+ import Booking from "views/user/Booking";
+import Index from "views/user/dashboard.js";
 import HospitalDetail from "views/user/HospitalDetail";
 
  import Profile from "views/user/Profile.js";
@@ -74,6 +75,24 @@ var userroutes = [
 
     
   },
+  {
+    path: "/Booking",
+    name: "Your Bookings",
+    icon: "ni ni-tv-2 text-primary",
+    component: Booking,
+    layout: "/user",
+    class: "",
+
+  },
+  // {
+  //   path: "/Tables",
+  //   name: "Tables",
+  //   icon: "ni ni-tv-2 text-primary",
+  //   component: Tables,
+  //   layout: "/user",
+  //   class: "",
+
+  // },
 
 ];
 export default userroutes;
