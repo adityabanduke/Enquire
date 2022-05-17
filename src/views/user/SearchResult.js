@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react'
+import React, { useState, Component , Link} from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import firebase from '../../config/firebase-enquire';
@@ -21,7 +21,7 @@ import Typography from '@mui/material/Typography';
 
 
 
-export default class dashboard extends Component {
+export default class SearchResult extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -36,8 +36,17 @@ export default class dashboard extends Component {
 	}
 
 	componentDidMount() {
+       
+		// const { myOptions, hospitalData } = this.state;
+        const temp = localStorage.getItem("hospitalData");
+        if(temp){
+        this.setState({ hospitalData: JSON.parse(temp) });
+        localStorage.clear();
+    }
+
 		firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
+            console.log("HI111111");
+			if (user != null) {
 				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
 					var userData = snapshot.val();
 					console.log(userData);
@@ -51,8 +60,8 @@ export default class dashboard extends Component {
 	}
 
 	handleKeyPress = (e) => {
-		let mytags;
-		// const { myOptions, hospitalData } = this.state;
+	
+        let mytags;
 		if (e.key === 'Enter') {
 			console.log("you hit enter...................");
 			console.log(e.target.value);
@@ -73,7 +82,7 @@ export default class dashboard extends Component {
 							})
 							this.setState({ hospitalData: tempData });
 							console.log(this.state.hospitalData);
-							localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
+							// localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
 
 						}
 					}).then(err => {
@@ -81,7 +90,6 @@ export default class dashboard extends Component {
 							console.log(err);
 						}else{
 							console.log("Success");
-							window.location.href = "/user/searchresult"
 							// localStorage.getItem("hospitalData");
 						}
 					})
@@ -184,6 +192,9 @@ export default class dashboard extends Component {
 
 								<Navbar style={{ "width": "40vw", 'margin': 'auto' }}
 									color="transparent"
+
+
+
 								>
 
 
@@ -222,34 +233,9 @@ export default class dashboard extends Component {
 
 
 				</div>
-				<Container fluid className='mt-5 p-3'>
-					<Stack direction="row" spacing={30} style={{ 'justifyContent': 'center', 'textAlign': 'center', 'padding': '5px' }}>
-						<div ><Avatar sx={{ bgcolor: pink[500], width: 100, height: 100 , boxShadow:'0px 5px 15px 0px rgba(0, 0, 0, 0.35)'}}>
-							<FolderIcon sx={{ fontSize: 40 }} />
+				<Container  className='mt-4 mx-auto' >
 
-
-						</Avatar><h2 className=' py-3'>Profile</h2></div>
-						<div>
-							<Avatar sx={{ bgcolor: pink[500], width: 100, height: 100 , boxShadow:'0px 5px 15px 0px rgba(0, 0, 0, 0.35)'}} >
-								<PageviewIcon sx={{ fontSize: 40 }} />
-								{/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */}
-							</Avatar>
-							<h2 className=' py-3'>Your Bookings</h2>
-						</div>
-
-						<div>
-							<Avatar sx={{ bgcolor: green[500], width: 100, height: 100, boxShadow:'0px 5px 15px 0px rgba(0, 0, 0, 0.35)' }}>
-								<AssignmentIcon sx={{ fontSize: 40 }} />
-
-
-							</Avatar>
-							<h2 className=' py-3'>History</h2>
-						</div>
-					</Stack>
-				</Container>
-				<Container  className='mt-1 mx-auto' >
-
-				{/* {   this.state.hospitalData && this.state.hospitalData.map((hospital) => (
+	 {   this.state.hospitalData && this.state.hospitalData.map((hospital) => (
 					
 					<Card  sx={{ display: 'flex', flexDirection: 'row', width: "80%" , marginBottom:'5vh' }}>
 						<CardMedia
@@ -272,17 +258,22 @@ export default class dashboard extends Component {
 						</CardContent>
 						<CardContent>
 							<CardActions sx={{ display: 'flex', flexDirection: 'column',  }}>
+							<a href={'/user/HospitalDetail?h_id=' + hospital.h_id}>
+								<Button variant="contained" fullWidth color="success">
+									
+									BOOK NOW
 							
-							<a href={'/user/HospitalDetail?h_id='+hospital.h_id}><Button variant="contained" fullWidth color="success" >
-BOOK NOW
-</Button></a>	
+								
+</Button>
+</a>
+
 							</CardActions>
 						</CardContent>
 
 					</Card>
 
         
-      ))} */}
+      ))} 
 
 
 

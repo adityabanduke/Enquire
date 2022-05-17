@@ -12,13 +12,13 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import UserHeader from "components/Headers/UserProfile";
 // import React from "react";
 import react, { useState, useEffect, Component } from "react";
 import firebase from '../../config/firebase-enquire'
 import Link from "react-router-dom/Link";
 
-
+import blank from "../../assets/images/blankProfilepic.png"
 
 export default class Profile extends Component {
   constructor(props) {
@@ -45,10 +45,7 @@ export default class Profile extends Component {
             console.log(data);
             this.setState({ userData: data });
           })
-          .then(() => {
-            document.getElementById("userHeaderNameId").innerHTML =
-              "Hello " + this.state.userData.username;
-          });
+         
       } else {
         window.location.href = "/";
       }
@@ -93,7 +90,7 @@ export default class Profile extends Component {
                           alt="..."
                           className="rounded-circle"
 
-                          src={this.state.userData.profilepic}
+                          src={this.state.userData.profilepic ? this.state.userData.profilepic : blank}
                           height='100'
                           width='100'
 

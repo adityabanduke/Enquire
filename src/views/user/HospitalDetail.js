@@ -14,7 +14,8 @@ import {
 
 import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+
 
 
 export default class HospitalDetails extends Component {
@@ -36,6 +37,8 @@ export default class HospitalDetails extends Component {
             user_id:"",
             today:todayDate,
             time:time,
+            booking:[],
+            hospitalName:'',
 
         }
         this.bookAppointment = this.bookAppointment.bind(this);
@@ -50,7 +53,7 @@ export default class HospitalDetails extends Component {
 				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
 					var Data = snapshot.val();
 					console.log(Data);
-                    this.setState({user_id: Data.user_uid});
+                    this.setState({user_id: user.uid});
 
 		
         var currenturl = window.location.search;
@@ -63,15 +66,18 @@ export default class HospitalDetails extends Component {
 
      
 
-   
+        firebase.database().ref("users/" + user.uid +"/YourBookings").once('value').then((snapshot) => {
+            var BData = snapshot.val();
+            console.log(BData);
+            this.setState({ booking : BData.bookings ? BData.bookings :[]});
 
-
+        })
 
         db.collection("Admin").doc(h_id).get().then((snapshot) => {
             console.log(snapshot.data());
             var hospitalData = snapshot.data();
             console.log(hospitalData.name);
-            this.setState({ hData: hospitalData });
+            this.setState({ hData: hospitalData , hospitalName: hospitalData.name });
 
             // console.log(userData);
         }).then((err) => {
@@ -96,8 +102,9 @@ else {
         // db.collection('Admin').doc(this.state.h_id).update({
         //     users: db.FieldValue.arrayUnion(this.state.userData)
         // });
-       
-
+       var x =[];
+     this.state.booking.push({h_id:this.state.h_id,hospitalName:this.state.hospitalName, bookingDate: this.state.today,
+        bookingTime:this.state.time,})
 
         firebase.database().ref("Hospitals/"+this.state.h_id +"/"+this.state.user_id).set({
             bookingDate: this.state.today,
@@ -105,9 +112,8 @@ else {
 
         }).then(()=>{
 
-            firebase.database().ref("users/"+this.state.user_id + "/bookings/"+ this.state.h_id).set({
-                bookingDate: this.state.today,
-                bookingTime:this.state.time,            })
+            firebase.database().ref("users/"+ this.state.user_id + "/YourBookings").set({
+                bookings: this.state.booking })
         }).then(()=>{
             alert("Appointment Booked Successfully");
         })
@@ -132,7 +138,7 @@ else {
                     <Container className="d-flex align-items-center" fluid>
                         <Row>
                             <Col lg="8" md="10">
-                                {this.state.hData ? <h1 className="display-2 text-white">{this.state.hData.name}</h1> : null}
+                                {this.state.hData ? <h1 className="display-2 text-white">{this.state.hospitalName}</h1> : null}
                                 {this.state.hData ? <p className="text-white mt-0 mb-5">
                                     {this.state.hData.about}
                                 </p> : null}

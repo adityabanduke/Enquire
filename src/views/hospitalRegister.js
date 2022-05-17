@@ -38,6 +38,7 @@ const hospitalRegister = () => {
   const [users, setUsers] = react.useState([]);
   const [imageAsUrl, setImageAsUrl] = react.useState({});
   const [DATA, setDATA] = react.useState([]);
+
   // const DATA = [
   //   {
   //     value: "Ekansh",
@@ -77,9 +78,9 @@ const hospitalRegister = () => {
 
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
       var user = userCredential.user;
-      setid(user.uid);
+     const ID = user.uid;
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags, h_id,users,imageAsUrl
+        name, email, address, city, country, postalCode, about, password, tags , users, h_id:ID
       })
     }).then((err) => {
       if (err) {

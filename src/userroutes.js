@@ -15,12 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
- import Index from "views/user/dashboard.js";
+ import Booking from "views/user/Booking";
+import Index from "views/user/dashboard.js";
 import HospitalDetail from "views/user/HospitalDetail";
 
  import Profile from "views/user/Profile.js";
  import UserEditProfile from "views/user/UserEditProfile.js";
-
+import SearchResult from "views/user/SearchResult.js";
+import BookingDetail from "views/user/BookingDetail";
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 // import Login from "views/examples/Login.js";
@@ -57,6 +59,14 @@ var userroutes = [
     
   },
   {
+    path: "/searchresult",
+    name: "searchresult",
+    icon: "ni ni-tv-2 text-primary",
+    component: SearchResult,
+    layout: "/user",
+    invisible: true,
+  },
+  {
     path: "/HospitalDetail",
     name: "Details",
     icon: "ni ni-tv-2 text-primary",
@@ -66,6 +76,33 @@ var userroutes = [
 
     
   },
+  {
+    path: "/Booking",
+    name: "Your Bookings",
+    icon: "ni ni-tv-2 text-primary",
+    component: Booking,
+    layout: "/user",
+    class: "",
+
+  },
+  {
+    path: "/BookingDetail",
+    name: "Booking Detail",
+    icon: "ni ni-tv-2 text-primary",
+    component: BookingDetail,
+    layout: "/user",
+    class: "",
+    invisible: true,
+  },
+  // {
+  //   path: "/Tables",
+  //   name: "Tables",
+  //   icon: "ni ni-tv-2 text-primary",
+  //   component: Tables,
+  //   layout: "/user",
+  //   class: "",
+
+  // },
 
 ];
 export default userroutes;
