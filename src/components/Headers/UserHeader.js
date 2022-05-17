@@ -17,15 +17,27 @@
 */
 
 // reactstrap components
+import react , {useState , useEffect} from 'react';
 import { Button, Container, Row, Col } from "reactstrap";
+
 const UserHeader = ({adminData,bool}) => {
+  const [url, setUrl] = useState(adminData.imageAsUrl);
+  console.log(adminData.imageAsUrl);
+  useEffect(() => {
+    adminData.imageAsUrl?setUrl(adminData.imageAsUrl):setUrl("");
+    
+  })
+  
+
   return (
+
     <>
-      <div
+ 
+<div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
           minHeight: "600px",
-         
+         backgroundImage:`url(${url})`,
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}
@@ -44,7 +56,7 @@ const UserHeader = ({adminData,bool}) => {
             </Col>
           </Row>
         </Container>
-      </div>
+      </div> 
     </>
   );
 };
