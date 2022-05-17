@@ -17,7 +17,7 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch , Redirect} from "react-router-dom";
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -38,12 +38,16 @@ import HospitalDetail from "views/user/HospitalDetail.js"
 
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename='/'>
     <Switch>
     {/* <MyProvider> */}
     <Route path="/"  exact>
         <Index/>
       </Route>
+      <Route path="/argon-dashboard-react" exact>
+      <Redirect to="/" /> 
+      </Route>
+
      
       <Route path="/auth" >
         <AuthLayout/>
