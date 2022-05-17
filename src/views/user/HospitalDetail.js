@@ -14,7 +14,8 @@ import {
 
 import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+
 
 
 export default class HospitalDetails extends Component {
@@ -137,7 +138,7 @@ else {
                     <Container className="d-flex align-items-center" fluid>
                         <Row>
                             <Col lg="8" md="10">
-                                {this.state.hData ? <h1 className="display-2 text-white">{this.state.hData.name}</h1> : null}
+                                {this.state.hData ? <h1 className="display-2 text-white">{this.state.hospitalName}</h1> : null}
                                 {this.state.hData ? <p className="text-white mt-0 mb-5">
                                     {this.state.hData.about}
                                 </p> : null}

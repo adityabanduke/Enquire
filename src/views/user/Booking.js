@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component,Redirect}from 'react'
 import firebase from '../../config/firebase-enquire'
 
 import {
@@ -164,7 +164,12 @@ export default class Booking extends Component {
                           />
                         </div>
                       </div> */}
-                      <Button>View Details</Button>
+                      <a href={'/user/BookingDetail?h_id=' + items.h_id}>
+                      <Button color="primary" >
+                        View Details
+                        </Button>
+                        </a>
+
                     </td>
                     <td className="text-right">
                       <UncontrolledDropdown>

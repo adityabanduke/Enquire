@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react'
+import React, { useState, Component , Link} from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import firebase from '../../config/firebase-enquire';
@@ -258,10 +258,15 @@ export default class SearchResult extends Component {
 						</CardContent>
 						<CardContent>
 							<CardActions sx={{ display: 'flex', flexDirection: 'column',  }}>
-							
+							<a href={'/user/HospitalDetail?h_id=' + hospital.h_id}>
 								<Button variant="contained" fullWidth color="success">
-BOOK NOW
+									
+									BOOK NOW
+							
+								
 </Button>
+</a>
+
 							</CardActions>
 						</CardContent>
 
