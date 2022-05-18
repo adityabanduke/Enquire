@@ -38,7 +38,7 @@ const hospitalRegister = () => {
   const [users, setUsers] = react.useState([]);
   const [imageAsUrl, setImageAsUrl] = react.useState({});
   const [DATA, setDATA] = react.useState([]);
-
+  const [doctor, setDoctor] = react.useState({});
   // const DATA = [
   //   {
   //     value: "Ekansh",
@@ -80,7 +80,7 @@ const hospitalRegister = () => {
       var user = userCredential.user;
      const ID = user.uid;
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags , users, h_id:ID
+        name, email, address, city, country, postalCode, about, password, tags , users, h_id:ID,doctor
       })
     }).then((err) => {
       if (err) {
