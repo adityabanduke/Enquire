@@ -24,6 +24,9 @@ import Login from "views/Admin/Login.js";
 import Tables from "views/Admin/Tables.js";
 import Icons from "views/Admin/Icons.js";
 import EditProfile from "views/Admin/EditProfile.js";
+import AddDoctor from "views/Admin/AddDoctor.js";
+import EditAddDoctor from "views/Admin/EditAddDoctor.js";
+
 // import Landing from "views/Admin/Landing.js";
 
 var routes = [
@@ -67,6 +70,20 @@ var routes = [
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
+    layout: "/admin",
+  },  
+  {
+    path: "/add-doctor",
+    name: "Add Doctor",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: AddDoctor,
+    layout: "/admin",
+  },
+  {
+    path: "/edit-doctor",
+    name: "Edit Doctor",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: EditAddDoctor,
     layout: "/admin",
   },
   {
