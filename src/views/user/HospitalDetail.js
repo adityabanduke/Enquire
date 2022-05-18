@@ -113,10 +113,19 @@ export default class HospitalDetails extends Component {
         //     users: db.FieldValue.arrayUnion(this.state.userData)
         // });
       
+(()=>{
 
-        var model = nanoid()
+    var model = nanoid()
 
-        this.setState({ booking_id: model });
+    this.setState({ booking_id : model });
+
+}).then(()=>{
+    
+
+      
+
+
+
             this.state.booking.push({
                 h_id: this.state.h_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
                 bookingTime: this.state.time, bookingId: this.state.booking_id, status: this.state.status
@@ -140,6 +149,8 @@ export default class HospitalDetails extends Component {
 
 
         })
+
+    })
 
 
     }
