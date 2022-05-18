@@ -85,8 +85,7 @@ export default class Profile extends Component {
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        {this.state.userData && <img
+                      <a ><img
                           alt="..."
                           className="rounded-circle"
 
@@ -94,7 +93,7 @@ export default class Profile extends Component {
                           height='100'
                           width='100'
 
-                        />}
+                        />
                       </a>
                     </div>
                   </Col>

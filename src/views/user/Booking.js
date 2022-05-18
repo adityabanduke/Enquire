@@ -80,7 +80,7 @@ export default class Booking extends Component {
 
                   this.setState({booking: bookingData.bookings})
                  
-
+                  this.state.booking.reverse();
                     // this.setState({ booking: withNestedKeys });
                     console.log(this.state.booking)                    //  Childsnapshot.forEach((item) => {
                     //      console.log(item.val())

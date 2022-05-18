@@ -117,7 +117,7 @@ if(items.bookingId == this.state.b_id){
 
 }
 else {
-    window.location.href = "/login";
+    window.location.href = "/Login";
 }
 })
 
