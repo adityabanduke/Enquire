@@ -16,7 +16,7 @@
 
 */
 // reactstrap components
-import React  , {useState} from 'react';
+import react  from 'react';
 import {
   Badge,
   Card,
@@ -75,7 +75,7 @@ const style = {
 
 
 const dashboard = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = react.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {setOpen(false)
 };
