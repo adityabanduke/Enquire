@@ -147,10 +147,12 @@ export default class Booking extends Component {
                     <td>{items.bookingDate}</td>
 
                     <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        pending
-                      </Badge>
+                      
+                        {items.status == 0 ? <Badge color="" className="badge-dot mr-4 d-flex align-items-center">
+                        <i className="bg-info" />pending </Badge> : (items.status == 1 ? <Badge color="" className="badge-dot mr-4 d-flex align-items-center">
+                        <i className="bg-success" />Inprogress </Badge> : <Badge color="" className="badge-dot mr-4 d-flex align-items-center">
+                        <i className="bg-warning" />Completed </Badge>)}
+                     
                     </td>
                     
                     <td>
@@ -164,7 +166,7 @@ export default class Booking extends Component {
                           />
                         </div>
                       </div> */}
-                      <a href={'/user/BookingDetail?h_id=' + items.h_id}>
+                      <a href={'/user/BookingDetail?Booking_id=' + items.bookingId}>
                       <Button color="primary" >
                         View Details
                         </Button>
