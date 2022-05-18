@@ -38,8 +38,8 @@ export default class HospitalDetails extends Component {
             today: todayDate,
             time: time,
             booking: [],
+            Hbooking:[],
             hospitalName: '',
-            bookingNo: 0,
             booking_id: '',
             status: 0,
 
@@ -76,6 +76,13 @@ export default class HospitalDetails extends Component {
 
                     })
 
+                    firebase.database().ref("Admin/" + this.state.h_id + "/data").once('value').then((snapshot) => {
+                        var BData = snapshot.val();
+                        console.log(BData);
+                        this.setState({ Hbooking: BData.data ? BData.data : [] });
+
+                    })
+
                     db.collection("Admin").doc(h_id).get().then((snapshot) => {
                         console.log(snapshot.data());
                         var hospitalData = snapshot.data();
@@ -105,30 +112,22 @@ export default class HospitalDetails extends Component {
         // db.collection('Admin').doc(this.state.h_id).update({
         //     users: db.FieldValue.arrayUnion(this.state.userData)
         // });
-        firebase.database().ref("Hospitals/" + this.state.h_id).once('value').then((snap) => {
-            // console.log(snap.numChildren())
-            var no = snap.numChildren() + 1;
-            this.setState({ bookingNo: no });
+      
 
+        var model = nanoid()
 
-            var model = nanoid()
-
-            this.setState({ booking_id: model });
-
-        }).then(() => {
-
+        this.setState({ booking_id: model });
             this.state.booking.push({
                 h_id: this.state.h_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
-                bookingTime: this.state.time, bookingNo: this.state.bookingNo, bookingId: this.state.booking_id, status: this.state.status
+                bookingTime: this.state.time, bookingId: this.state.booking_id, status: this.state.status
+            })
+            this.state.Hbooking.push({
+                user_id: this.state.user_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
+                bookingTime: this.state.time,  bookingId: this.state.booking_id, status: this.state.status
             })
 
-            firebase.database().ref("Hospitals/" + this.state.h_id + "/" + this.state.user_id).set({
-                bookingDate: this.state.today,
-                bookingTime: this.state.time,
-                user_id: this.state.user_id,
-                status: this.state.status,
-                booking_id: this.state.booking_id,
-                bookingNo: this.state.bookingNo,
+            firebase.database().ref("Hospitals/" + this.state.h_id).set({
+                data: this.state.Hbooking
 
             }).then(() => {
 
@@ -137,7 +136,7 @@ export default class HospitalDetails extends Component {
                 })
             }).then(() => {
                 alert("Appointment Booked Successfully");
-            })
+            
 
 
         })
