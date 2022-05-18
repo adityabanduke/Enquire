@@ -132,7 +132,7 @@ export default class HospitalDetails extends Component {
             })
             this.state.Hbooking.push({
                 user_id: this.state.user_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
-                bookingTime: this.state.time,  bookingId: this.state.booking_id, status: this.state.status
+                bookingTime: this.state.time,  bookingId: this.state.booking_id, status: this.state.status,h_id: this.state.h_id,
             })
 
             firebase.database().ref("Hospitals/" + this.state.h_id).set({

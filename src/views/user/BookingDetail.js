@@ -34,6 +34,8 @@ export default class BookingDetail extends Component {
             h_name:"",
             book_time:'',
             book_date:'',
+            bookingNo:1,
+            bNo:1,
 
         }
     }
@@ -54,7 +56,7 @@ export default class BookingDetail extends Component {
 
 		     Data.map((items)=>{
 if(items.bookingId == this.state.b_id){
-  this.setState({ b_no:items.bookingNo,
+  this.setState({
     h_id:items.h_id,
     h_name:items.hospitalName,
     book_time:items.bookingTime,
@@ -62,19 +64,25 @@ if(items.bookingId == this.state.b_id){
 }
          })
         
-
-
-
-
-       
-
-
-            
-
-
-
    
+    }).then(()=>{
+
+      firebase.database().ref("Hospitals/"+ this.state.h_id + "/data").once('value').then((snapshot) => {
+        var hData = snapshot.val();
+        console.log(hData);  
+        hData.map((items)=>{
+          if(items.bookingId == this.state.b_id){
+               this.setState({bookingNo : this.state.bNo})
+          }else{
+            this.setState({bNo : this.state.bNo +1})
+          }
+                   })      
+            })
+
     })
+
+ 
+
 }
 else {
     window.location.href = "/login";
@@ -105,7 +113,7 @@ else {
                           Booking No
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                         {this.state.b_no}
+                         {this.state.bookingNo}
                         </span>
                       </div>
                       <Col className="col-auto">
