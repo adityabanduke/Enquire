@@ -47,7 +47,6 @@ export default class AddDoctor extends Component {
                   var hospitalData = snapshot.data();
                   console.log(hospitalData.name);
                    this.setState({userData:hospitalData,adminData:hospitalData});
-                console.log(userData);
                 })
             }
 
