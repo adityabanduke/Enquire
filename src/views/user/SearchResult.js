@@ -1,4 +1,4 @@
-import React, { useState, Component , Link} from 'react'
+import React, { useState, Component, Link } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import firebase from '../../config/firebase-enquire';
@@ -17,6 +17,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import "../../assets/css/card.css";
 
 
 
@@ -36,16 +37,16 @@ export default class SearchResult extends Component {
 	}
 
 	componentDidMount() {
-       
+
 		// const { myOptions, hospitalData } = this.state;
-        const temp = localStorage.getItem("hospitalData");
-        if(temp){
-        this.setState({ hospitalData: JSON.parse(temp) });
-        localStorage.clear();
-    }
+		const temp = localStorage.getItem("hospitalData");
+		if (temp) {
+			this.setState({ hospitalData: JSON.parse(temp) });
+			localStorage.clear();
+		}
 
 		firebase.auth().onAuthStateChanged((user) => {
-            console.log("HI111111");
+			console.log("HI111111");
 			if (user != null) {
 				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
 					var userData = snapshot.val();
@@ -60,8 +61,8 @@ export default class SearchResult extends Component {
 	}
 
 	handleKeyPress = (e) => {
-	
-        let mytags;
+
+		let mytags;
 		if (e.key === 'Enter') {
 			console.log("you hit enter...................");
 			console.log(e.target.value);
@@ -74,7 +75,7 @@ export default class SearchResult extends Component {
 					.where('tags', 'array-contains-any', mytags).get().then((snapshot) => {
 						let tempData = [];
 						if (snapshot.docs.length > 0) {
-  
+
 							snapshot.docs.forEach((doc) => {
 
 								tempData.push(doc.data());
@@ -86,9 +87,9 @@ export default class SearchResult extends Component {
 
 						}
 					}).then(err => {
-						if(err){
+						if (err) {
 							console.log(err);
-						}else{
+						} else {
 							console.log("Success");
 							// localStorage.getItem("hospitalData");
 						}
@@ -233,47 +234,44 @@ export default class SearchResult extends Component {
 
 
 				</div>
-				<Container  className='mt-4 mx-auto' >
+		
+				<Container className='mt-4 mx-auto' >
 
-	 {   this.state.hospitalData && this.state.hospitalData.map((hospital) => (
+					{this.state.hospitalData && this.state.hospitalData.map((hospital) => (
+						<>
+		<div className="container mt-5 mb-5" >
+		<div className="d-flex justify-content-center row" >
+			<div className="col-md-10">
+				<div className="row p-2 bg-white border rounded" style={{ 'box-shadow': '0px 0px 6px 1px rgba(0,0,0,0.47)' }}>
+					<div className="col-md-3 mt-1"><img className="img-fluid img-responsive rounded product-image" src={hospital.imageAsUrl ? hospital.imageAsUrl : "https://www.blkmaxhospital.com/slider-mobile.jpg"}/></div>
+					<div className="col-md-6 mt-1">
+						<h3>	{hospital.name}</h3>
+						<div className="d-flex flex-row">
+							<div className="ratings mr-2"><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /></div>
+						</div>
+												<p className="text-justify  para mb-0">	{hospital.address}<br /><br /></p>
+					</div>
+					<div className="align-items-center align-content-center col-md-3 border-left mt-1">
 					
-					<Card  sx={{ display: 'flex', flexDirection: 'row', width: "80%" , marginBottom:'5vh' }}>
-						<CardMedia
-							component="img"
-							alt="green iguana"
-							height="140"
-							
-							image="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80"
-						/>
-						<CardContent>
-							<Typography gutterBottom variant="h5" component="div">
-								{hospital.name}
-							</Typography>
-							<div>
+						<h5 className="text-success">Available</h5>
+						<div className="d-flex flex-column mt-4">
+							<button className="btn btn-primary btn-sm mt-2" type="button">
+							<a style={{'color':'white'}} href={'/user/HospitalDetail?h_id=' + hospital.h_id}>
 
+								Book Now
+								</a>
+								</button>
+						
+							<button className="btn btn-outline-primary btn-sm mt-2" type="button">Bookmark</button>
 							</div>
-							<Typography variant="body2" color="text.secondary">
-						{	hospital.address}
-							</Typography>
-						</CardContent>
-						<CardContent>
-							<CardActions sx={{ display: 'flex', flexDirection: 'column',  }}>
-							<a href={'/user/HospitalDetail?h_id=' + hospital.h_id}>
-								<Button variant="contained" fullWidth color="success">
-									
-									BOOK NOW
-							
-								
-</Button>
-</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</>
 
-							</CardActions>
-						</CardContent>
-
-					</Card>
-
-        
-      ))} 
+					))}
 
 
 
