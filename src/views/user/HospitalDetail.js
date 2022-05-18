@@ -76,7 +76,7 @@ export default class HospitalDetails extends Component {
 
                     })
 
-                    firebase.database().ref("Admin/" + this.state.h_id).once('value').then((snapshot) => {
+                    firebase.database().ref("Hospitals/" + this.state.h_id).once('value').then((snapshot) => {
                         var BData = snapshot.val();
                         console.log(BData);
                         this.setState({ Hbooking: BData.data ? BData.data : [] });
