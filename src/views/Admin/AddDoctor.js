@@ -59,7 +59,7 @@ export default class AddDoctor extends Component {
     render() {
         return (
             <>
-                <UserHeader adminData={this.state.adminData} />
+                <UserHeader adminData={{}} />
 
                 <Container className="mt--7" fluid >
                     <Row className='justify-content-center'>
