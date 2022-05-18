@@ -26,6 +26,7 @@ import {
   Form,
   Input,
   Container,
+  CardTitle,
   Row,
   Col,
 } from "reactstrap";
@@ -69,6 +70,7 @@ const Profile = () => {
   // }
   const [userData, setUserData] = useState({});
   const [adminData, setAdminData] = useState({});
+  const data ="https://firebasestorage.googleapis.com/v0/b/enquire-3bea9.appspot.com/o/images%2FScreenshot%20(4).png?alt=media&token=f035f28a-2a0c-44b4-8ccc-714c6b190cbf";
   useEffect(() => {
   // firebase.auth().onAuthStateChanged((user) => {
      // if (user) {
@@ -106,7 +108,25 @@ const Profile = () => {
   
   return (
     <>
-      <UserHeader adminData={adminData} />
+      <div className="header bg-gradient-info pb-8 pt-5 pt-md-8"
+      style={{
+        backgroundImage:`url(${data})`
+      }}
+      >
+        <Container fluid>
+          <div className="header-body">
+            {/* Card stats */}
+            <Row>
+       
+             <h1>
+               {userData.name}{
+                 console.log(userData.imageAsUrl)
+               }
+             </h1>
+            </Row>
+          </div>
+        </Container>
+      </div>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
