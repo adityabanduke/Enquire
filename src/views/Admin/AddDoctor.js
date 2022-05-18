@@ -152,7 +152,7 @@ export default class AddDoctor extends Component {
                                                     alt="..."
                                                     className="rounded-circle"
 
-                                                    //   src={this.state.userData.profilepic ? this.state.userData.profilepic : blank}
+                                                      src={this.state.userData.doctorImg}
                                                     height='100'
                                                     width='100'
 

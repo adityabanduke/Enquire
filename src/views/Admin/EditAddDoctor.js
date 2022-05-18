@@ -42,12 +42,12 @@ export default class EditAddDoctor extends Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 console.log(user.uid);
-                db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
-                  console.log(snapshot.data());
-                  var hospitalData = snapshot.data();
-                  console.log(hospitalData.name);
-                   this.setState({userData:hospitalData,adminData:hospitalData});
-                console.log(this.state.userData);
+                db.collection("Admin").doc(user.uid).get().then((snapshot) => {
+                    console.log(snapshot.data());
+                    var hospitalData = snapshot.data();
+                    console.log(hospitalData.name);
+                    this.setState({ userData: hospitalData, adminData: hospitalData });
+                    console.log(this.state.userData);
                 })
             }
 
@@ -63,36 +63,19 @@ export default class EditAddDoctor extends Component {
     UpdateData = () => {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                db.collection('Admin/doctor').doc(user.uid).update(this.state.userData).then((err) => {
+                db.collection('Admin').doc(user.uid).update(this.state.userData).then((err) => {
                     if (err) {
                         console.log(err);
                     }
                 });
-                console.log(this.state.userData);
-                if (this.state.uniTags.length) {
-                    for (let i = 0; i < this.state.tags.length; i++) {
-                        if (!this.state.uniTags.includes(this.state.tags[i])) {
-                            this.state.uniTags.push(this.state.tags[i]);
-                        }
-                    }
-
-                }
-                firebase
-                    .database()
-                    .ref("search_tags")
-                    .set(this.state.uniTags)
             }
         })
-
-    }
-    handleFireBaseUpload = e => {
-        e.preventDefault()
         console.log('start of upload')
         // async magic goes here...
         if (this.state.imageAsFile === '') {
             console.error(`not an image, the image file is a ${typeof (this.state.imageAsFile)}`)
         }
-        const uploadTask = storage.ref(`/images/${this.state.imageAsFile.name}`).put(this.state.imageAsFile)
+        const uploadTask = storage.ref(`/doctorImage/${this.state.imageAsFile.name}`).put(this.state.imageAsFile)
         //initiates the firebase side uploading 
         uploadTask.on('state_changed',
             (snapShot) => {
@@ -104,14 +87,20 @@ export default class EditAddDoctor extends Component {
             }, () => {
                 // gets the functions from storage refences the image storage in firebase by the children
                 // gets the download url then sets the image from firebase as the value for the imgUrl key:
-                storage.ref('images').child(this.state.imageAsFile.name).getDownloadURL()
+                // const anda = storage.ref('doctorImage').child(this.state.imageAsFile.name).getDownloadURL()
+                console.log(this.state.imageAsFile.name);
+                storage.ref('doctorImages').child(this.state.imageAsFile.name).getDownloadUrl()
                     .then(fireBaseUrl => {
                         //  this.setState({imageAsUrl:{...prevObject, imgUrl: fireBaseUrl})
                         //  setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-                        this.setState({ userData: { ...this.state.userData, imageAsUrl: fireBaseUrl } })
-
+                        console.log(fireBaseUrl)
+                        this.setState({ userData: { ...this.state.userData, doctorImg: fireBaseUrl } })
+                        console.log(this.state.userData.doctorImg)
                     })
             })
+    }
+    handleFireBaseUpload = e => {
+  
     }
     render() {
         return (
@@ -209,7 +198,7 @@ export default class EditAddDoctor extends Component {
                                                     alt="..."
                                                     className="rounded-circle"
 
-                                                    //   src={this.state.userData.profilepic ? this.state.userData.profilepic : blank}
+                                                      src={`${this.state.userData.doctorImg}`}
                                                     height='100'
                                                     width='100'
 
@@ -232,12 +221,12 @@ export default class EditAddDoctor extends Component {
                                                 </label>
                                                 <Input
                                                     className="form-control-alternative"
-                                                    defaultValue={this.state.userData.name}
+                                                    defaultValue={this.state.userData.doctorName}
                                                     id="input-username"
-                                                    placeholder={this.state.userData.name}
+                                                    placeholder={this.state.userData.doctorName}
                                                     type="text"
-                                                    onChange={e => this.setState({ userData: { ...this.state.userData, name: e.target.value } })}
-                                                    
+                                                    onChange={e => this.setState({ userData: { ...this.state.userData, doctorName: e.target.value } })}
+
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -251,25 +240,36 @@ export default class EditAddDoctor extends Component {
                                                 </label>
                                                 <Input
                                                     className="form-control-alternative"
-                                                    defaultValue={this.state.userData.name}
+                                                    defaultValue={this.state.userData.doctorSpec}
                                                     id="input-username"
-                                                    placeholder={this.state.userData.name}
+                                                    placeholder={this.state.userData.doctorSpec}
                                                     type="text"
-                                                    onChange={e => this.setState({ userData: { ...this.state.userData, name: e.target.value } })}
-                                                    
+                                                    onChange={e => this.setState({ userData: { ...this.state.userData, doctorSpec: e.target.value } })}
+
                                                 />
                                             </FormGroup>
                                         </Col>
                                     </Row>
+                                    <Row>
+                                        <Col lg="6">
+                                            <form>
+                                                <input
+                                                    // allows you to reach into your file directory and upload image to the browser
+                                                    type="file"
+                                                    onChange={this.handleImageAsFile}
+                                                />
+                                                <button>upload to firebase</button>
+                                            </form></Col>
+                                    </Row>
                                 </CardBody>
                                 <div className='d-flex justify-content-center mb-4'>
-                                <Button
-                                    color="info"
-                                    // href="/admin/dashboard"
-                                    onClick={this.UpdateData}
-                                >
-                                    Save
-                                </Button>
+                                    <Button
+                                        color="info"
+                                        // href="/admin/dashboard"
+                                        onClick={this.UpdateData}
+                                    >
+                                        Save
+                                    </Button>
                                 </div>
 
                             </Card>
