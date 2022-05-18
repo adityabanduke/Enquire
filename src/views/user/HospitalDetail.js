@@ -16,29 +16,32 @@ import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
 import { useHistory, useParams } from 'react-router-dom';
 
-
+import { nanoid } from 'nanoid'
 
 export default class HospitalDetails extends Component {
 
     constructor(props) {
 
         var today = new Date(),
-        todayDate =
-          today.getFullYear() +
-          "-" +
-          ((today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1)) +
-          "-" +
-          ((today.getDate() < 10 ? "0" : "") + today.getDate());
-      var time = today.getHours() + ":" + today.getMinutes();
+            todayDate =
+                today.getFullYear() +
+                "-" +
+                ((today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1)) +
+                "-" +
+                ((today.getDate() < 10 ? "0" : "") + today.getDate());
+        var time = today.getHours() + ":" + today.getMinutes();
 
         super(props)
         this.state = {
             h_id: "",
-            user_id:"",
-            today:todayDate,
-            time:time,
-            booking:[],
-            hospitalName:'',
+            user_id: "",
+            today: todayDate,
+            time: time,
+            booking: [],
+            hospitalName: '',
+            bookingNo: 0,
+            booking_id: '',
+            status: 0,
 
         }
         this.bookAppointment = this.bookAppointment.bind(this);
@@ -49,52 +52,52 @@ export default class HospitalDetails extends Component {
         // this.setState({ h_id: h_id });
 
         firebase.auth().onAuthStateChanged((user) => {
-			if (user) {
-				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
-					var Data = snapshot.val();
-					console.log(Data);
-                    this.setState({user_id: user.uid});
-
-		
-        var currenturl = window.location.search;
-        var currenturlsearch = new URLSearchParams(currenturl);
-        var h_id = currenturlsearch.get("h_id");
-        console.log(h_id)
-
-        this.setState({ h_id: h_id });
+            if (user) {
+                firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
+                    var Data = snapshot.val();
+                    console.log(Data);
+                    this.setState({ user_id: user.uid });
 
 
-     
+                    var currenturl = window.location.search;
+                    var currenturlsearch = new URLSearchParams(currenturl);
+                    var h_id = currenturlsearch.get("h_id");
+                    console.log(h_id)
 
-        firebase.database().ref("users/" + user.uid +"/YourBookings").once('value').then((snapshot) => {
-            var BData = snapshot.val();
-            console.log(BData);
-            this.setState({ booking : BData.bookings ? BData.bookings :[]});
+                    this.setState({ h_id: h_id });
 
-        })
 
-        db.collection("Admin").doc(h_id).get().then((snapshot) => {
-            console.log(snapshot.data());
-            var hospitalData = snapshot.data();
-            console.log(hospitalData.name);
-            this.setState({ hData: hospitalData , hospitalName: hospitalData.name });
 
-            // console.log(userData);
-        }).then((err) => {
-            if(err){
-                console.log(err);
-            }else{
-                console.log("Success!!!")
+
+                    firebase.database().ref("users/" + user.uid + "/YourBookings").once('value').then((snapshot) => {
+                        var BData = snapshot.val();
+                        console.log(BData);
+                        this.setState({ booking: BData.bookings ? BData.bookings : [] });
+
+                    })
+
+                    db.collection("Admin").doc(h_id).get().then((snapshot) => {
+                        console.log(snapshot.data());
+                        var hospitalData = snapshot.data();
+                        console.log(hospitalData.name);
+                        this.setState({ hData: hospitalData, hospitalName: hospitalData.name });
+
+                        // console.log(userData);
+                    }).then((err) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("Success!!!")
+                        }
+                    })
+
+
+                })
+            }
+            else {
+                window.location.href = "/login";
             }
         })
-
-
-    })
-}
-else {
-    window.location.href = "/login";
-}
-})
 
     }
 
@@ -102,23 +105,44 @@ else {
         // db.collection('Admin').doc(this.state.h_id).update({
         //     users: db.FieldValue.arrayUnion(this.state.userData)
         // });
-       var x =[];
-     this.state.booking.push({h_id:this.state.h_id,hospitalName:this.state.hospitalName, bookingDate: this.state.today,
-        bookingTime:this.state.time,})
+        firebase.database().ref("Hospitals/" + this.state.h_id).once('value').then((snap) => {
+            // console.log(snap.numChildren())
+            var no = snap.numChildren() + 1;
+            this.setState({ bookingNo: no });
 
-        firebase.database().ref("Hospitals/"+this.state.h_id +"/"+this.state.user_id).set({
-            bookingDate: this.state.today,
-            bookingTime:this.state.time,
 
-        }).then(()=>{
+            var model = nanoid()
 
-            firebase.database().ref("users/"+ this.state.user_id + "/YourBookings").set({
-                bookings: this.state.booking })
-        }).then(()=>{
-            alert("Appointment Booked Successfully");
+            this.setState({ booking_id: model });
+
+        }).then(() => {
+
+            this.state.booking.push({
+                h_id: this.state.h_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
+                bookingTime: this.state.time, bookingNo: this.state.bookingNo, bookingId: this.state.booking_id, status: this.state.status
+            })
+
+            firebase.database().ref("Hospitals/" + this.state.h_id + "/" + this.state.user_id).set({
+                bookingDate: this.state.today,
+                bookingTime: this.state.time,
+                user_id: this.state.user_id,
+                status: this.state.status,
+                booking_id: this.state.booking_id,
+                bookingNo: this.state.bookingNo,
+
+            }).then(() => {
+
+                firebase.database().ref("users/" + this.state.user_id + "/YourBookings").set({
+                    bookings: this.state.booking
+                })
+            }).then(() => {
+                alert("Appointment Booked Successfully");
+            })
+
+
         })
 
-      
+
     }
     render() {
         return (

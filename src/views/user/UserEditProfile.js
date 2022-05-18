@@ -94,7 +94,7 @@ state:'',
             .then((snapshot) => {
               var data = snapshot.val();
               console.log(data);
-              this.setState({ userData: data });
+              this.setState({ userData: data , name: data.username, contact:data.contact, city : data.city , state:data.state, address: data.address , postalCode: data.postalCode });
             })
             .then(() => { 
               document.getElementById("userHeaderNameId").innerHTML =
@@ -444,7 +444,7 @@ submitmodal = ()=>{
                             </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue={this.state.userData.username}
+                            defaultValue={this.state.username}
                             id="input-username"
                             onChange={this.handleName}
 
@@ -465,7 +465,7 @@ submitmodal = ()=>{
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder={this.state.userData.contact}
+                              placeholder={this.state.contact}
                               type="email"
                               onChange={this.handleContact}
 
@@ -527,7 +527,7 @@ submitmodal = ()=>{
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.address}
+                              defaultValue={this.state.address}
                               id="input-address"
                               placeholder={this.state.userData.address}
                               type="text"
@@ -548,7 +548,7 @@ submitmodal = ()=>{
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.city}
+                              defaultValue={this.state.city}
                               id="input-city"
                               placeholder={this.state.userData.city}
                               type="text"
@@ -567,7 +567,7 @@ submitmodal = ()=>{
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue={this.state.userData.state}
+                              defaultValue={this.state.state}
                               id="input-state"
                               placeholder={this.state.userData.state}
                               type="text"
@@ -587,7 +587,7 @@ submitmodal = ()=>{
                             <Input
                               className="form-control-alternative"
                               id="input-postal-code"
-                              placeholder={this.state.userData.postalCode}
+                              placeholder={this.state.postalCode}
                               type="number"
                               onChange={this.handlePostalcode}
 

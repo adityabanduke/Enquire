@@ -35,11 +35,10 @@ const hospitalRegister = () => {
   const [about, setAbout] = react.useState();
   const [tags, setTags] = react.useState([]);
   const [h_id, setid] = react.useState("");
-
-
+  const [users, setUsers] = react.useState([]);
+  const [imageAsUrl, setImageAsUrl] = react.useState({});
   const [DATA, setDATA] = react.useState([]);
 
-  const [users, setUsers] = react.useState([])
   // const DATA = [
   //   {
   //     value: "Ekansh",

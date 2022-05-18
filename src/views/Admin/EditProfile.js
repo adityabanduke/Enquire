@@ -35,11 +35,13 @@ import {
   import react,{useState,useEffect} from "react";
   import firebase from '../../config/firebase-enquire'
   import {db} from '../../config/firebase-enquire'
+  import {storage} from '../../config/firebase-enquire'
   import Select from "react-dropdown-select";
   import { Chip } from "@mui/material";
 
 // import { Preview } from "@mui/icons-material";
 export default class EditProfile extends react.Component {
+  allInputs = {imgUrl: ''}
   constructor(props) {
     super(props);
     this.state = {
@@ -49,6 +51,8 @@ export default class EditProfile extends react.Component {
       uniTags:[],
       DATA: [],
       selectBool: true,
+      imageAsFile:'',
+      imageAsUrl:this.allInputs
     };
   }
 
@@ -89,6 +93,11 @@ export default class EditProfile extends react.Component {
     }
     )
   }
+  handleImageAsFile = (e) => {
+    const image = e.target.files[0]
+    this.setState({imageAsFile:image})
+    // setImageAsFile(imageFile => (image))
+}
     // componentDidMount() {
     //   firebase.auth().onAuthStateChanged((user) => {
     //     if (user) {
@@ -136,7 +145,34 @@ export default class EditProfile extends react.Component {
       })
       
     }
-    
+     handleFireBaseUpload = e => {
+      e.preventDefault()
+    console.log('start of upload')
+    // async magic goes here...
+    if(this.state.imageAsFile === '') {
+      console.error(`not an image, the image file is a ${typeof(this.state.imageAsFile)}`)
+    }
+    const uploadTask = storage.ref(`/images/${this.state.imageAsFile.name}`).put(this.state.imageAsFile)
+    //initiates the firebase side uploading 
+    uploadTask.on('state_changed', 
+    (snapShot) => {
+      //takes a snap shot of the process as it is happening
+      console.log(snapShot)
+    }, (err) => {
+      //catches the errors
+      console.log(err)
+    }, () => {
+      // gets the functions from storage refences the image storage in firebase by the children
+      // gets the download url then sets the image from firebase as the value for the imgUrl key:
+      storage.ref('images').child(this.state.imageAsFile.name).getDownloadURL()
+       .then(fireBaseUrl => {
+        //  this.setState({imageAsUrl:{...prevObject, imgUrl: fireBaseUrl})
+        //  setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+        this.setState({userData:{...this.state.userData,imageAsUrl:fireBaseUrl}})
+        
+       })
+    })
+    }
     render() {
     
     return (
@@ -145,96 +181,16 @@ export default class EditProfile extends react.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-             {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-              <Card className="card-profile shadow">
-                <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={
-                            require("../../assets/img/theme/team-4-800x800.jpg")
-                              .default
-                          }
-                        />
-                      </a>
-                    </div>
-                  </Col>
-                </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="pt-0 pt-md-4">
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div> 
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Row>
-                  <div className="text-center">
-                    <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
-                    </h3>
-                    <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
-                    </div>
-                    <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
-                    </div>
-                    <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      Show more
-                    </a>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col> */}
+
             <Col className="order-xl-1" xl="12">
+            <form onSubmit={this.handleFireBaseUpload}>
+        <input 
+// allows you to reach into your file directory and upload image to the browser
+          type="file"
+          onChange={this.handleImageAsFile}
+        />
+        <button>upload to firebase</button>
+      </form>
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
@@ -482,8 +438,7 @@ export default class EditProfile extends react.Component {
                           rows="4"
                           defaultValue={this.state.userData.about}
                           onChange={e =>this.setState({userData:{...this.state.userData,about:e.target.value}})}
-                          type="textarea"
-                         
+                          type="textarea" 
                         />
                       </FormGroup>
                     </div>
