@@ -28,7 +28,12 @@ export default class BookingDetail extends Component {
 
         super(props)
         this.state = {
-            h_id: "",
+            b_id: "",
+            b_no:0,
+            h_id:"",
+            h_name:"",
+            book_time:'',
+            book_date:'',
 
         }
     }
@@ -37,18 +42,34 @@ export default class BookingDetail extends Component {
       
         firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
-				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
-					var Data = snapshot.val();
-					console.log(Data);
-                    this.setState({user_id: user.uid});
-
-		
         var currenturl = window.location.search;
         var currenturlsearch = new URLSearchParams(currenturl);
-        var h_id = currenturlsearch.get("h_id");
-        console.log(h_id)
+        var b_id = currenturlsearch.get("Booking_id");
+        this.setState({ b_id: b_id });
 
-        this.setState({ h_id: h_id });
+				firebase.database().ref("users/" + user.uid + "/YourBookings/bookings").once('value').then((snapshot) => {
+					var Data = snapshot.val();
+					console.log(Data);
+         this.setState({user_id: user.uid});
+
+		     Data.map((items)=>{
+if(items.bookingId == this.state.b_id){
+  this.setState({ b_no:items.bookingNo,
+    h_id:items.h_id,
+    h_name:items.hospitalName,
+    book_time:items.bookingTime,
+    book_date:items.bookingDate,})
+}
+         })
+        
+
+
+
+
+       
+
+
+            
 
 
 
@@ -81,10 +102,10 @@ else {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Traffic
+                          Booking No
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          350,897
+                         {this.state.b_no}
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -95,9 +116,9 @@ else {
                     </Row>
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
-                        <i className="fa fa-arrow-up" /> 3.48%
+                        <i className="fa fa-arrow-up" /> 
                       </span>{" "}
-                      <span className="text-nowrap">Since last month</span>
+                      <span className="text-nowrap"></span>
                     </p>
                   </CardBody>
                 </Card>
@@ -111,9 +132,9 @@ else {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          New users
+                           Current Patient No
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span>
+                        <span className="h2 font-weight-bold mb-0">4</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -139,9 +160,9 @@ else {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Sales
+                         Expected time
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span>
+                        <span className="h2 font-weight-bold mb-0">10 min</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -167,9 +188,9 @@ else {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Performance
+                          Status of Doctor
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">49,65%</span>
+                        <span className="h2 font-weight-bold mb-0">Active</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
