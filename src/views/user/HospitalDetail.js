@@ -102,7 +102,7 @@ export default class HospitalDetails extends Component {
                 })
             }
             else {
-                window.location.href = "/login";
+                window.location.href = "/Login";
             }
         })
 
@@ -113,7 +113,7 @@ export default class HospitalDetails extends Component {
         //     users: db.FieldValue.arrayUnion(this.state.userData)
         // });
       
-(()=>{
+        firebase.database().ref("users/" + this.state.user_id + "/YourBookings").once('value').then((snapshot) => {
 
     var model = nanoid()
 
