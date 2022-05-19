@@ -208,7 +208,7 @@ export default class AddDoctor extends Component {
                                 <div className='d-flex justify-content-center mb-4'>
                                 <Button
                                     color="info"
-                                    href="/admin/EditAddDoctor"
+                                    href="/admin/edit-doctor"
                                 >
                                     Edit
                                 </Button>
