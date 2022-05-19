@@ -33,6 +33,7 @@ import {
   Container,
   Media,
 } from "reactstrap";
+import blank from "../../assets/images/blankProfilepic.png"
 
 const AdminNavbar = (props) => {
   return (
@@ -53,15 +54,12 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={
-                        require("../../assets/img/theme/team-4-800x800.jpg")
-                          .default
-                      }
+                      src={props.profile ? props.profile : blank}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {props.name}
                     </span>
                   </Media>
                 </Media>

@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React , {useEffect , useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Navbar } from "reactstrap";
@@ -24,16 +24,34 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import UserNavbar from "components/Navbars/UserNavbar.js";
 // import UserFooter from "components/Footers/UserFooter.js";
 import userroutes from "userroutes.js";
+import firebase from '../config/firebase-enquire';
 
 const User = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
-
+ const [name, setName] = useState('');
+ const [profile, setProfile] = useState("")
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContent.current.scrollTop = 0;
   }, [location]);
+
+  React.useEffect(()=>{
+    firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
+					var userData = snapshot.val();
+					console.log(userData);
+          setName(userData.username);
+          setProfile(userData.profilepic);
+				})
+			}
+			else {
+				window.location.href = "/Login";
+			}
+		}) 
+  })
 
   const getRoutes = (userroutes) => {
     return userroutes.map((prop, key) => {
@@ -75,7 +93,7 @@ const User = (props) => {
         }}
       />
       <div className="main-content" ref={mainContent}>
-      <UserNavbar/>
+      <UserNavbar name={name} profile={profile}/>
         <Switch>
           {getRoutes(userroutes)}
           <Redirect from="*" to="/user/dashboard" />

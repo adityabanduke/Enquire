@@ -14,10 +14,10 @@ import {
 
 import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
-import { useHistory, useParams } from 'react-router-dom';
+// import { useHistory, useParams } from 'react-router-dom';
 
 import { nanoid } from 'nanoid'
-
+import hospitalimg from "../../assets/img/hospital.jpg"
 export default class HospitalDetails extends Component {
 
     constructor(props) {
@@ -87,7 +87,7 @@ export default class HospitalDetails extends Component {
                         console.log(snapshot.data());
                         var hospitalData = snapshot.data();
                         console.log(hospitalData.name);
-                        this.setState({ hData: hospitalData, hospitalName: hospitalData.name });
+                        this.setState({ hData: hospitalData, hospitalName: hospitalData.name , profilepic:hospitalData.imageAsUrl? hospitalData.imageAsUrl : hospitalimg});
 
                         // console.log(userData);
                     }).then((err) => {
@@ -132,7 +132,7 @@ export default class HospitalDetails extends Component {
             })
             this.state.Hbooking.push({
                 user_id: this.state.user_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
-                bookingTime: this.state.time,  bookingId: this.state.booking_id, status: this.state.status
+                bookingTime: this.state.time,  bookingId: this.state.booking_id, status: this.state.status,h_id: this.state.h_id,
             })
 
             firebase.database().ref("Hospitals/" + this.state.h_id).set({
@@ -161,13 +161,13 @@ export default class HospitalDetails extends Component {
                     className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
                     style={{
                         minHeight: "600px",
-                        // backgroundImage:`url(${this.state.hData.profilphoto})`,
+                        //  backgroundImage:`url(${this.state.profilepic})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center top",
                     }}
-                >
+                ><img src={this.state.profilepic} className="img-fluid img-responsive rounded product-image" style={{'position':'absolute' , 'opacity':'0.5'}} ></img>
                     {/* Mask */}
-                    <span className="mask bg-gradient-default opacity-8" />
+                    <span className="mask bg-gradient-default opacity-5" />
                     {/* Header container */}
                     <Container className="d-flex align-items-center" fluid>
                         <Row>
@@ -181,7 +181,7 @@ export default class HospitalDetails extends Component {
                         </Row>
                     </Container>
                 </div>
-                <Container className='text-center' fluid>
+                <Container className='text-center mt-5' fluid>
 
                     <Button className='text-center my-4' color="info" onClick={this.bookAppointment}>
                         Book Appointment

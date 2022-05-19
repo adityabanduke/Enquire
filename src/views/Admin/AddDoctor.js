@@ -54,8 +54,6 @@ export default class AddDoctor extends Component {
         )
     }
 
-
-    
     render() {
         return (
             <>

@@ -34,6 +34,11 @@ export default class BookingDetail extends Component {
             h_name:"",
             book_time:'',
             book_date:'',
+            bookingNo:1,
+            bNo:1,
+            c_no:1,
+            CurrentP:1,
+            Extime:'',
 
         }
     }
@@ -54,7 +59,7 @@ export default class BookingDetail extends Component {
 
 		     Data.map((items)=>{
 if(items.bookingId == this.state.b_id){
-  this.setState({ b_no:items.bookingNo,
+  this.setState({
     h_id:items.h_id,
     h_name:items.hospitalName,
     book_time:items.bookingTime,
@@ -62,22 +67,57 @@ if(items.bookingId == this.state.b_id){
 }
          })
         
-
-
-
-
-       
-
-
-            
-
-
-
    
+    }).then(()=>{
+
+      firebase.database().ref("Hospitals/"+ this.state.h_id + "/data").once('value').then((snapshot) => {
+        var hData = snapshot.val();
+        console.log(hData);  
+        hData.map((items)=>{
+          if(items.bookingId == this.state.b_id){
+               this.setState({bookingNo : this.state.bNo})
+          }else{
+            this.setState({bNo : this.state.bNo +1})
+          }
+
+
+          if(items.status== 0 ){
+            this.setState({c_no: this.state.c_no })
+          }else if(items.status ==1){
+
+            this.setState({CurrentP : this.state.c_no})
+          }else if(items.status ==2 ){
+            this.setState({c_no: this.state.c_no +1})
+
+          }
+
+
+                   })      
+            }).then(()=>{
+              if(this.state.CurrentP < this.state.bookingNo){
+                var timeDiff = this.state.bookingNo - this.state.CurrentP;
+                this.setState({Extime : timeDiff*10  })
+              }
+        
+               if(this.state.CurrentP == this.state.bookingNo){
+                this.setState({Extime : "Appointment InProgress"})
+        
+              } if(this.state.CurrentP > this.state.bookingNo){
+                this.setState({Extime : "Appointment Completed"})
+        
+              }
+            })
+
+
+         
+
     })
+
+ 
+
 }
 else {
-    window.location.href = "/login";
+    window.location.href = "/Login";
 }
 })
 
@@ -105,7 +145,7 @@ else {
                           Booking No
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                         {this.state.b_no}
+                         {this.state.bookingNo}
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -134,7 +174,7 @@ else {
                         >
                            Current Patient No
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">4</span>
+                        <span className="h2 font-weight-bold mb-0">{this.state.CurrentP}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -162,7 +202,7 @@ else {
                         >
                          Expected time
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">10 min</span>
+                        <span className="h2 font-weight-bold mb-0">{this.state.Extime}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
