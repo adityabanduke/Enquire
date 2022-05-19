@@ -181,7 +181,7 @@ export default class HospitalDetails extends Component {
                         </Row>
                     </Container>
                 </div>
-                <Container className='text-center' fluid>
+                <Container className='text-center mt-5' fluid>
 
                     <Button className='text-center my-4' color="info" onClick={this.bookAppointment}>
                         Book Appointment

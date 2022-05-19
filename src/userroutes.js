@@ -23,6 +23,8 @@ import HospitalDetail from "views/user/HospitalDetail";
  import UserEditProfile from "views/user/UserEditProfile.js";
 import SearchResult from "views/user/SearchResult.js";
 import BookingDetail from "views/user/BookingDetail";
+import BookHistory from "views/user/BookHistory";
+
 // import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 // import Login from "views/examples/Login.js";
@@ -32,7 +34,7 @@ import BookingDetail from "views/user/BookingDetail";
 var userroutes = [
   {
     path: "/dashboard",
-    name: "dashboard",
+    name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/user",
@@ -93,6 +95,15 @@ var userroutes = [
     layout: "/user",
     class: "",
     invisible: true,
+  },
+  {
+    path: "/History",
+    name: "History",
+    icon: "ni ni-tv-2 text-primary",
+    component: BookHistory,
+    layout: "/user",
+    class: "",
+
   },
   // {
   //   path: "/Tables",
