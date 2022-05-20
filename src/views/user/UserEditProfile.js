@@ -18,261 +18,284 @@
 
 // reactstrap components
 import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
-    Modal,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  Container,
+  Modal,
 
-    Row,
-    Col,
-  } from "reactstrap";
-  // core components
-  import UserHeader from "components/Headers/UserHeader.js";
-  // import React from "react";
-  import react,{useState,useEffect, Component} from "react";
-  import firebase from '../../config/firebase-enquire'
-  import getCroppedImg from "utils/cropImage";
+  Row,
+  Col,
+} from "reactstrap";
+// core components
+import UserHeader from "components/Headers/UserEditProfile";
+// import React from "react";
+import react, { useState, useEffect, Component } from "react";
+import firebase from '../../config/firebase-enquire'
+import getCroppedImg from "utils/cropImage";
 import Cropper from "react-easy-crop";
 
-  export default class EditProfile extends Component {
-	constructor(props){
-		super(props);
-		this.state={
-           userData:{},
-           name: "",
-           contact: "",
-city:'',
-state:'',
-          address:"",
-           sameP: false,
-          
-           profilepic: '',
-           newprofilepic: null,
-           mentorModal: false,
-           submitModal: false,
-           Modal: false,
-           profile: '',
-           croppedArea: null,
-           croppedAreaPixels: null,
-           crop: {
-               x: 0,
-               y: 0,
-               width: 250,
-               height: 250,
-           },
-           zoom: 1,
+import defaultIcon from "../../assets/images/blankProfilepic.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Lottie from 'react-lottie';
+  //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
+   import rocket  from '../../assets/lottie/9764-loader.json'
+export default class EditProfile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {},
+      name: "",
+      contact: "",
+      city: '',
+      state: '',
+      address: "",
+      sameP: false,
+
+      profilepic: '',
+      newprofilepic: null,
+      mentorModal: false,
+      submitModal: false,
+      Modal: false,
+      profile: '',
+      croppedArea: null,
+      croppedAreaPixels: null,
+      crop: {
+        x: 0,
+        y: 0,
+        width: 250,
+        height: 250,
+      },
+      zoom: 1,
 
 
-		}
+    }
 
     this.setCropFunction = this.setCropFunction.bind(this);
     this.setZoomFunction = this.setZoomFunction.bind(this);
     this.onCropCompleteFunction = this.onCropCompleteFunction.bind(this);
     this.getNewImg = this.getNewImg.bind(this);
     this.uploadNewProfilePic = this.uploadNewProfilePic.bind(this);
-            this.submitmodal = this.submitmodal.bind(this);
+    this.submitmodal = this.submitmodal.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
 
 
-	}
+  }
 
-	
-  
-    componentDidMount() {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          firebase
-            .database()
-            .ref("users/" + user.uid)
-            .once("value")
-            .then((snapshot) => {
-              var data = snapshot.val();
-              console.log(data);
-              this.setState({ userData: data , name: data.username, contact:data.contact, city : data.city , state:data.state, address: data.address , postalCode: data.postalCode });
-            })
-            .then(() => { 
-              document.getElementById("userHeaderNameId").innerHTML =
-                "Hello " + this.state.userData.username;
+
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        firebase
+          .database()
+          .ref("users/" + user.uid)
+          .once("value")
+          .then((snapshot) => {
+            var data = snapshot.val();
+            console.log(data);
+            this.setState({
+              userData: data, name: data.username, contact: data.contact, city: data.city, state: data.state, address: data.address, postalCode: data.postalCode, profilepic: data.profilepic,
+              prevprofile: data.profilepic,
             });
-        } else {
-          window.location.href = "/";
-        }
-      });
-    }
+          })
 
-    
-    handleName = (e) => {
-      this.setState({ name: e.target.value });
+      } else {
+        window.location.href = "/";
+      }
+    });
+  }
+
+
+  handleName = (e) => {
+    this.setState({ name: e.target.value });
   };
   handleContact = (e) => {
-      this.setState({ contact: e.target.value });
+    this.setState({ contact: e.target.value });
   };
 
- 
+
 
   handleCity = (e) => {
-      this.setState({ city: e.target.value });
+    this.setState({ city: e.target.value });
   };
 
   handleState = (e) => {
-      this.setState({ state: e.target.value });
+    this.setState({ state: e.target.value });
   };
 
 
 
   handleAddress = (e) => {
-      this.setState({ address: e.target.value });
+    this.setState({ address: e.target.value });
   };
- 
-  handlePostalcode = (e) => {
-      this.setState({ postalCode: e.target.value });
-  };
- 
 
- 
+  handlePostalcode = (e) => {
+    this.setState({ postalCode: e.target.value });
+  };
+
+
+
 
   getNewImg = (e) => {
-      this.setState({
-          newprofilepic: URL.createObjectURL(e.target.files[0]),
-      });
-              this.setState({mentorModal: true});
+    this.setState({
+      newprofilepic: URL.createObjectURL(e.target.files[0]),
+    });
+    this.setState({ mentorModal: true });
 
   };
 
   setCropFunction = (newcrop) => {
-      this.setState({
-          crop: newcrop,
-      });
+    this.setState({
+      crop: newcrop,
+    });
   };
   setZoomFunction = (newzoom) => {
-      this.setState({
-          zoom: newzoom,
-      });
+    this.setState({
+      zoom: newzoom,
+    });
   };
   onCropCompleteFunction = (croppedArea, croppedAreaPixels) => {
-      this.setState({
-          croppedArea: croppedArea,
-          croppedAreaPixels: croppedAreaPixels,
-      });
-   
+    this.setState({
+      croppedArea: croppedArea,
+      croppedAreaPixels: croppedAreaPixels,
+    });
+
   };
   uploadNewProfilePic = () => {
-      getCroppedImg(
-          this.state.newprofilepic,
-          this.state.croppedAreaPixels,
-          0
-      ).then((result) => {
-          this.setState({
-              newprofilepic: null,
-              profilepic: result,
-          })
-      }).then(() => {
-          console.log(this.state.profilepic);
+    getCroppedImg(
+      this.state.newprofilepic,
+      this.state.croppedAreaPixels,
+      0
+    ).then((result) => {
+      this.setState({
+        newprofilepic: null,
+        profilepic: result,
       })
+    }).then(() => {
+      console.log(this.state.profilepic);
+    })
   };
 
 
   toggleMentor = () => {
-      if (this.state.mentorModal) {
-          console.log("Modal Close");
-          this.setState({
-              mentorModal: false,
-          });
-      } else {
-          console.log("Modal Open");
-          this.setState({
-              mentorModal: true,
-              
-          });
-      }
+    if (this.state.mentorModal) {
+      console.log("Modal Close");
+      this.setState({
+        mentorModal: false,
+      });
+    } else {
+      console.log("Modal Open");
+      this.setState({
+        mentorModal: true,
+
+      });
+    }
   };
 
   // openModal = () =>{
-      
+
   //     this.setState({mentorModal: true});
   // }
 
-submitmodal = ()=>{
-    this.setState({submitModal: true})
-}
+  submitmodal = () => {
+    this.setState({ submitModal: true })
+  }
 
   handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      firebase.auth().onAuthStateChanged((user) => {
-          firebase.database().ref(`users/${user.uid}`).once("value")
-              .then((snap) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      firebase.database().ref(`users/${user.uid}`).once("value")
+        .then((snap) => {
+          this.setState({createloader: true});
 
-                  if (this.state.profilepic !== this.state.profile) {
-                      firebase
-                          .storage()
-                          .ref("users/" + user.uid + "/profile.jpeg")
-                          .putString(this.state.profilepic, "data_url")
-                          .then((snapshot) => {
+          const db = firebase.database();
+          db.ref("users/" + user.uid)
+            .update({
+              username: this.state.name,
 
-                              firebase
-                                  .storage()
-                                  .ref("users")
-                                  .child(user.uid + "/profile.jpeg")
-                                  .getDownloadURL()
-                                  .then((urls) => {
+              contact: this.state.contact,
 
-                                      const db = firebase.database();
-                                      db.ref("users/" + user.uid)
-                                          .update({
-                                              profilepic: urls,
-                                          })
+              address: this.state.address,
+              city: this.state.city,
+              state: this.state.state,
+              postalCode: this.state.postalCode,
 
-                                  })
-                          })
-                  }
-                  
 
-                  const db = firebase.database();
-                  db.ref("users/" + user.uid)
+            }).then(()=>{
+
+          
+
+          if (this.state.profilepic !== this.state.prevprofile) {
+            firebase
+              .storage()
+              .ref("users/" + user.uid + "/profile.jpeg")
+              .putString(this.state.profilepic, "data_url")
+              .then((snapshot) => {
+
+                firebase
+                  .storage()
+                  .ref("users")
+                  .child(user.uid + "/profile.jpeg")
+                  .getDownloadURL()
+                  .then((urls) => {
+
+                    const db = firebase.database();
+                    db.ref("users/" + user.uid)
                       .update({
-                          username: this.state.name,
+                        profilepic: urls,
+                      }).then(() => {
+                        this.setState({createloader: false});
 
-                          contact: this.state.contact,
-
-                          address: this.state.address,
-                          city: this.state.city,
-                          state: this.state.state,
-                          postalCode: this.state.postalCode,
-
-
-                      })
-                     
-
-
-              }) .then(() => {
-                          //   alert("Mentor Updated Successfully!");
-                          // window.location.href = "/mentor/Profile";
-                          this.submitmodal();
+                        this.submitmodal();
                       });
-      })
+
+                  })
+              })
+          }else{
+            this.submitmodal();
+            this.setState({createloader: false});
+
+          }
+
+
+        })
+
+
+
+        })
+    })
 
   };
 
 
 
-    
-   
-    render(){
+
+
+  render() {
+    const defaultOptions = {
+      loop: true,
+      autoplay: true, 
+      animationData: rocket,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+      }
+    };
     return (
       <>   {this.state.newprofilepic ? (
         <>
-            <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
-                <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent:"center" , position:'relative'}}>
-                    {/* <CardHeader> */}
-                    <Button size="lg" onClick={this.toggleMentor} style={{ position: "absolute", top: "0", left: "0", margin: "5px" }}>
-                        {/* <FontAwesomeIcon
+          <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
+            <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent: "center", position: 'relative' }}>
+              {/* <CardHeader> */}
+              <Button size="lg" onClick={this.toggleMentor} style={{ position: "absolute", top: "0", left: "0", margin: "5px" }}>
+                {/* <FontAwesomeIcon
                             icon={faWindowClose}
                             style={{
                                 color: "rgb(185, 185, 185)",
@@ -282,44 +305,48 @@ submitmodal = ()=>{
                                 zIndex:'100',
                             }}
                         /> */}
-                    </Button>
-                    {/* </CardHeader> */}
-                    <div className="imgCropperParentDiv">
-                        <Cropper
-                            className="cropperClass"
-                            image={this.state.newprofilepic}
-                            crop={this.state.crop}
-                            zoom={this.state.zoom}
-                            aspect={1 / 1}
-                            onCropChange={this.setCropFunction}
-                            onCropComplete={this.onCropCompleteFunction}
-                            onZoomChange={this.setZoomFunction}
-                        />
-                       
-                    </div>
-<Button color="primary" className="cancel" onClick={this.uploadNewProfilePic}>
-                            Upload
-                        </Button>
-                    {/* </CardFooter> */}
-                </Card>
-            </Modal>
+              </Button>
+              {/* </CardHeader> */}
+              <div className="imgCropperParentDiv">
+                <Cropper
+                  className="cropperClass"
+                  image={this.state.newprofilepic}
+                  crop={this.state.crop}
+                  zoom={this.state.zoom}
+                  aspect={1 / 1}
+                  onCropChange={this.setCropFunction}
+                  onCropComplete={this.onCropCompleteFunction}
+                  onZoomChange={this.setZoomFunction}
+                />
+
+              </div>
+              <Button color="primary" className="cancel" onClick={this.uploadNewProfilePic}>
+                Upload
+              </Button>
+              {/* </CardFooter> */}
+            </Card>
+          </Modal>
         </>
-    ) : null}
+      ) : null}
 
 
-    <Modal isOpen={this.state.submitModal} toggle={this.toggleSubmit}>
-                <Card  style={{ width: '100%', height: "30vh", alignItems: "center",justifyContent:'center', position:'relative'}}>
-                 
-                 <h2>Profile Succesfully Updated</h2>
-                 
-                 <a href="/user/Profile"><Button color="info">Return To Profile</Button></a>
-                 </Card>
-                 </Modal>
-        <UserHeader userData={this.state.userData}  />
+        <Modal isOpen={this.state.submitModal} toggle={this.toggleSubmit}>
+          <Card style={{ width: '100%', height: "30vh", alignItems: "center", justifyContent: 'center', position: 'relative' }}>
+
+            <h2>Profile Succesfully Updated</h2>
+
+            <a href="/user/Profile"><Button color="info">Return To Profile</Button></a>
+          </Card>
+        </Modal>
+        <UserHeader userData={this.state.userData} />
         {/* Page content */}
+
+        {this.state.createloader ?  <Lottie options={defaultOptions}
+              height={300}
+              width={300}></Lottie> :
         <Container className="mt--7" fluid>
           <Row>
-             {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+            {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-Editprofile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
@@ -427,6 +454,59 @@ submitmodal = ()=>{
                     </Col>
                   </Row>
                 </CardHeader>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "fit-content",
+                    position: "relative",
+                  }}
+                  className="align-items-center"
+                >
+                  <img
+                    alt="..."
+                    className="rounded-circle"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      margin: "0 20px",
+                    }}
+                    src={
+                      this.state.profilepic
+                        ? this.state.profilepic
+                        : defaultIcon
+                    }
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "-10px",
+                      right: "0",
+                      width: "30px",
+                    }}
+                  >
+                    <div className="image-upload">
+                      <label htmlFor="file-input" style={{ display: "block" }}>
+                        <FontAwesomeIcon
+                          icon={faPen}
+                          style={{
+                            fontSize: "30px",
+                            color: "#5E72E4",
+                            backgroundColor: "#DEE1E6",
+                            borderRadius: "50%",
+                            padding: "30%",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </label>
+                      <input
+                        id="file-input"
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={this.getNewImg}
+                      />
+                    </div>
+                  </div>
+                </div>
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
@@ -440,20 +520,20 @@ submitmodal = ()=>{
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                               Name
+                              Name
                             </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue={this.state.username}
-                            id="input-username"
-                            onChange={this.handleName}
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue={this.state.username}
+                              id="input-username"
+                              onChange={this.handleName}
 
-                            placeholder={this.state.userData.username}
-                            type="text"
-                          />
+                              placeholder={this.state.userData.username}
+                              type="text"
+                            />
                           </FormGroup>
                         </Col>
-                      
+
                         <Col lg="6">
                           <FormGroup>
                             <label
@@ -598,22 +678,21 @@ submitmodal = ()=>{
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                  
+
                   </Form>
                 </CardBody>
                 <Button
-                      color="info"
-                     onClick={this.handleSubmit}
+                  color="info"
+                  onClick={this.handleSubmit}
 
-                    > Edit profile
-                    </Button>
+                > Edit profile
+                </Button>
               </Card>
             </Col>
           </Row>
-        </Container>
+        </Container>}
       </>
     );
-                    }
-  };
-  
-  
+  }
+};
+

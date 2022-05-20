@@ -21,6 +21,8 @@ import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
+import logol from "../../assets/img/enquirelogo.png"
+
 // reactstrap components
 import {
   Button,
@@ -120,11 +122,13 @@ const Sidebar = (props) => {
         </button>
         {/* Brand */}
         {logo ? (
-          <NavbarBrand className="pt-0" {...navbarBrandProps}>
+          <NavbarBrand className="pt-3" {...navbarBrandProps}>
             <img
               alt={logo.imgAlt}
               className="navbar-brand-img"
-              src={logo.imgSrc}
+              src={logol}
+              height= {150}
+              width={160}
             />
           </NavbarBrand>
         ) : null}

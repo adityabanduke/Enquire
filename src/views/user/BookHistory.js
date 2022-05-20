@@ -132,7 +132,7 @@ export default class Booking extends Component {
                 {this.state.booking && this.state.booking.map((items,index) => (
 <>
                  
-                {items.bookingDate == this.state.today ?   <tr>
+                {items.bookingDate !== this.state.today ?   <tr>
                     
                     <th scope="row">
                       <Media className="align-items-center">

@@ -16,7 +16,7 @@
 
 */
 // reactstrap components
-import react  from 'react';
+import react from 'react';
 import {
   Badge,
   Card,
@@ -58,47 +58,163 @@ import Typography from '@mui/material/Typography';
 import Header from "components/Headers/Header.js";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
+import { db } from '../../config/firebase-enquire';
+import firebase from '../../config/firebase-enquire';
+import { useHistory, useParams } from 'react-router-dom';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
+import { nanoid } from 'nanoid';
+
+
+
+
+export default class dashboard extends react.Component {
+  constructor(props) {
+
+    var today = new Date(),
+      todayDate =
+        today.getFullYear() +
+        "-" +
+        ((today.getMonth() + 1 < 10 ? "0" : "") + (today.getMonth() + 1)) +
+        "-" +
+        ((today.getDate() < 10 ? "0" : "") + today.getDate());
+    var time = today.getHours() + ":" + today.getMinutes();
+    var DATA = '';
+    super(props)
+    this.state = {
+      patientname: "",
+      open: false,
+      h_id: "",
+      user_id: "",
+      hData: "",
+      today: todayDate,
+      time: time,
+      booking: [],
+      Hbooking: [],
+      hospitalName: '',
+      booking_id: '',
+      status: 0,
+      queue: [],
+      PatientInProcess:"",
+      value:true,
+
+    }
+    this.handleOpen = this.handleOpen.bind(this);
+    this.bookAppointment = this.bookAppointment.bind(this);
+    this.handleclose = this.handleClose.bind(this);
+    this.changeStatus = this.changeStatus.bind(this);
+
+
+
+  }
+  handleOpen = () => { this.setState({ open: true }) };
+  handleClose = () => { this.setState({ open: false }) };
+  componentDidMount() {
+    // var currenturl = window.location.pathname;
+    // this.setState({ h_id: h_id });
+
+    firebase.auth().onAuthStateChanged((user) => {
+
+      if (user) {
+        db.collection("Admin").doc(user.uid).get().then((snapshot) => {
+          console.log(snapshot.data());
+          var hospitalData = snapshot.data();
+          console.log(hospitalData.name);
+          this.setState({ hData: hospitalData, hospitalName: hospitalData.name, h_id: hospitalData.h_id });
+
+          // console.log(userData);
+        }).then(() => {
+          firebase.database().ref("Hospitals/" + this.state.h_id).once('value').then((snapshot) => {
+            var Data = snapshot.val();
+            this.setState({ Hbooking: Data.data });
+            console.log(Data.data);
+            // this.DATA=Data.data;
+          })
+        }).then((err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Success!!!")
+
+          }
+        })
+
+      }
+      else {
+        window.location.href = "/Login";
+      }
+    })
+
+  }
+
+
+  changeStatus = (e) => {
   
-  boxShadow: 24,
-  p: 4,
-  
-};
+    this.setState({value:!this.state.value});
+    console.log(this.state.value);
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+        console.log(user.uid);
+        this.state.hData.avalabilityStatus = !e.target.value;
+        this.setState({hData:{...this.state.hData, avalabilityStatus:this.state.value}})
+        db.collection('Admin').doc(user.uid).update(this.state.hData).then((err) => {
+          if(err){
+            console.log(err);
+          }
+        })
+      }
+          // console.log(userData);
+        });
+  }
+
+
+  bookAppointment = async () => {
+    console.log("book");
+    var model = nanoid();
+    await this.setState({ booking_id: model });
+    console.log(this.state.h_id);
+    console.log(this.state.booking_id);
+    this.state.Hbooking.push({
+      user_id: this.state.booking_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
+      bookingTime: this.state.time, bookingId: this.state.booking_id, status: this.state.status, patientname: this.state.patientname
+    })
+
+    firebase.database().ref("Hospitals/" + this.state.h_id).set({
+
+      data: this.state.Hbooking
+
+    }).then(() => {
+      alert("Appointment Booked Successfully");
 
 
 
-const dashboard = () => {
-  const [open, setOpen] = react.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => {setOpen(false)
-};
-  return (
-    <>
-     {/* Modal */}
-     <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Add a user
-            </Typography>
-            <FormGroup>
+    })
+  }
+
+
+
+
+  render() {
+    return (
+
+      <>
+        {/* Modal */}
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={this.state.open}
+          onClose={this.handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={this.state.open}>
+            <Box style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: '500', backgroundColor: 'white', boxShadow: '24', padding: '30px' }}>
+              <Typography id="transition-modal-title" variant="h6" component="h2">
+                Add a user
+              </Typography>
+              <FormGroup>
                 <InputGroup className="input-group-alternative mb-3 mt-2">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -108,234 +224,395 @@ const dashboard = () => {
                   <Input
                     placeholder="Name"
                     type="text"
-                  
+                    value={this.state.patientname}
+                    onChange={(e) => { this.setState({ patientname: e.target.value }) }}
+
                   />
                 </InputGroup>
               </FormGroup>
               <div className="d-flex justify-content-between">
-              <Button variant="text" type='button' onClick={() => {setOpen(false)}}>Close</Button>
-<Button variant="contained">Add</Button>
+                <Button variant="text" type='button' onClick={() => { this.setState({ open: false }) }}>Close</Button>
+                <Button variant="contained" onClick={this.bookAppointment}>Add</Button>
               </div>
-          </Box>
-        </Fade>
-      </Modal>
-       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
-        <Container fluid>
-          <div className="header-body">
-            {/* Card stats */}
-            <Row>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          In Process
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">
-                          Ashwin Joshi
-                        </span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
-                          <i className=" ni ni-circle-08" />
-                         
-
-                        </div>
-                      </Col>
-                    </Row>
-                 
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          New users
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">2,356</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-                          <i className="fas fa-chart-pie" />
-                        </div>
-                      </Col>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-danger mr-2">
-                        <i className="fas fa-arrow-down" /> 3.48%
-                      </span>{" "}
-                      <span className="text-nowrap">Since last week</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                         Total Customers
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">924</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                          <i className="fas fa-users" />
-                        </div>
-                      </Col>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-warning mr-2">
-                        <i className="fas fa-arrow-down" /> 1.10%
-                      </span>{" "}
-                      <span className="text-nowrap">Since yesterday</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg="6" xl="3">
-                <Card className="card-stats mb-4 mb-xl-0">
-                  <CardBody>
-                    <Row>
-                      <div className="col">
-                        <CardTitle
-                          tag="h5"
-                          className="text-uppercase text-muted mb-0"
-                        >
-                          Status
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">Available</span>
-                      </div>
-                      <Col className="col-auto">
-                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                          <i className="ni ni-button-power" />
-                        </div>
-                      </Col>
-                    </Row>
-                    <p className="mt-3 mb-0 text-muted text-sm">
-                      <span className="text-success mr-2">
-                      <Switch defaultChecked color="success" />
-                      </span>{" "}
-                      <span className="text-nowrap">Toggle Availability</span>
-                    </p>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </div>
-      {/* Page content */}
-      <Container className="mt--7" fluid>
-        {/* Table */}
-        <Row>
-          <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0 d-flex justify-content-between">
-              <div className="d-flex">
-                  <h3> Your Waiting List</h3>
-               </div>
-                <Fab color="success" onClick={handleOpen} size="small"  aria-label="add">
-        <AddIcon />
-      </Fab>
-               
-              
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                  <th scope="col">SNo.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Booking Time</th>
-                    <th scope="col">Status</th>
-                    <th scope="col" />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                  <th scope="row">
-                     <span className="mb-0 text-sm">
-1.                          </span>
-               
-                    </th>
-                    <th scope="row">
-                     <span className="mb-0 text-sm">
-                            Argon Design System
+            </Box>
+          </Fade>
+        </Modal>
+        <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+          <Container fluid>
+            <div className="header-body">
+              {/* Card stats */}
+              <Row>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            In Process
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">
+                            {this.state.PatientInProcess? this.state.PatientInProcess:"Patient Name"}
                           </span>
-               
-                    </th>
-                  
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">14.57</span>
-                   
-                      </div>
-                    </td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        pending
-                      </Badge>
-                    </td>
-                
-                   
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          className="btn-icon-only text-light"
-                          href="#pablo"
-                          role="button"
-                          size="sm"
-                          color=""
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                           Process
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Remove
-                          </DropdownItem>
-                        
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-        
-                </tbody>
-              </Table>
-           
-            </Card>
-          </div>
-        </Row>
-     
-      </Container>
-      
-    
-    </>
-  );
-};
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i className=" ni ni-circle-08" />
 
-export default dashboard;
+
+                          </div>
+                        </Col>
+                      </Row>
+
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            New users
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">2,356</span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
+                            <i className="fas fa-chart-pie" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-danger mr-2">
+                          <i className="fas fa-arrow-down" /> 3.48%
+                        </span>{" "}
+                        <span className="text-nowrap">Since last week</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            Total Customers
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">924</span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                            <i className="fas fa-users" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-warning mr-2">
+                          <i className="fas fa-arrow-down" /> 1.10%
+                        </span>{" "}
+                        <span className="text-nowrap">Since yesterday</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg="6" xl="3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            Status
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">Available</span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                            <i className="ni ni-button-power" />
+                          </div>
+                        </Col>
+                      </Row>
+                      <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-success mr-2">
+                          <Switch
+                                  value={this.state.value}
+                                  onChange={
+                                   this.changeStatus}
+                          
+                           defaultChecked color="success" />
+                        </span>{" "}
+                        <span className="text-nowrap">Toggle Availability</span>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        </div>
+        {/* Page content */}
+        <Container className="mt--7" fluid>
+          {/* Table */}
+          <Row>
+            <div className="col">
+              <Card className="shadow">
+                <CardHeader className="border-0 d-flex justify-content-between">
+                  <div className="d-flex">
+                    <h3> Your Waiting List</h3>
+                  </div>
+                  {this.state.hData.avalabilityStatus?<Fab color="success" onClick={this.handleOpen} size="small" aria-label="add">
+                    <AddIcon />
+                  </Fab>:null}
+
+
+                </CardHeader>
+                <Table className="align-items-center table-flush" responsive>
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">SNo.</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Booking Time</th>
+                      <th scope="col">Status</th>
+                      <th scope="col" />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.Hbooking && this.state.Hbooking.map((item, index) => (
+
+                      <>
+                        <tr>
+                          <th scope="row">
+                            <span className="mb-0 text-sm">
+                              {index + 1}.                          </span>
+
+                          </th>
+                          <th scope="row">
+                            <span className="mb-0 text-sm">
+                              {item.patientname}
+                            </span>
+
+                          </th>
+
+                          <td>
+                            <div className="d-flex align-items-center">
+                              <span className="mr-2">{item.bookingTime}</span>
+
+                            </div>
+                          </td>
+                          <td>
+                            <Badge color="" className="badge-dot mr-4">
+                              {!item.status ? <i className="bg-warning" /> : item.status == 1 ? <i className="bg-info" /> : <i className="bg-success" />}
+
+                              {!item.status ? "Pending" : item.status == 1 ? "Progress" : "Done"}
+              
+                            </Badge>
+                          </td>
+
+
+                          <td className="text-right">
+                            <UncontrolledDropdown>
+                              <DropdownToggle
+                                className="btn-icon-only text-light"
+                                href="#pablo"
+                                role="button"
+                                size="sm"
+                                color=""
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                }
+
+                                }
+                              >
+                                <i className="fas fa-ellipsis-v" />
+                              </DropdownToggle>
+                              <DropdownMenu className="dropdown-menu-arrow" right>
+                              {(!index && item.status === 1 )? <DropdownItem
+                                 
+                                  onClick={() => {
+                                    var data = this.state.Hbooking;
+                               
+                                    
+                                    var removedVal;
+                                      for (let i = 0; i < this.state.Hbooking.length; i++) {
+                                      if (item.bookingId == this.state.Hbooking[i].bookingId){
+                                      
+                                       removedVal = data.splice(i, 1);
+                                    removedVal[0].status = 2;
+                                      this.setState({ Hbooking: data });
+                                      console.log(data);
+                                      firebase.database().ref("Hospitals/" + this.state.h_id).set({
+
+                                        data: data,
+
+                                      })}
+
+                                        
+                                        firebase.database().ref("hospitalHistory/" + this.state.h_id).get().then((snapshot) => {
+                                            if (snapshot.exists()) {
+                                                  var hHistory = snapshot.val();
+                                                console.log(hHistory.history);
+                                                console.log(removedVal);
+                                                       hHistory.history.push(removedVal[0]);
+                                                  firebase.database().ref("hospitalHistory/" + this.state.h_id).set({
+  
+                                                    history: hHistory.history,
+            
+                                                  })
+
+                                          } else {
+                                            firebase.database().ref("hospitalHistory/" + this.state.h_id).set({
+  
+                                              history: removedVal,
+      
+                                            })
+                                            }
+                                          }).catch((error) => {
+                                            console.error(error);
+                                          });
+  
+
+
+                                      }
+
+
+                                   if (item.bookingId != item.user_id)
+                                        firebase.database().ref("users/" + item.user_id + "/YourBookings").get().then((snapshot) => {
+                                          if (snapshot.exists()) {
+                                            var tempData = snapshot.val();
+                                          console.log(tempData)
+                                            tempData.bookings.map((uitem, index) => {
+                                              console.log(uitem);
+                                              console.log(index);
+                                              
+                                              if (uitem.bookingId == item.bookingId) {
+                                                tempData.bookings[index].status = 2;
+                                               }
+                                               console.log(tempData);
+                                              
+   
+                                          })
+
+                                           firebase.database().ref("users/" + item.user_id + "/YourBookings").set({
+                                                 bookings: tempData.bookings
+                                               })
+                                             
+                                            
+                                         
+                                          } else {
+                                            console.log("No data available");
+                                          }
+                                        }).catch((error) => {
+                                          console.error(error);
+                                        });
+
+                                    
+                                  }}
+                                >
+                                  
+                                  Done
+                                </DropdownItem> : null}
+                                {!index ? <DropdownItem
+                                 
+                                  onClick={() => {
+                                    var data = this.state.Hbooking;
+                                    for (let i = 0; i < this.state.Hbooking.length; i++) {
+                                      if (item.bookingId == this.state.Hbooking[i].bookingId)
+                                        data[i].status = 1;
+                                        this.setState({PatientInProcess:data[i].patientname})
+                                      this.setState({ Hbooking: data });
+                                      firebase.database().ref("Hospitals/" + this.state.h_id).set({
+                                        data: data
+                                      })
+
+
+
+                                      if (item.bookingId != item.user_id)
+                                        firebase.database().ref("users/" + item.user_id + "/YourBookings").get().then((snapshot) => {
+                                          if (snapshot.exists()) {
+                                            var tempData = snapshot.val();
+                                          console.log(tempData)
+                                            tempData.bookings.map((uitem, index) => {
+                                              console.log(uitem);
+                                              console.log(index);
+                                              
+                                              if (uitem.bookingId == item.bookingId) {
+                                                tempData.bookings[index].status = 1;
+                                               }
+                                               console.log(tempData);
+                                              
+   
+                                          })
+
+                                           firebase.database().ref("users/" + item.user_id + "/YourBookings").set({
+                                                 bookings: tempData.bookings
+                                               })
+                                             
+                                            
+                                         
+                                          } else {
+                                            console.log("No data available");
+                                          }
+                                        }).catch((error) => {
+                                          console.error(error);
+                                        });
+
+                                    }
+                                  }}
+                                >
+                                  Process
+                                </DropdownItem> : null}
+                                <DropdownItem
+                                  href="#pablo"
+                                  onClick={() => {
+                                    var data = this.state.Hbooking;
+                                    for (let i = 0; i < this.state.Hbooking.length; i++) {
+                                      if (item.bookingId == this.state.Hbooking[i].bookingId)
+                                        data.splice(i, 1);
+                                      console.log(data);
+                                      this.setState({ Hbooking: data });
+                                      firebase.database().ref("Hospitals/" + this.state.h_id).set({
+
+                                        data: data,
+
+                                      })
+                                    }
+                                  }}
+                                >
+                                  Remove
+                                </DropdownItem>
+
+                              </DropdownMenu>
+                            </UncontrolledDropdown>
+                          </td>
+                        </tr></>
+                    ))}
+
+                  </tbody>
+                </Table>
+
+              </Card>
+            </div>
+          </Row>
+
+        </Container>
+
+
+      </>
+    );
+  };
+}
+
+
+

@@ -36,6 +36,9 @@ export default class BookingDetail extends Component {
             book_date:'',
             bookingNo:1,
             bNo:1,
+            c_no:1,
+            CurrentP:1,
+            Extime:'',
 
         }
     }
@@ -76,8 +79,37 @@ if(items.bookingId == this.state.b_id){
           }else{
             this.setState({bNo : this.state.bNo +1})
           }
+
+
+          if(items.status== 0 ){
+            this.setState({c_no: this.state.c_no })
+          }else if(items.status ==1){
+
+            this.setState({CurrentP : this.state.c_no})
+          }else if(items.status ==2 ){
+            this.setState({c_no: this.state.c_no +1})
+
+          }
+
+
                    })      
+            }).then(()=>{
+              if(this.state.CurrentP < this.state.bookingNo){
+                var timeDiff = this.state.bookingNo - this.state.CurrentP;
+                this.setState({Extime : timeDiff*10  })
+              }
+        
+               if(this.state.CurrentP == this.state.bookingNo){
+                this.setState({Extime : "Appointment InProgress"})
+        
+              } if(this.state.CurrentP > this.state.bookingNo){
+                this.setState({Extime : "Appointment Completed"})
+        
+              }
             })
+
+
+         
 
     })
 
@@ -85,7 +117,7 @@ if(items.bookingId == this.state.b_id){
 
 }
 else {
-    window.location.href = "/login";
+    window.location.href = "/Login";
 }
 })
 
@@ -142,7 +174,7 @@ else {
                         >
                            Current Patient No
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">4</span>
+                        <span className="h2 font-weight-bold mb-0">{this.state.CurrentP}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -170,7 +202,7 @@ else {
                         >
                          Expected time
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">10 min</span>
+                        <span className="h2 font-weight-bold mb-0">{this.state.Extime}</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
