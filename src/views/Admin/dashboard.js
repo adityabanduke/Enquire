@@ -63,6 +63,7 @@ import firebase from '../../config/firebase-enquire';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { nanoid } from 'nanoid';
+import Loader from '../../components/loader/Loader.js';
 
 
 
@@ -95,6 +96,7 @@ export default class dashboard extends react.Component {
       status: 0,
       queue: [],
       PatientInProcess:"",
+      loading:false,
       value:true,
 
     }
@@ -126,6 +128,7 @@ export default class dashboard extends react.Component {
           firebase.database().ref("Hospitals/" + this.state.h_id).once('value').then((snapshot) => {
             var Data = snapshot.val();
             this.setState({ Hbooking: Data.data });
+            this.setState({loading:true})
             console.log(Data.data);
             // this.DATA=Data.data;
           })
@@ -365,6 +368,7 @@ export default class dashboard extends react.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           {/* Table */}
+          {this.state.loading?
           <Row>
             <div className="col">
               <Card className="shadow">
@@ -378,233 +382,237 @@ export default class dashboard extends react.Component {
 
 
                 </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">SNo.</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Booking Time</th>
-                      <th scope="col">Status</th>
-                      <th scope="col" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.Hbooking && this.state.Hbooking.map((item, index) => (
-
-                      <>
-                        <tr>
-                          <th scope="row">
-                            <span className="mb-0 text-sm">
-                              {index + 1}.                          </span>
-
-                          </th>
-                          <th scope="row">
-                            <span className="mb-0 text-sm">
-                              {item.patientname}
-                            </span>
-
-                          </th>
-
-                          <td>
-                            <div className="d-flex align-items-center">
-                              <span className="mr-2">{item.bookingTime}</span>
-
-                            </div>
-                          </td>
-                          <td>
-                            <Badge color="" className="badge-dot mr-4">
-                              {!item.status ? <i className="bg-warning" /> : item.status == 1 ? <i className="bg-info" /> : <i className="bg-success" />}
-
-                              {!item.status ? "Pending" : item.status == 1 ? "Progress" : "Done"}
               
-                            </Badge>
-                          </td>
+                 <Table className="align-items-center table-flush" responsive>
+                 <thead className="thead-light">
+                   <tr>
+                     <th scope="col">SNo.</th>
+                     <th scope="col">Name</th>
+                     <th scope="col">Booking Time</th>
+                     <th scope="col">Status</th>
+                     <th scope="col" />
+                   </tr>
+                 </thead>
+                 <tbody>
+                   {this.state.Hbooking && this.state.Hbooking.map((item, index) => (
+
+                     <>
+                       <tr>
+                         <th scope="row">
+                           <span className="mb-0 text-sm">
+                             {index + 1}.                          </span>
+
+                         </th>
+                         <th scope="row">
+                           <span className="mb-0 text-sm">
+                             {item.patientname}
+                           </span>
+
+                         </th>
+
+                         <td>
+                           <div className="d-flex align-items-center">
+                             <span className="mr-2">{item.bookingTime}</span>
+
+                           </div>
+                         </td>
+                         <td>
+                           <Badge color="" className="badge-dot mr-4">
+                             {!item.status ? <i className="bg-warning" /> : item.status == 1 ? <i className="bg-info" /> : <i className="bg-success" />}
+
+                             {!item.status ? "Pending" : item.status == 1 ? "Progress" : "Done"}
+             
+                           </Badge>
+                         </td>
 
 
-                          <td className="text-right">
-                            <UncontrolledDropdown>
-                              <DropdownToggle
-                                className="btn-icon-only text-light"
-                                href="#pablo"
-                                role="button"
-                                size="sm"
-                                color=""
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                }
+                         <td className="text-right">
+                           <UncontrolledDropdown>
+                             <DropdownToggle
+                               className="btn-icon-only text-light"
+                               href="#pablo"
+                               role="button"
+                               size="sm"
+                               color=""
+                               onClick={(e) => {
+                                 e.preventDefault();
+                               }
 
-                                }
-                              >
-                                <i className="fas fa-ellipsis-v" />
-                              </DropdownToggle>
-                              <DropdownMenu className="dropdown-menu-arrow" right>
-                              {(!index && item.status === 1 )? <DropdownItem
-                                 
-                                  onClick={() => {
-                                    var data = this.state.Hbooking;
-                               
-                                    
-                                    var removedVal;
-                                      for (let i = 0; i < this.state.Hbooking.length; i++) {
-                                      if (item.bookingId == this.state.Hbooking[i].bookingId){
-                                      
-                                       removedVal = data.splice(i, 1);
-                                    removedVal[0].status = 2;
-                                      this.setState({ Hbooking: data });
-                                      console.log(data);
-                                      firebase.database().ref("Hospitals/" + this.state.h_id).set({
+                               }
+                             >
+                               <i className="fas fa-ellipsis-v" />
+                             </DropdownToggle>
+                             <DropdownMenu className="dropdown-menu-arrow" right>
+                             {(!index && item.status === 1 )? <DropdownItem
+                                
+                                 onClick={() => {
+                                   var data = this.state.Hbooking;
+                              
+                                   
+                                   var removedVal;
+                                     for (let i = 0; i < this.state.Hbooking.length; i++) {
+                                     if (item.bookingId == this.state.Hbooking[i].bookingId){
+                                     
+                                      removedVal = data.splice(i, 1);
+                                   removedVal[0].status = 2;
+                                     this.setState({ Hbooking: data });
+                                     console.log(data);
+                                     firebase.database().ref("Hospitals/" + this.state.h_id).set({
 
-                                        data: data,
+                                       data: data,
 
-                                      })}
+                                     })}
 
+                                       
+                                       firebase.database().ref("hospitalHistory/" + this.state.h_id).get().then((snapshot) => {
+                                           if (snapshot.exists()) {
+                                                 var hHistory = snapshot.val();
+                                               console.log(hHistory.history);
+                                               console.log(removedVal);
+                                                      hHistory.history.push(removedVal[0]);
+                                                 firebase.database().ref("hospitalHistory/" + this.state.h_id).set({
+ 
+                                                   history: hHistory.history,
+           
+                                                 })
+
+                                         } else {
+                                           firebase.database().ref("hospitalHistory/" + this.state.h_id).set({
+ 
+                                             history: removedVal,
+     
+                                           })
+                                           }
+                                         }).catch((error) => {
+                                           console.error(error);
+                                         });
+ 
+
+
+                                     }
+
+
+                                  if (item.bookingId != item.user_id)
+                                       firebase.database().ref("users/" + item.user_id + "/YourBookings").get().then((snapshot) => {
+                                         if (snapshot.exists()) {
+                                           var tempData = snapshot.val();
+                                         console.log(tempData)
+                                           tempData.bookings.map((uitem, index) => {
+                                             console.log(uitem);
+                                             console.log(index);
+                                             
+                                             if (uitem.bookingId == item.bookingId) {
+                                               tempData.bookings[index].status = 2;
+                                              }
+                                              console.log(tempData);
+                                             
+  
+                                         })
+
+                                          firebase.database().ref("users/" + item.user_id + "/YourBookings").set({
+                                                bookings: tempData.bookings
+                                              })
+                                            
+                                           
                                         
-                                        firebase.database().ref("hospitalHistory/" + this.state.h_id).get().then((snapshot) => {
-                                            if (snapshot.exists()) {
-                                                  var hHistory = snapshot.val();
-                                                console.log(hHistory.history);
-                                                console.log(removedVal);
-                                                       hHistory.history.push(removedVal[0]);
-                                                  firebase.database().ref("hospitalHistory/" + this.state.h_id).set({
-  
-                                                    history: hHistory.history,
-            
-                                                  })
+                                         } else {
+                                           console.log("No data available");
+                                         }
+                                       }).catch((error) => {
+                                         console.error(error);
+                                       });
 
-                                          } else {
-                                            firebase.database().ref("hospitalHistory/" + this.state.h_id).set({
-  
-                                              history: removedVal,
-      
-                                            })
-                                            }
-                                          }).catch((error) => {
-                                            console.error(error);
-                                          });
-  
-
-
-                                      }
-
-
-                                   if (item.bookingId != item.user_id)
-                                        firebase.database().ref("users/" + item.user_id + "/YourBookings").get().then((snapshot) => {
-                                          if (snapshot.exists()) {
-                                            var tempData = snapshot.val();
-                                          console.log(tempData)
-                                            tempData.bookings.map((uitem, index) => {
-                                              console.log(uitem);
-                                              console.log(index);
-                                              
-                                              if (uitem.bookingId == item.bookingId) {
-                                                tempData.bookings[index].status = 2;
-                                               }
-                                               console.log(tempData);
-                                              
-   
-                                          })
-
-                                           firebase.database().ref("users/" + item.user_id + "/YourBookings").set({
-                                                 bookings: tempData.bookings
-                                               })
-                                             
-                                            
-                                         
-                                          } else {
-                                            console.log("No data available");
-                                          }
-                                        }).catch((error) => {
-                                          console.error(error);
-                                        });
-
-                                    
-                                  }}
-                                >
-                                  
-                                  Done
-                                </DropdownItem> : null}
-                                {!index ? <DropdownItem
+                                   
+                                 }}
+                               >
                                  
-                                  onClick={() => {
-                                    var data = this.state.Hbooking;
-                                    for (let i = 0; i < this.state.Hbooking.length; i++) {
-                                      if (item.bookingId == this.state.Hbooking[i].bookingId)
-                                        data[i].status = 1;
-                                        this.setState({PatientInProcess:data[i].patientname})
-                                      this.setState({ Hbooking: data });
-                                      firebase.database().ref("Hospitals/" + this.state.h_id).set({
-                                        data: data
-                                      })
+                                 Done
+                               </DropdownItem> : null}
+                               {!index ? <DropdownItem
+                                
+                                 onClick={() => {
+                                   var data = this.state.Hbooking;
+                                   for (let i = 0; i < this.state.Hbooking.length; i++) {
+                                     if (item.bookingId == this.state.Hbooking[i].bookingId)
+                                       data[i].status = 1;
+                                       this.setState({PatientInProcess:data[i].patientname})
+                                     this.setState({ Hbooking: data });
+                                     firebase.database().ref("Hospitals/" + this.state.h_id).set({
+                                       data: data
+                                     })
 
 
 
-                                      if (item.bookingId != item.user_id)
-                                        firebase.database().ref("users/" + item.user_id + "/YourBookings").get().then((snapshot) => {
-                                          if (snapshot.exists()) {
-                                            var tempData = snapshot.val();
-                                          console.log(tempData)
-                                            tempData.bookings.map((uitem, index) => {
-                                              console.log(uitem);
-                                              console.log(index);
-                                              
-                                              if (uitem.bookingId == item.bookingId) {
-                                                tempData.bookings[index].status = 1;
-                                               }
-                                               console.log(tempData);
-                                              
-   
-                                          })
-
-                                           firebase.database().ref("users/" + item.user_id + "/YourBookings").set({
-                                                 bookings: tempData.bookings
-                                               })
+                                     if (item.bookingId != item.user_id)
+                                       firebase.database().ref("users/" + item.user_id + "/YourBookings").get().then((snapshot) => {
+                                         if (snapshot.exists()) {
+                                           var tempData = snapshot.val();
+                                         console.log(tempData)
+                                           tempData.bookings.map((uitem, index) => {
+                                             console.log(uitem);
+                                             console.log(index);
                                              
+                                             if (uitem.bookingId == item.bookingId) {
+                                               tempData.bookings[index].status = 1;
+                                              }
+                                              console.log(tempData);
+                                             
+  
+                                         })
+
+                                          firebase.database().ref("users/" + item.user_id + "/YourBookings").set({
+                                                bookings: tempData.bookings
+                                              })
                                             
-                                         
-                                          } else {
-                                            console.log("No data available");
-                                          }
-                                        }).catch((error) => {
-                                          console.error(error);
-                                        });
+                                           
+                                        
+                                         } else {
+                                           console.log("No data available");
+                                         }
+                                       }).catch((error) => {
+                                         console.error(error);
+                                       });
 
-                                    }
-                                  }}
-                                >
-                                  Process
-                                </DropdownItem> : null}
-                                <DropdownItem
-                                  href="#pablo"
-                                  onClick={() => {
-                                    var data = this.state.Hbooking;
-                                    for (let i = 0; i < this.state.Hbooking.length; i++) {
-                                      if (item.bookingId == this.state.Hbooking[i].bookingId)
-                                        data.splice(i, 1);
-                                      console.log(data);
-                                      this.setState({ Hbooking: data });
-                                      firebase.database().ref("Hospitals/" + this.state.h_id).set({
+                                   }
+                                 }}
+                               >
+                                 Process
+                               </DropdownItem> : null}
+                               <DropdownItem
+                                 href="#pablo"
+                                 onClick={() => {
+                                   var data = this.state.Hbooking;
+                                   for (let i = 0; i < this.state.Hbooking.length; i++) {
+                                     if (item.bookingId == this.state.Hbooking[i].bookingId)
+                                       data.splice(i, 1);
+                                     console.log(data);
+                                     this.setState({ Hbooking: data });
+                                     firebase.database().ref("Hospitals/" + this.state.h_id).set({
 
-                                        data: data,
+                                       data: data,
 
-                                      })
-                                    }
-                                  }}
-                                >
-                                  Remove
-                                </DropdownItem>
+                                     })
+                                   }
+                                 }}
+                               >
+                                 Remove
+                               </DropdownItem>
 
-                              </DropdownMenu>
-                            </UncontrolledDropdown>
-                          </td>
-                        </tr></>
-                    ))}
+                             </DropdownMenu>
+                           </UncontrolledDropdown>
+                         </td>
+                       </tr></>
+                   ))}
 
-                  </tbody>
-                </Table>
+                 </tbody>
+               </Table>
+                
+               
 
               </Card>
             </div>
           </Row>
+          :<Loader/>}
 
         </Container>
 

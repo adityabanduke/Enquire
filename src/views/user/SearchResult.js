@@ -18,6 +18,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import "../../assets/css/card.css";
+import Loader from "../../components/loader/Loader.js";
 
 
 
@@ -28,6 +29,8 @@ export default class SearchResult extends Component {
 		this.state = {
 			myOptions: [],
 			hospitalData: [],
+			loading:false,
+
 		}
 
 		this.getDataFromAPI = this.getDataFromAPI.bind(this);
@@ -41,7 +44,9 @@ export default class SearchResult extends Component {
 		// const { myOptions, hospitalData } = this.state;
 		const temp = localStorage.getItem("hospitalData");
 		if (temp) {
+
 			this.setState({ hospitalData: JSON.parse(temp) });
+			this.setState({loading:true});
 			localStorage.clear();
 		}
 
@@ -53,6 +58,8 @@ export default class SearchResult extends Component {
 					console.log(userData);
 
 				})
+
+		
 			}
 			else {
 				window.location.href = "/login";
@@ -64,6 +71,7 @@ export default class SearchResult extends Component {
 
 		let mytags;
 		if (e.key === 'Enter') {
+			this.setState({loading:false});
 			console.log("you hit enter...................");
 			console.log(e.target.value);
 			if (e.target.value != null) {
@@ -86,6 +94,7 @@ export default class SearchResult extends Component {
 							// localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
 
 						}
+						this.setState({loading:true});
 					}).then(err => {
 						if (err) {
 							console.log(err);
@@ -238,7 +247,7 @@ export default class SearchResult extends Component {
 		
 				<Container className='mt-4 mx-auto' >
 
-					{this.state.hospitalData && this.state.hospitalData.map((hospital) => (
+					{this.state.loading ? this.state.hospitalData.map((hospital) => (
 						<>
 		<div className="container mt-5 mb-5" >
 		<div className="d-flex justify-content-center row" >
@@ -250,18 +259,22 @@ export default class SearchResult extends Component {
 						<div className="d-flex flex-row">
 							<div className="ratings mr-2"><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /><i className="fa fa-star" /></div>
 						</div>
-												<p className="text-justify  para mb-0">	{hospital.address}<br /><br /></p>
+												<p className="text-justify text-truncate  para mb-0">	{hospital.address}<br /><br /></p>
 					</div>
 					<div className="align-items-center align-content-center col-md-3 border-left mt-1">
 					
-						<h5 className="text-success">Available</h5>
+						{console.log(hospital.avalabilityStatus)}
+						{hospital.avalabilityStatus?<h5 className="text-success">Available</h5>:<h5 className="text-danger"> Not Available</h5>}
 						<div className="d-flex flex-column mt-4">
-							<button className="btn btn-primary btn-sm mt-2" type="button">
+
+						{hospital.avalabilityStatus?<button className="btn btn-primary btn-sm mt-2" type="button">
 							<a style={{'color':'white'}} href={'/user/HospitalDetail?h_id=' + hospital.h_id}>
 
 								Book Now
 								</a>
-								</button>
+								</button>:null}
+					
+							
 						
 							<button className="btn btn-outline-primary btn-sm mt-2" type="button">Bookmark</button>
 							</div>
@@ -272,7 +285,7 @@ export default class SearchResult extends Component {
 	</div>
 </>
 
-					))}
+					)) : <Loader/>}
 
 
 

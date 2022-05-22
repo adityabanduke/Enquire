@@ -42,6 +42,7 @@ export default class HospitalDetails extends Component {
             hospitalName: '',
             booking_id: '',
             status: 0,
+            
 
         }
         this.bookAppointment = this.bookAppointment.bind(this);
@@ -160,16 +161,15 @@ export default class HospitalDetails extends Component {
                 <div
                     className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
                     style={{
-                        minHeight: "600px",
-                        //  backgroundImage:`url(${this.state.profilepic})`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center top",
+                      
+                        backgroundColor: "#3972C1",
                     }}
-                ><img src={this.state.profilepic} className="img-fluid img-responsive rounded product-image" style={{'position':'absolute' , 'opacity':'0.5'}} ></img>
-                    {/* Mask */}
-                    <span className="mask bg-gradient-default opacity-5" />
+                >  {/* Mask */}
+                  
                     {/* Header container */}
-                    <Container className="d-flex align-items-center" fluid>
+                    <Container className="d-flex flex-direction-column align-items-center" fluid>
+
+                       
                         <Row>
                             <Col lg="8" md="10">
                                 {this.state.hData ? <h1 className="display-2 text-white">{this.state.hospitalName}</h1> : null}
@@ -178,6 +178,7 @@ export default class HospitalDetails extends Component {
                                 </p> : null}
 
                             </Col>
+                         
                         </Row>
                     </Container>
                 </div>

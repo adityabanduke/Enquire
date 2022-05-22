@@ -25,6 +25,7 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       userData: {},
+      loading:false,
     }
 
 

@@ -45,6 +45,8 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Lottie from 'react-lottie';
   //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
    import rocket  from '../../assets/lottie/9764-loader.json'
+   import Loader from "../../components/loader/Loader.js";
+
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,7 @@ export default class EditProfile extends Component {
       state: '',
       address: "",
       sameP: false,
-
+      
       profilepic: '',
       newprofilepic: null,
       mentorModal: false,
@@ -289,7 +291,8 @@ export default class EditProfile extends Component {
       }
     };
     return (
-      <>   {this.state.newprofilepic ? (
+      <>   {this.state.newprofilepic ?
+         (
         <>
           <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
             <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent: "center", position: 'relative' }}>
@@ -343,7 +346,7 @@ export default class EditProfile extends Component {
 
         {this.state.createloader ?  <Lottie options={defaultOptions}
               height={300}
-              width={300}></Lottie> :
+              width={100}></Lottie> :
         <Container className="mt--7" fluid>
           <Row>
             {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
