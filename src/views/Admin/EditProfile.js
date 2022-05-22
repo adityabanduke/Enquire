@@ -136,14 +136,12 @@ export default class EditProfile extends react.Component {
                 this.state.uniTags.push(this.state.tags[i]);
               }
             }
-      
           }
           firebase
           .database()
           .ref("search_tags")
           .set(this.state.uniTags)}
       })
-      
     }
      handleFireBaseUpload = e => {
       e.preventDefault()

@@ -89,19 +89,11 @@ export default class EditAddDoctor extends Component {
                 // gets the download url then sets the image from firebase as the value for the imgUrl key:
                 // const anda = storage.ref('doctorImage').child(this.state.imageAsFile.name).getDownloadURL()
                 console.log(this.state.imageAsFile.name);
-                storage.ref('doctorImages').child(this.state.imageAsFile.name).getDownloadUrl()
-                    .then(fireBaseUrl => {
-                        //  this.setState({imageAsUrl:{...prevObject, imgUrl: fireBaseUrl})
-                        //  setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-                        console.log(fireBaseUrl)
-                        this.setState({ userData: { ...this.state.userData, doctorImg: fireBaseUrl } })
-                        console.log(this.state.userData.doctorImg)
-                    })
+             const link =  storage.ref('doctorImages').child(this.state.imageAsFile.name).getDownloadURL();
+                console.log(link);
             })
     }
-    handleFireBaseUpload = e => {
   
-    }
     render() {
         return (
             <>
@@ -258,7 +250,7 @@ export default class EditAddDoctor extends Component {
                                                     type="file"
                                                     onChange={this.handleImageAsFile}
                                                 />
-                                                <button>upload to firebase</button>
+                                                {/* <button>upload to firebase</button> */}
                                             </form></Col>
                                     </Row>
                                 </CardBody>
