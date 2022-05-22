@@ -91,7 +91,7 @@ export default class Profile extends Component {
 
                           src={this.state.userData.profilepic ? this.state.userData.profilepic : blank}
                           height='100'
-                          width='100'
+                          width='100'     
 
                         />
                       </a>
