@@ -81,8 +81,10 @@ const hospitalRegister = () => {
     firebase.auth().createUserWithEmailAndPassword(email, password).then((userCredential) => {
       var user = userCredential.user;
      const ID = user.uid;
+     var tempTags = tags;
+     tempTags.push(name);
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags , users, h_id:ID,doctorName,doctorSpec,doctorImg,
+        name, email, address, city, country, postalCode, about, password, tags:tempTags , users, h_id:ID,doctorName,doctorSpec,doctorImg,
       })
     }).then((err) => {
       if (err) {
@@ -100,6 +102,8 @@ const hospitalRegister = () => {
           uniTags.push(tags[i].toLowerCase());
         }
       }
+
+      uniTags.push(name);
 
     }
     firebase

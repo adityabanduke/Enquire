@@ -42,6 +42,7 @@ export default class HospitalDetails extends Component {
             hospitalName: '',
             booking_id: '',
             status: 0,
+            
 
         }
         this.bookAppointment = this.bookAppointment.bind(this);
@@ -178,6 +179,7 @@ export default class HospitalDetails extends Component {
                                 </p> : null}
 
                             </Col>
+                         
                         </Row>
                     </Container>
                 </div>
