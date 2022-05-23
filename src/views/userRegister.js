@@ -24,6 +24,7 @@ import {
   Label,
 } from "reactstrap";
 import { db } from "../config/firebase-enquire";
+import google from "../assets/img/google.png"
 
 class Register extends React.Component {
   constructor(props) {
@@ -45,11 +46,11 @@ class Register extends React.Component {
     this.handleRePassword = this.handleRePassword.bind(this);
     this.handleRegisterEmailPassword = this.handleRegisterEmailPassword.bind(this);
     this.manageGoogleRegister = this.manageGoogleRegister.bind(this);
-    this.keyModalFunction = this.keyModalFunction.bind(this);
+    // this.keyModalFunction = this.keyModalFunction.bind(this);
     // this.sendEmailFunction = this.sendEmailFunction.bind(this);
-    this.checkUserVerification = this.checkUserVerification.bind(this);
+    // this.checkUserVerification = this.checkUserVerification.bind(this);
     // this.resendEmailFunction = this.resendEmailFunction.bind(this);
-    this.showPassFunction = this.showPassFunction.bind(this);
+    // this.showPassFunction = this.showPassFunction.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
   }
@@ -73,22 +74,22 @@ class Register extends React.Component {
     });
   };
 
-  showPassFunction = () => {
-    if (
-      document.getElementById("showPassIconId").getAttribute("class") ===
-      "fas fa-eye"
-    ) {
-      document.getElementById("passwordId").setAttribute("type", "text");
-      document
-        .getElementById("showPassIconId")
-        .setAttribute("class", "fas fa-eye-slash");
-    } else {
-      document.getElementById("passwordId").setAttribute("type", "password");
-      document
-        .getElementById("showPassIconId")
-        .setAttribute("class", "fas fa-eye");
-    }
-  };
+  // showPassFunction = () => {
+  //   if (
+  //     document.getElementById("showPassIconId").getAttribute("class") ===
+  //     "fas fa-eye"
+  //   ) {
+  //     document.getElementById("passwordId").setAttribute("type", "text");
+  //     document
+  //       .getElementById("showPassIconId")
+  //       .setAttribute("class", "fas fa-eye-slash");
+  //   } else {
+  //     document.getElementById("passwordId").setAttribute("type", "password");
+  //     document
+  //       .getElementById("showPassIconId")
+  //       .setAttribute("class", "fas fa-eye");
+  //   }
+  // };
 
   handleRegisterEmailPassword = () => {
     firebase
@@ -123,20 +124,20 @@ class Register extends React.Component {
       });
   };
 
-  checkUserVerification = () => {
-    var x = document.getElementById("optInput").value;
-    var y = x.toString();
-    var otp = this.state.otp;
-    var z = otp.toString();
-    console.log(y);
-    console.log(z);
-    if (y === z) {
-      this.setState({ keyModal: false });
-      this.handleRegisterEmailPassword();
-    } else {
-      this.setState({ checkCorrectOtp: false });
-    }
-  };
+  // checkUserVerification = () => {
+  //   var x = document.getElementById("optInput").value;
+  //   var y = x.toString();
+  //   var otp = this.state.otp;
+  //   var z = otp.toString();
+  //   console.log(y);
+  //   console.log(z);
+  //   if (y === z) {
+  //     this.setState({ keyModal: false });
+  //     this.handleRegisterEmailPassword();
+  //   } else {
+  //     this.setState({ checkCorrectOtp: false });
+  //   }
+  // };
 
   keyModalFunction = () => {
     if (this.state.keyModal) {
@@ -359,7 +360,7 @@ class Register extends React.Component {
                       <small>Sign up with</small>
                     </div>
                     <div className="text-center">
-                      <Button
+                      {/* <Button
                         className="btn-neutral btn-icon mr-4"
                         color="default"
                         href="#pablo"
@@ -371,7 +372,7 @@ class Register extends React.Component {
                           />
                         </span>
                         <span className="btn-inner--text">Github</span>
-                      </Button>
+                      </Button> */}
                       <Button
                         className="btn-neutral btn-icon"
                         color="default"
@@ -381,7 +382,7 @@ class Register extends React.Component {
                         <span className="btn-inner--icon">
                           <img
                             alt="..."
-                            src={require("assets/img/icons/common/google.svg")}
+                            src={google}
                           />
                         </span>
                         <span className="btn-inner--text">Google</span>
@@ -396,7 +397,7 @@ class Register extends React.Component {
                       role="form"
                       onSubmit={(e) => {
                         e.preventDefault();
-                        this.sendEmailFunction();
+                        this.handleRegisterEmailPassword();
                       }}
                     >
                       <FormGroup>
@@ -452,7 +453,7 @@ class Register extends React.Component {
                               <i
                                 className="fas fa-eye"
                                 id="showPassIconId"
-                                onClick={this.showPassFunction}
+                                // onClick={this.showPassFunction}
                               />
                             </InputGroupText>
                           </InputGroupAddon>

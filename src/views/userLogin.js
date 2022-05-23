@@ -50,17 +50,17 @@ class Login extends React.Component {
         console.log(error)
       });
   };
-  googleLogin(){
-    var provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    firebase.auth()
-    .signInWithPopup(provider)
-    .then((result) => {
-      window.location.href = "/user/dashboard";
+  // googleLogin(){
+  //   var provider = new firebase.auth.GoogleAuthProvider();
+  //   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  //   firebase.auth()
+  //   .signInWithPopup(provider)
+  //   .then((result) => {
+  //     window.location.href = "/user/dashboard";
 
-    }).catch((error) => {
-    });
-  }
+  //   }).catch((error) => {
+  //   });
+  // }
   
   // manageGithubLogin = () => {
   //   var provider = new firebase.auth.GithubAuthProvider();
@@ -96,6 +96,41 @@ class Login extends React.Component {
   //     })
   //     .catch((error) => {});
   // };
+
+  manageGoogleLogin = () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        /** @type {firebase.auth.OAuthCredential} */
+        var user = result.user;
+        var id = user.uid;
+        console.log(user);
+        firebase
+          .database()
+          .ref("users/" + id)
+          .once("value")
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+            } else {
+              firebase
+                .database()
+                .ref("users/" + id)
+                .set({
+                  username: user.displayName,
+                  email: user.email,
+                  user_uid: id,
+                  profilepic: user.photoURL,
+                });
+            }
+          })
+          .then(() => {
+            window.location.href = "/user/dashboard";
+          });
+      })
+      .catch((error) => {});
+  };
   render() {
     return (
       <>
@@ -130,7 +165,7 @@ class Login extends React.Component {
                         className="btn-neutral btn-icon"
                         color="default"
                         type="button"
-                        onClick={this.googleLogin}
+                        onClick={this.manageGoogleLogin}
                       >
                         <span className="btn-inner--icon">
                           <img
