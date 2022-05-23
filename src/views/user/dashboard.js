@@ -21,6 +21,7 @@ import { db } from '../../config/firebase-enquire';
 import StepProgressBar from 'react-step-progress';
 // import the stylesheet
 import 'react-step-progress/dist/index.css';
+// import "../../assets/css/Actionbutton.css"
 
 import {
 	Button,
@@ -56,17 +57,16 @@ export default class dashboard extends Component {
 					console.log(userData);
 					this.setState({ userData: userData })
 
-				}).then(() => {
-					if (!this.state.userData || !this.state.userData.contact || !this.state.userData.address || !this.state.userData.profilepic) {
-						setTimeout(() => {
-							this.setState({ pModal: true })
-						}, 2000);
-					}
+				}).then(()=>{
 				})
+
+				
 			}
 			else {
 				window.location.href = "/login";
 			}
+
+		
 		})
 	}
 
@@ -201,18 +201,40 @@ export default class dashboard extends Component {
 		}
 	};
 
+	
+	step2Validator= ()=> {
+		if (this.state.userData.contact && this.state.userData.address) {
+			this.step3Validator();
+			return true
+			
+		} else {
+			this.setState({ pModal: true })
+		}
+	}
+	step3Validator = () => {
+		if (this.state.userData.profilepic) {
+			return true
+		} else {
+			this.setState({ pModal: true })
+		}
+	}
+
 	render() {
 
+		
+		const ulStyle = {display:'none'}
 
-		const step1Content = <h1>Step 1 Content</h1>;
-		const step2Content = <h1>Step 2 Content</h1>;
-		const step3Content = <h1>Step 3 Content</h1>;
+
+		const step1Content = <h1>UserName</h1>;
+		const step2Content = <h1>Personal Info</h1>;
+		const step3Content = <h1>Profile Image</h1>;
 		return (
 
 
 
 			// Navbar
 			<>
+			
 
 				<div
 					className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
@@ -223,14 +245,14 @@ export default class dashboard extends Component {
 						backgroundPosition: "center top",
 					}}
 				>
-					{/* <Modal isOpen={this.state.pModal} toggle={this.toggleSubmit}>
+					<Modal isOpen={this.state.pModal} toggle={this.toggleSubmit}>
           <Card style={{ width: '100%', height: "30vh", alignItems: "center", justifyContent: 'center', position: 'relative' }}>
 
             <h2>Complete Your Profile</h2>
 
             <a href="/user/Profile"><Button color="info">View Profile</Button></a>
           </Card>
-        </Modal> */}
+        </Modal>
 					{/* Mask */}
 					<span className="mask bg-gradient-default opacity-8" />
 					<img src={"https://images.unsplash.com/photo-1629909613654-28e377c37b09?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1168"} style={{ 'position': 'absolute', 'opacity': '0.3', 'height': "500px", 'width': '100%', 'backgroundSize': "100% 100%" }} ></img>
@@ -284,33 +306,40 @@ export default class dashboard extends Component {
 				<Container fluid className='mt-5 p-3'>
 
 
-					<div> <StepProgressBar
-						startingStep={0}
-						// onSubmit={onFormSubmit}
-						steps={[
-							{
-								label: 'Step 1',
-								subtitle: '10%',
-								name: 'step 1',
-								content: step1Content
-							},
-							{
-								label: 'Step 2',
-								subtitle: '50%',
-								name: 'step 2',
-								content: step2Content,
-								// validator: step2Validator
-							},
-							{
-								label: 'Step 3',
-								subtitle: '100%',
-								name: 'step 3',
-								content: step3Content,
-								// validator: step3Validator
-								
-							}
-						]}
-					/>;</div>
+					<div>
+						<h1>Complete Your Profile</h1>
+
+						<StepProgressBar
+							startingStep={0}
+							
+							 buttonWrapperClass={ulStyle}
+							// onSubmit={onFormSubmit}
+							steps={[
+								{
+									label: 'Step 1',
+									subtitle: '10%',
+									name: 'step 1',
+									content: step1Content,
+
+								},
+								{
+									label: 'Step 2',
+									subtitle: '50%',
+									name: 'step 2',
+									content: step2Content,
+									validator: this.step2Validator
+								},
+								{
+									label: 'Step 3',
+									subtitle: '100%',
+									name: 'step 3',
+									content: step3Content,
+									validator: this.step3Validator
+
+								}
+							]}
+						/>
+					</div>
 
 
 					<div className='d-flex flex-wrap' style={{ 'justifyContent': 'center', 'textAlign': 'center', 'padding': '5px' }}>
