@@ -1,0 +1,26 @@
+
+  
+  .map{
+    height:600px;
+    width:100vw;
+  }
+  
+  .marker-delivery{
+     background-color: red;
+     width:22px;
+     height:22px;
+  
+  }
+  
+  .marker{
+  
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWpTm8D5Fdn0pulF4M6JcfL-QLu_aGDEtaMA&usqp=CAU');
+    background-size: cover;
+    width:22px;
+    height:22px;
+    background-color: yellow;
+    border-radius: 10px;
+    border: solid 3px black;
+  
+  
+  }

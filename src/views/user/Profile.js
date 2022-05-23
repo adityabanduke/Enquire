@@ -126,6 +126,13 @@ export default class Profile extends Component {
 
                       > Edit profile
                       </Button></a>
+                      <a className="ml-2" style={{ color: "#fff" }} href="/userLocation">
+                      <Button
+                        color="info"
+
+
+                      > Set Location
+                      </Button></a>
 
                   </div>
                 </CardBody>

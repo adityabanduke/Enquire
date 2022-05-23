@@ -1,4 +1,3 @@
-
 import {
   Button,
   Card,
@@ -13,6 +12,8 @@ import {
   Row,
   Col,
 } from "reactstrap";
+
+
 
 const Register = () => {
   return (

@@ -41,6 +41,8 @@ const hospitalRegister = () => {
   const [doctorName, setDoctorName] = react.useState("");
   const [doctorSpec, setDoctorSpec] = react.useState("");
   const [doctorImg, setDoctorImg] = react.useState("");
+  const [latitude, setLatitude] = react.useState(23.30778);
+  const [longitude, setLongitude] = react.useState(77.33058);
   // const DATA = [
   //   {
   //     value: "Ekansh",
@@ -60,6 +62,25 @@ const hospitalRegister = () => {
   //   },
   // ]
   react.useEffect(() => {
+
+
+    if ("geolocation" in navigator) {
+      console.log("Available");
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position);
+        console.log("Latitude is :", position.coords.latitude);
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+        console.log("Longitude is :", position.coords.longitude);
+  
+
+        
+      });
+    } else {
+      console.log("Not Available");
+    }
+  
+
     firebase
       .database()
       .ref("search_tags/")
@@ -84,7 +105,7 @@ const hospitalRegister = () => {
      var tempTags = tags;
      tempTags.push(name);
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags:tempTags , users, h_id:ID,doctorName,doctorSpec,doctorImg,
+        name, email, address, city, country, postalCode, about, password, tags:tempTags , users, h_id:ID,doctorName,doctorSpec,doctorImg,longitude,latitude
       })
     }).then((err) => {
       if (err) {
