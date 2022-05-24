@@ -25,6 +25,7 @@ export default class Profile extends Component {
     super(props);
     this.state = {
       userData: {},
+      loading:false,
     }
 
 
@@ -91,7 +92,7 @@ export default class Profile extends Component {
 
                           src={this.state.userData.profilepic ? this.state.userData.profilepic : blank}
                           height='100'
-                          width='100'
+                          width='100'     
 
                         />
                       </a>
@@ -124,6 +125,13 @@ export default class Profile extends Component {
 
 
                       > Edit profile
+                      </Button></a>
+                      <a className="ml-2" style={{ color: "#fff" }} href="/userLocation">
+                      <Button
+                        color="info"
+
+
+                      > Set Location
                       </Button></a>
 
                   </div>

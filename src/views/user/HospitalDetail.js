@@ -42,6 +42,7 @@ export default class HospitalDetails extends Component {
             hospitalName: '',
             booking_id: '',
             status: 0,
+            
 
         }
         this.bookAppointment = this.bookAppointment.bind(this);
@@ -144,8 +145,8 @@ export default class HospitalDetails extends Component {
                     bookings: this.state.booking
                 })
             }).then(() => {
-                alert("Appointment Booked Successfully");
-            
+                // alert("Appointment Booked Successfully");
+               window.location.href=`${'/BookingDetail?Booking_id='+ this.state.booking_id}`
 
 
         })
@@ -160,24 +161,25 @@ export default class HospitalDetails extends Component {
                 <div
                     className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
                     style={{
-                        minHeight: "600px",
+                        minHeight: "200px",
                         //  backgroundImage:`url(${this.state.profilepic})`,
-                        backgroundSize: "cover",
                         backgroundPosition: "center top",
                     }}
-                ><img src={this.state.profilepic} className="img-fluid img-responsive rounded product-image" style={{'position':'absolute' , 'opacity':'0.5'}} ></img>
+                >
                     {/* Mask */}
                     <span className="mask bg-gradient-default opacity-5" />
                     {/* Header container */}
-                    <Container className="d-flex align-items-center" fluid>
-                        <Row>
-                            <Col lg="8" md="10">
+                    <Container className="d-flex align-items-center justify-content-between" fluid>
+                        <Row style={{"padding":'20px'}} className="d-flex justify-content-between">
+                            <Col lg="4"><img src={this.state.profilepic} className="img-fluid img-responsive product-image" style={{'position':'absolute' , 'height':'150px'}} ></img></Col>
+                            <Col lg="7" md="10" >
                                 {this.state.hData ? <h1 className="display-2 text-white">{this.state.hospitalName}</h1> : null}
                                 {this.state.hData ? <p className="text-white mt-0 mb-5">
                                     {this.state.hData.about}
                                 </p> : null}
 
                             </Col>
+                         
                         </Row>
                     </Container>
                 </div>

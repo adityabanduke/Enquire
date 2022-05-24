@@ -28,6 +28,8 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import logol from "../../assets/img/enquirelogo.png"
+
 
 const AdminNavbar = () => {
   return (
@@ -38,7 +40,7 @@ const AdminNavbar = () => {
             <img
               alt="..."
               src={
-                require("../../assets/img/brand/argon-react-white.png").default
+                logol
               }
             />
           </NavbarBrand>
@@ -53,8 +55,7 @@ const AdminNavbar = () => {
                     <img
                       alt="..."
                       src={
-                        require("../../assets/img/brand/argon-react.png")
-                          .default
+                        logol
                       }
                     />
                   </Link>

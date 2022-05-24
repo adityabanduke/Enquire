@@ -43,8 +43,10 @@ import defaultIcon from "../../assets/images/blankProfilepic.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Lottie from 'react-lottie';
-  //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
-   import rocket  from '../../assets/lottie/9764-loader.json'
+//  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
+import rocket from '../../assets/lottie/9764-loader.json'
+import Loader from "../../components/loader/Loader.js";
+
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +67,8 @@ export default class EditProfile extends Component {
       profile: '',
       croppedArea: null,
       croppedAreaPixels: null,
+      longitude: '',
+      latitude: '',
       crop: {
         x: 0,
         y: 0,
@@ -91,8 +95,35 @@ export default class EditProfile extends Component {
 
 
   componentDidMount() {
+    if ("geolocation" in navigator) {
+      console.log("Available");
+      navigator.geolocation.getCurrentPosition(function (position) {
+        console.log(position);
+        console.log("Latitude is :", position.coords.latitude);
+        this.setState({ latituude: position.coords.latitude });
+        this.setState({ longitude: position.coords.longitude });
+        console.log("Longitude is :", position.coords.longitude);
+
+
+
+      });
+    } else {
+      console.log("Not Available");
+    }
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        if ("geolocation" in navigator) {
+          console.log("Available");
+          navigator.geolocation.getCurrentPosition(function (position) {
+            console.log(position);
+            console.log("Latitude is :", position.coords.latitude);
+            this.setState({ latitude: position.coords.latitude });
+            this.setState({ longitude: position.coords.longitude });
+            console.log("Longitude is :", position.coords.longitude);
+          });
+        } else {
+          console.log("Not Available");
+        }
         firebase
           .database()
           .ref("users/" + user.uid)
@@ -102,7 +133,7 @@ export default class EditProfile extends Component {
             console.log(data);
             this.setState({
               userData: data, name: data.username, contact: data.contact, city: data.city, state: data.state, address: data.address, postalCode: data.postalCode, profilepic: data.profilepic,
-              prevprofile: data.profilepic,
+              prevprofile: data.profilepic, longitude: this.state.longitude, latitude: this.state.latitude
             });
           })
 
@@ -214,7 +245,7 @@ export default class EditProfile extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       firebase.database().ref(`users/${user.uid}`).once("value")
         .then((snap) => {
-          this.setState({createloader: true});
+          this.setState({ createloader: true });
 
           const db = firebase.database();
           db.ref("users/" + user.uid)
@@ -229,44 +260,44 @@ export default class EditProfile extends Component {
               postalCode: this.state.postalCode,
 
 
-            }).then(()=>{
+            }).then(() => {
 
-          
 
-          if (this.state.profilepic !== this.state.prevprofile) {
-            firebase
-              .storage()
-              .ref("users/" + user.uid + "/profile.jpeg")
-              .putString(this.state.profilepic, "data_url")
-              .then((snapshot) => {
 
+              if (this.state.profilepic !== this.state.prevprofile) {
                 firebase
                   .storage()
-                  .ref("users")
-                  .child(user.uid + "/profile.jpeg")
-                  .getDownloadURL()
-                  .then((urls) => {
+                  .ref("users/" + user.uid + "/profile.jpeg")
+                  .putString(this.state.profilepic, "data_url")
+                  .then((snapshot) => {
 
-                    const db = firebase.database();
-                    db.ref("users/" + user.uid)
-                      .update({
-                        profilepic: urls,
-                      }).then(() => {
-                        this.setState({createloader: false});
+                    firebase
+                      .storage()
+                      .ref("users")
+                      .child(user.uid + "/profile.jpeg")
+                      .getDownloadURL()
+                      .then((urls) => {
 
-                        this.submitmodal();
-                      });
+                        const db = firebase.database();
+                        db.ref("users/" + user.uid)
+                          .update({
+                            profilepic: urls,
+                          }).then(() => {
+                            this.setState({ createloader: false });
 
+                            this.submitmodal();
+                          });
+
+                      })
                   })
-              })
-          }else{
-            this.submitmodal();
-            this.setState({createloader: false});
+              } else {
+                this.submitmodal();
+                this.setState({ createloader: false });
 
-          }
+              }
 
 
-        })
+            })
 
 
 
@@ -282,20 +313,21 @@ export default class EditProfile extends Component {
   render() {
     const defaultOptions = {
       loop: true,
-      autoplay: true, 
+      autoplay: true,
       animationData: rocket,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
       }
     };
     return (
-      <>   {this.state.newprofilepic ? (
-        <>
-          <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
-            <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent: "center", position: 'relative' }}>
-              {/* <CardHeader> */}
-              <Button size="lg" onClick={this.toggleMentor} style={{ position: "absolute", top: "0", left: "0", margin: "5px" }}>
-                {/* <FontAwesomeIcon
+      <>   {this.state.newprofilepic ?
+        (
+          <>
+            <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
+              <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent: "center", position: 'relative' }}>
+                {/* <CardHeader> */}
+                <Button size="lg" onClick={this.toggleMentor} style={{ position: "absolute", top: "0", left: "0", margin: "5px" }}>
+                  {/* <FontAwesomeIcon
                             icon={faWindowClose}
                             style={{
                                 color: "rgb(185, 185, 185)",
@@ -305,29 +337,29 @@ export default class EditProfile extends Component {
                                 zIndex:'100',
                             }}
                         /> */}
-              </Button>
-              {/* </CardHeader> */}
-              <div className="imgCropperParentDiv">
-                <Cropper
-                  className="cropperClass"
-                  image={this.state.newprofilepic}
-                  crop={this.state.crop}
-                  zoom={this.state.zoom}
-                  aspect={1 / 1}
-                  onCropChange={this.setCropFunction}
-                  onCropComplete={this.onCropCompleteFunction}
-                  onZoomChange={this.setZoomFunction}
-                />
+                </Button>
+                {/* </CardHeader> */}
+                <div className="imgCropperParentDiv">
+                  <Cropper
+                    className="cropperClass"
+                    image={this.state.newprofilepic}
+                    crop={this.state.crop}
+                    zoom={this.state.zoom}
+                    aspect={1 / 1}
+                    onCropChange={this.setCropFunction}
+                    onCropComplete={this.onCropCompleteFunction}
+                    onZoomChange={this.setZoomFunction}
+                  />
 
-              </div>
-              <Button color="primary" className="cancel" onClick={this.uploadNewProfilePic}>
-                Upload
-              </Button>
-              {/* </CardFooter> */}
-            </Card>
-          </Modal>
-        </>
-      ) : null}
+                </div>
+                <Button color="primary" className="cancel" onClick={this.uploadNewProfilePic}>
+                  Upload
+                </Button>
+                {/* </CardFooter> */}
+              </Card>
+            </Modal>
+          </>
+        ) : null}
 
 
         <Modal isOpen={this.state.submitModal} toggle={this.toggleSubmit}>
@@ -341,12 +373,12 @@ export default class EditProfile extends Component {
         <UserHeader userData={this.state.userData} />
         {/* Page content */}
 
-        {this.state.createloader ?  <Lottie options={defaultOptions}
-              height={300}
-              width={300}></Lottie> :
-        <Container className="mt--7" fluid>
-          <Row>
-            {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+        {this.state.createloader ? <Lottie options={defaultOptions}
+          height={300}
+          width={100}></Lottie> :
+          <Container className="mt--7" fluid>
+            <Row>
+              {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-Editprofile shadow">
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3">
@@ -435,15 +467,15 @@ export default class EditProfile extends Component {
                 </CardBody>
               </Card>
             </Col> */}
-            <Col className="order-xl-1" xl="12">
-              <Card className="bg-secondary shadow">
-                <CardHeader className="bg-white border-0">
-                  <Row className="align-items-center">
-                    <Col xs="8">
-                      <h3 className="mb-0">My account</h3>
-                    </Col>
-                    <Col className="text-right" xs="4">
-                      {/* <Button
+              <Col className="order-xl-1" xl="12">
+                <Card className="bg-secondary shadow">
+                  <CardHeader className="bg-white border-0">
+                    <Row className="align-items-center">
+                      <Col xs="8">
+                        <h3 className="mb-0">My account</h3>
+                      </Col>
+                      <Col className="text-right" xs="4">
+                        {/* <Button
                         color="primary"
                         href="#pablo"
                         onClick={(e) => e.preventDefault()}
@@ -451,109 +483,109 @@ export default class EditProfile extends Component {
                       >
                         Settings
                       </Button> */}
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <div
-                  style={{
-                    display: "flex",
-                    width: "fit-content",
-                    position: "relative",
-                  }}
-                  className="align-items-center"
-                >
-                  <img
-                    alt="..."
-                    className="rounded-circle"
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      margin: "0 20px",
-                    }}
-                    src={
-                      this.state.profilepic
-                        ? this.state.profilepic
-                        : defaultIcon
-                    }
-                  />
+                      </Col>
+                    </Row>
+                  </CardHeader>
                   <div
                     style={{
-                      position: "absolute",
-                      bottom: "-10px",
-                      right: "0",
-                      width: "30px",
+                      display: "flex",
+                      width: "fit-content",
+                      position: "relative",
                     }}
+                    className="align-items-center"
                   >
-                    <div className="image-upload">
-                      <label htmlFor="file-input" style={{ display: "block" }}>
-                        <FontAwesomeIcon
-                          icon={faPen}
-                          style={{
-                            fontSize: "30px",
-                            color: "#5E72E4",
-                            backgroundColor: "#DEE1E6",
-                            borderRadius: "50%",
-                            padding: "30%",
-                            cursor: "pointer",
-                          }}
+                    <img
+                      alt="..."
+                      className="rounded-circle"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        margin: "0 20px",
+                      }}
+                      src={
+                        this.state.profilepic
+                          ? this.state.profilepic
+                          : defaultIcon
+                      }
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: "-10px",
+                        right: "0",
+                        width: "30px",
+                      }}
+                    >
+                      <div className="image-upload">
+                        <label htmlFor="file-input" style={{ display: "block" }}>
+                          <FontAwesomeIcon
+                            icon={faPen}
+                            style={{
+                              fontSize: "30px",
+                              color: "#5E72E4",
+                              backgroundColor: "#DEE1E6",
+                              borderRadius: "50%",
+                              padding: "30%",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </label>
+                        <input
+                          id="file-input"
+                          type="file"
+                          style={{ display: "none" }}
+                          onChange={this.getNewImg}
                         />
-                      </label>
-                      <input
-                        id="file-input"
-                        type="file"
-                        style={{ display: "none" }}
-                        onChange={this.getNewImg}
-                      />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <CardBody>
-                  <Form>
-                    <h6 className="heading-small text-muted mb-4">
-                      Edit Details
-                    </h6>
-                    <div className="pl-lg-4">
-                      <Row>
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-username"
-                            >
-                              Name
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue={this.state.username}
-                              id="input-username"
-                              onChange={this.handleName}
+                  <CardBody>
+                    <Form>
+                      <h6 className="heading-small text-muted mb-4">
+                        Edit Details
+                      </h6>
+                      <div className="pl-lg-4">
+                        <Row>
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-username"
+                              >
+                                Name
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                defaultValue={this.state.username}
+                                id="input-username"
+                                onChange={this.handleName}
 
-                              placeholder={this.state.userData.username}
-                              type="text"
-                            />
-                          </FormGroup>
-                        </Col>
+                                placeholder={this.state.userData.username}
+                                type="text"
+                              />
+                            </FormGroup>
+                          </Col>
 
-                        <Col lg="6">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-email"
-                            >
-                              Contact No.
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              id="input-email"
-                              placeholder={this.state.contact}
-                              type="email"
-                              onChange={this.handleContact}
+                          <Col lg="6">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-email"
+                              >
+                                Contact No.
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                id="input-email"
+                                placeholder={this.state.contact}
+                                type="email"
+                                onChange={this.handleContact}
 
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      {/* <Row>
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        {/* <Row>
                         <Col lg="6">
                           <FormGroup>
                             <label
@@ -589,108 +621,108 @@ export default class EditProfile extends Component {
                           </FormGroup>
                         </Col>
                       </Row> */}
-                    </div>
-                    <hr className="my-4" />
-                    {/* Address */}
-                    <h6 className="heading-small text-muted mb-4">
-                      Contact information
-                    </h6>
-                    <div className="pl-lg-4">
-                      <Row>
-                        <Col md="12">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-address"
-                            >
-                              Address
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue={this.state.address}
-                              id="input-address"
-                              placeholder={this.state.userData.address}
-                              type="text"
-                              onChange={this.handleAddress}
+                      </div>
+                      <hr className="my-4" />
+                      {/* Address */}
+                      <h6 className="heading-small text-muted mb-4">
+                        Contact information
+                      </h6>
+                      <div className="pl-lg-4">
+                        <Row>
+                          <Col md="12">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-address"
+                              >
+                                Address
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                defaultValue={this.state.address}
+                                id="input-address"
+                                placeholder={this.state.userData.address}
+                                type="text"
+                                onChange={this.handleAddress}
 
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-city"
-                            >
-                              City
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue={this.state.city}
-                              id="input-city"
-                              placeholder={this.state.userData.city}
-                              type="text"
-                              onChange={this.handleCity}
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col lg="4">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-city"
+                              >
+                                City
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                defaultValue={this.state.city}
+                                id="input-city"
+                                placeholder={this.state.userData.city}
+                                type="text"
+                                onChange={this.handleCity}
 
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              State
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              defaultValue={this.state.state}
-                              id="input-state"
-                              placeholder={this.state.userData.state}
-                              type="text"
-                              onChange={this.handleState}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="4">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-country"
+                              >
+                                State
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                defaultValue={this.state.state}
+                                id="input-state"
+                                placeholder={this.state.userData.state}
+                                type="text"
+                                onChange={this.handleState}
 
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                              className="form-control-label"
-                              htmlFor="input-country"
-                            >
-                              Postal code
-                            </label>
-                            <Input
-                              className="form-control-alternative"
-                              id="input-postal-code"
-                              placeholder={this.state.postalCode}
-                              type="number"
-                              onChange={this.handlePostalcode}
+                              />
+                            </FormGroup>
+                          </Col>
+                          <Col lg="4">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-country"
+                              >
+                                Postal code
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                id="input-postal-code"
+                                placeholder={this.state.postalCode}
+                                type="number"
+                                onChange={this.handlePostalcode}
 
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </div>
-                    <hr className="my-4" />
-                    {/* Description */}
+                              />
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </div>
+                      <hr className="my-4" />
+                      {/* Description */}
 
-                  </Form>
-                </CardBody>
-                <Button
-                  color="info"
-                  onClick={this.handleSubmit}
+                    </Form>
+                  </CardBody>
+                  <Button
+                    color="info"
+                    onClick={this.handleSubmit}
 
-                > Edit profile
-                </Button>
-              </Card>
-            </Col>
-          </Row>
-        </Container>}
+                  > Edit profile
+                  </Button>
+                </Card>
+              </Col>
+            </Row>
+          </Container>}
       </>
     );
   }

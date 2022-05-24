@@ -18,7 +18,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+import google from "../assets/img/google.png"
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -29,8 +29,8 @@ class Login extends React.Component {
     this.handleEmail = this.handleEmail.bind(this);
     this.handlePass = this.handlePass.bind(this);
     this.login = this.login.bind(this);
-    this.manageGoogleLogin = this.manageGoogleLogin.bind(this);
-    this.manageGithubLogin = this.manageGithubLogin.bind(this);
+    // this.manageGoogleLogin = this.manageGoogleLogin.bind(this);
+    // this.manageGithubLogin = this.manageGithubLogin.bind(this);
   }
   handleEmail = (e) => {
     this.setState({ email: e.target.value });
@@ -47,6 +47,7 @@ class Login extends React.Component {
       })
       .catch((error) => {
         alert("Login Unsuccessful");
+        console.log(error)
       });
   };
   // googleLogin(){
@@ -55,9 +56,47 @@ class Login extends React.Component {
   //   firebase.auth()
   //   .signInWithPopup(provider)
   //   .then((result) => {
+  //     window.location.href = "/user/dashboard";
+
   //   }).catch((error) => {
   //   });
   // }
+  
+  // manageGithubLogin = () => {
+  //   var provider = new firebase.auth.GithubAuthProvider();
+  //   firebase
+  //     .auth()
+  //     .signInWithPopup(provider)
+  //     .then((result) => {
+  //       /** @type {firebase.auth.OAuthCredential} */
+  //       var user = result.user;
+  //       console.log(user);
+  //       var id = user.uid;
+  //       console.log(user);
+  //       firebase
+  //         .database()
+  //         .ref("users/" + id)
+  //         .once("value")
+  //         .then((snapshot) => {
+  //           if (snapshot.exists()) {
+  //           } else {
+  //             firebase
+  //               .database()
+  //               .ref("users/" + id)
+  //               .set({
+  //                 email: user.email,
+  //                 user_uid: id,
+  //                 profilepic: user.photoURL,
+  //               });
+  //           }
+  //         })
+  //         .then(() => {
+  //           window.location.href = "/user/dashboard";
+  //         });
+  //     })
+  //     .catch((error) => {});
+  // };
+
   manageGoogleLogin = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase
@@ -92,40 +131,6 @@ class Login extends React.Component {
       })
       .catch((error) => {});
   };
-  manageGithubLogin = () => {
-    var provider = new firebase.auth.GithubAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        /** @type {firebase.auth.OAuthCredential} */
-        var user = result.user;
-        console.log(user);
-        var id = user.uid;
-        console.log(user);
-        firebase
-          .database()
-          .ref("users/" + id)
-          .once("value")
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-            } else {
-              firebase
-                .database()
-                .ref("users/" + id)
-                .set({
-                  email: user.email,
-                  user_uid: id,
-                  profilepic: user.photoURL,
-                });
-            }
-          })
-          .then(() => {
-            window.location.href = "/user/dashboard";
-          });
-      })
-      .catch((error) => {});
-  };
   render() {
     return (
       <>
@@ -142,7 +147,7 @@ class Login extends React.Component {
                       <small>Sign in with</small>
                     </div>
                     <div className="btn-wrapper text-center">
-                      <Button
+                      {/* <Button
                         className="btn-neutral btn-icon"
                         color="default"
                         href="#pablo"
@@ -155,7 +160,7 @@ class Login extends React.Component {
                           />
                         </span>
                         <span className="btn-inner--text">Github</span>
-                      </Button>
+                      </Button> */}
                       <Button
                         className="btn-neutral btn-icon"
                         color="default"
@@ -165,7 +170,7 @@ class Login extends React.Component {
                         <span className="btn-inner--icon">
                           <img
                             alt="..."
-                            src={require("assets/img/icons/common/google.svg")}
+                            src={google}
                           />
                         </span>
                         <span className="btn-inner--text">Google</span>

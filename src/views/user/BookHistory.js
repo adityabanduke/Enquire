@@ -1,5 +1,7 @@
 import React, { Component,Redirect}from 'react'
-import firebase from '../../config/firebase-enquire'
+import firebase from '../../config/firebase-enquire';
+import Loader from "../../components/loader/Loader.js";
+
 
 import {
   Badge,
@@ -46,6 +48,7 @@ export default class Booking extends Component {
             booking: [],
             today: todayDate,
             time: time,
+            loading:false,
         }
 
 
@@ -78,9 +81,9 @@ export default class Booking extends Component {
 
                     // })
 
-                  this.setState({booking: bookingData.bookings})
+                  this.setState({booking: bookingData.bookings.reverse()})
                  
-                  this.state.booking.reverse();
+                  this.setState({loading:true});
                     // this.setState({ booking: withNestedKeys });
                     console.log(this.state.booking)                    //  Childsnapshot.forEach((item) => {
                     //      console.log(item.val())
@@ -106,7 +109,7 @@ export default class Booking extends Component {
       <UserHeader />
       {/* Page content */}
 
-   {this.state.booking ? (  
+   {this.state.loading ? (  
 
       <Container className="mt--7" fluid>
         {/* Table */}
@@ -221,7 +224,7 @@ export default class Booking extends Component {
           </div>
         </Row>
       </Container>
-      ): <h1>Loading...</h1>}
+      ): <Loader/>}
     </>
   );
 }}
