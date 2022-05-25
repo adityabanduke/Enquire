@@ -186,15 +186,14 @@ export default class dashboard extends react.Component {
       data: this.state.Hbooking
 
     }).then(() => {
-      alert("Appointment Booked Successfully");
-
+      this.setState({
+        open:false
+      })
+      // alert("Appointment Booked Successfully");
 
 
     })
   }
-
-
-
 
   render() {
     return (
