@@ -26,7 +26,7 @@ import "assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import UserLayout from "layouts/User.js";
-// import UserLocation from 'views/UserLocation';
+import UserLocation from 'views/UserLocation';
 import Index from "views/Index";
 import UserLogin from "views/userLogin.js"
 import UserRegister from "views/userRegister.js";
@@ -68,6 +68,10 @@ ReactDOM.render(
        
       <Route path="/UserEditProfile" exact >
         <UserEditProfile/>
+      </Route>
+
+      <Route path="/userLocation" exact >
+        <UserLocation/>
       </Route>
 
       <Route path="/HospitalDetail" exact >

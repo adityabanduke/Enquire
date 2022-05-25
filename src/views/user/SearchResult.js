@@ -34,8 +34,8 @@ export default class SearchResult extends Component {
 			myOptions: [],
 			hospitalData: [],
 			loading:false,
-			userLongitude:23.11,
-			userLatitude:77.94,
+			userLongitude:'',
+			userLatitude:'',
 			dandt:[],
 			destinations: [],
 
@@ -57,12 +57,14 @@ export default class SearchResult extends Component {
 
 		// const { myOptions, hospitalData } = this.state;
 		const temp = localStorage.getItem("hospitalData");
-		if (temp) {
-
+		const detail = localStorage.getItem("dandt");
+	
 			this.setState({ hospitalData: JSON.parse(temp) });
-			this.setState({loading:true});
-			localStorage.clear();
-		}
+			this.setState({dandt:JSON.parse(detail)});
+			console.log(this.state.dandt);
+			
+			
+	
 
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log("HI111111");
@@ -83,6 +85,8 @@ export default class SearchResult extends Component {
 				window.location.href = "/login";
 			}
 		})
+
+		this.setState({loading:true});
 	}
 
 	    
@@ -132,6 +136,7 @@ export default class SearchResult extends Component {
 
 		let mytags;
 		if (e.key === 'Enter') {
+			localStorage.clear();
 			this.setState({loading:false});
 			console.log("you hit enter...................");
 			console.log(e.target.value);

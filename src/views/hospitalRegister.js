@@ -105,7 +105,7 @@ const hospitalRegister = () => {
      var tempTags = tags;
      tempTags.push(name);
       db.collection("Admin").doc(user.uid).set({
-        name, email, address, city, country, postalCode, about, password, tags:tempTags , users, h_id:ID,doctorName,doctorSpec,doctorImg,longitude,latitude
+        name, email, address, city, country, postalCode, about, password, tags:tempTags , users, h_id:ID,doctorName,doctorSpec,doctorImg,longitude,latitude,
       })
     }).then((err) => {
       if (err) {
