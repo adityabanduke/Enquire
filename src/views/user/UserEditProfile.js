@@ -67,8 +67,10 @@ export default class EditProfile extends Component {
       profile: '',
       croppedArea: null,
       croppedAreaPixels: null,
-      longitude: '',
-      latitude: '',
+      coords: [],
+      longitude:'',
+      latitude:'',
+     
       crop: {
         x: 0,
         y: 0,
@@ -94,22 +96,9 @@ export default class EditProfile extends Component {
 
 
 
-  componentDidMount() {
-    if ("geolocation" in navigator) {
-      console.log("Available");
-      navigator.geolocation.getCurrentPosition(function (position) {
-        console.log(position);
-        console.log("Latitude is :", position.coords.latitude);
-        this.setState({ latituude: position.coords.latitude });
-        this.setState({ longitude: position.coords.longitude });
-        console.log("Longitude is :", position.coords.longitude);
-
-
-
-      });
-    } else {
-      console.log("Not Available");
-    }
+  componentDidMount() 
+  {
+    let temp = [];
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         if ("geolocation" in navigator) {
@@ -117,13 +106,26 @@ export default class EditProfile extends Component {
           navigator.geolocation.getCurrentPosition(function (position) {
             console.log(position);
             console.log("Latitude is :", position.coords.latitude);
-            this.setState({ latitude: position.coords.latitude });
-            this.setState({ longitude: position.coords.longitude });
+
+            // this.setState({ latitude: position.coords.latitude});
+            
+            temp.push(position.coords.latitude);
+            temp.push(position.coords.longitude);
+
+          
+           
+
+            // this.setState({ longitude: position.coords.longitude });
+
             console.log("Longitude is :", position.coords.longitude);
           });
         } else {
           console.log("Not Available");
         }
+
+        this.setState({coords: temp});
+        console.log(this.state.coords);
+
         firebase
           .database()
           .ref("users/" + user.uid)
@@ -133,7 +135,7 @@ export default class EditProfile extends Component {
             console.log(data);
             this.setState({
               userData: data, name: data.username, contact: data.contact, city: data.city, state: data.state, address: data.address, postalCode: data.postalCode, profilepic: data.profilepic,
-              prevprofile: data.profilepic, longitude: this.state.longitude, latitude: this.state.latitude
+              prevprofile: data.profilepic, longitude: data.username, latitude: data.latitude
             });
           })
 
@@ -258,6 +260,8 @@ export default class EditProfile extends Component {
               city: this.state.city,
               state: this.state.state,
               postalCode: this.state.postalCode,
+              longitude:this.state.coords[1],
+              latitude:this.state.coords[0],
 
 
             }).then(() => {
