@@ -42,9 +42,9 @@ import Cropper from "react-easy-crop";
 import defaultIcon from "../../assets/images/blankProfilepic.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import Lottie from 'react-lottie';
+// import Lottie from 'react-lottie';
 //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
-import rocket from '../../assets/lottie/9764-loader.json'
+// import rocket from '../../assets/lottie/9764-loader.json'
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -314,14 +314,14 @@ export default class EditProfile extends Component {
 
 
   render() {
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: rocket,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
+    // const defaultOptions = {
+    //   loop: true,
+    //   autoplay: true,
+    //   animationData: rocket,
+    //   rendererSettings: {
+    //     preserveAspectRatio: 'xMidYMid slice'
+    //   }
+    // };
     return (
       <>   {this.state.newprofilepic ?
         (
@@ -376,9 +376,12 @@ export default class EditProfile extends Component {
         <UserHeader userData={this.state.userData} />
         {/* Page content */}
 
-        {this.state.createloader ? <Lottie options={defaultOptions}
-          height={300}
-          width={100}></Lottie> :
+        {this.state.createloader ?
+        //  <Lottie options={defaultOptions}
+        //   height={300}
+        //   width={100}></Lottie> 
+        <> <h1>Loading...</h1></>
+          :
           <Container className="mt--7" fluid>
             <Row>
               {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
