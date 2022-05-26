@@ -39,6 +39,7 @@ export default class BookingDetail extends Component {
       c_no: 1,
       CurrentP: 1,
       Extime: '',
+      hData:{},
 
     }
   }
@@ -51,6 +52,8 @@ export default class BookingDetail extends Component {
         var currenturlsearch = new URLSearchParams(currenturl);
         var b_id = currenturlsearch.get("Booking_id");
         this.setState({ b_id: b_id });
+
+
 
         firebase.database().ref("users/" + user.uid + "/YourBookings/bookings").once('value').then((snapshot) => {
           var Data = snapshot.val();
@@ -70,6 +73,15 @@ export default class BookingDetail extends Component {
 
 
         }).then(() => {
+
+          db.collection("Admin").doc(this.state.h_id).get().then((snapshot) => {
+            // console.log(snapshot.data());
+            var hospitalData = snapshot.data();
+            // console.log(hospitalData.name);
+            this.setState({ hData: hospitalData });
+
+            // console.log(userData);
+        })
 
           firebase.database().ref("Hospitals/" + this.state.h_id + "/data").once('value').then((snapshot) => {
             var hData = snapshot.val();
@@ -128,6 +140,9 @@ export default class BookingDetail extends Component {
   render() {
     return (
       <>
+
+      {this.state.hData ? 
+      <div>
 
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
           <Container fluid>
@@ -216,7 +231,7 @@ export default class BookingDetail extends Component {
                           >
                             Status of Doctor
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">Active</span>
+                          <span className="h2 font-weight-bold mb-0">{this.state.hData.avalabilityStatus ? "Available" : " Unavailable"}</span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -230,8 +245,77 @@ export default class BookingDetail extends Component {
                 </Col>
               </Row>
             </div>
+
+           
           </Container>
+         
         </div>
+        <Container className='mt--7' style={{zIndex:'15'}} fluid>
+             
+              <Card>
+                <CardHeader> <h1>Booking Information</h1></CardHeader>
+                <CardBody>
+                <Row style={{ "padding": '20px' }} className="d-flex justify-content-between">
+                            <Col lg="4"><img src={this.state.hData.imageAsUrl} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} ></img></Col>
+                            <Col lg="7" md="10" >
+                                {this.state.hData ? <h1 className="display-2 ">{this.state.hData.name}</h1> : null}
+                                {this.state.hData ? <p className=" mt-0 mb-5">
+                                    {this.state.hData.address}
+                                    <p>{this.state.hData.city} , {this.state.hData.country}</p>
+                                </p> : null}
+
+                                {/* <div className="text-white mt-0 mb-5"><p color='#fff'><AddLocationIcon/> {this.state.hData.address}</p>
+                                <p color='#fff'><EmailIcon/> {this.state.hData.email}</p>
+                                                       <p><LanguageIcon/> {this.state.hData.city},{this.state.hData.country}</p>
+
+                                </div> */}
+
+                            </Col>
+
+                        </Row>
+
+                        <Row className='pt-lg-5'> <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-city"
+                            >
+                              Booking Date
+                            </label>
+                            <Input disabled
+                              className="form-control-alternative"
+                              placeholder={this.state.book_date}
+                              id="input-contact"
+                              // placeholder={this.state.hData.contact}
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg='6'>
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-address"
+                            >
+                              Booking Time
+                            </label>
+                            <Input disabled
+                              className="form-control-alternative"
+                              placeholder={this.state.book_time}
+                              id="input-address"
+                              // placeholder={this.state.hData.address}
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                </CardBody>
+              </Card>
+            </Container >
+
+            </div>
+
+            : <h1>Loading...</h1> }
       </>
     )
   }
