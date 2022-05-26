@@ -1,12 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+
 .BaapClass {
     
-
 
 body {
     margin: 0;
     line-height: 1.15;
     -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%
+    -webkit-text-size-adjust: 100%;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 article,
@@ -40,7 +44,7 @@ hr {
 }
 
 pre {
-    font-family: monospace, monospace;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 1em
 }
 
@@ -69,7 +73,7 @@ strong {
 code,
 kbd,
 samp {
-    font-family: monospace, monospace;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 1em
 }
 
@@ -125,7 +129,7 @@ input,
 optgroup,
 select,
 textarea {
-    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 100%;
     line-height: 1.15;
     margin: 0
@@ -356,7 +360,8 @@ button,
 input,
 select,
 textarea {
-    font-family: "Heebo", sans-serif
+    font-family: 'Montserrat', sans-serif !important;
+
 }
 
 a {
@@ -384,7 +389,6 @@ h6,
 .h6 {
     clear: both;
     color: #182538;
-    font-family: "IBM Plex Sans", sans-serif;
     font-weight: 600
 }
 
@@ -582,7 +586,7 @@ pre .h3,
 pre .h4,
 pre .h5,
 pre .h6 {
-    font-family: "Courier 10 Pitch", Courier, monospace
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 pre,
@@ -608,7 +612,7 @@ code,
 kbd,
 tt,
 var {
-    font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 16px;
     padding: 2px 4px
 }
@@ -688,7 +692,7 @@ label {
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
     clip: auto !important;
     display: block;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 14px;
     letter-spacing: 0px;
     font-weight: 600;
@@ -1296,7 +1300,7 @@ label {
 
 .button {
     display: inline-flex;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 14px;
     letter-spacing: 0px;
     font-weight: 600;

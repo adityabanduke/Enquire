@@ -35,7 +35,7 @@ import HospitalRegister from "views/hospitalRegister"
 import UserEditProfile from "views/user/UserEditProfile.js";
 import HospitalDetail from "views/user/HospitalDetail.js";
 import AdminLocation from "views/AdminLocation.js";
-
+import AdminLogin from "views/AdminLogin";
 
 
 
@@ -96,6 +96,9 @@ ReactDOM.render(
 
       <Route path="/admin-register" exact >
         <HospitalRegister/>
+      </Route>
+      <Route path="/AdminLogin" exact >
+        <AdminLogin/>
       </Route>
       {/* <Redirect to="/" /> */}
 

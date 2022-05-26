@@ -21,6 +21,8 @@ import hospitalimg from "../../assets/img/hospital.jpg"
 import doctor from "../../assets/img/doctor.jpg"
 import EmailIcon from '@mui/icons-material/Email';
 import LanguageIcon from '@mui/icons-material/Language';
+import { Chip } from "@material-ui/core";
+
 export default class HospitalDetails extends Component {
 
     constructor(props) {
@@ -149,7 +151,7 @@ export default class HospitalDetails extends Component {
                 })
             }).then(() => {
                 // alert("Appointment Booked Successfully");
-                window.location.href = `${'/BookingDetail?Booking_id=' + this.state.booking_id}`
+                 window.location.href = `${'/user/BookingDetail?Booking_id=' + this.state.booking_id}`
 
 
             })
@@ -197,7 +199,25 @@ export default class HospitalDetails extends Component {
                     </Container>
                 </div>
                 <Container className='text-center mt-5' fluid>
+
 <div className='text-left justify-content-left align-items-center'>
+
+
+<h1 className=" mb-1">Specialities</h1>
+<hr style={{width:'100px' , backgroundColor:'#3972C1', marginLeft:'0'}}></hr>
+
+                  <div className="pl-lg-2 mb-4">
+                    <Row>
+                    
+                    { this.state.hData.tags && this.state.hData.tags.map((tag)=>(
+                      
+                    <Chip className="ml-2" label={tag} color="primary" />
+                 ) )}
+                    </Row>
+                  </div>
+
+
+
                     <h1 >Featured Doctor</h1>
                     <hr style={{width:'100px' , backgroundColor:'#3972C1', marginLeft:'0'}}></hr></div>
                     <Card className='shadow p-3 mb-5 bg-white rounded '>

@@ -118,7 +118,7 @@ const Profile = () => {
             {/* Card stats */}
             <Row>
        
-             <h1>
+             <h1 className="px-3" style={{color:'#fff' , fontSize:'2.5rem'}}>
                {userData.name}{
                  console.log(userData.imageAsUrl)
                }
@@ -411,7 +411,7 @@ const Profile = () => {
                     
                     { userData.tags && userData.tags.map((tag)=>(
                       
-                    <Chip className="ml-2" label={tag} color="primary" />
+                    <Chip className="ml-2" label={tag} color='#21AEE4' />
                  ) )}
                     </Row>
                   </div>
