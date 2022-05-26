@@ -32,7 +32,7 @@ import {
   // core components
   import UserHeader from "components/Headers/UserHeader.js";
   // import React from "react";
-  import react,{useState,useEffect} from "react";
+  import react  from "react";
   import firebase from '../../config/firebase-enquire'
   import {db} from '../../config/firebase-enquire'
   import {storage} from '../../config/firebase-enquire'

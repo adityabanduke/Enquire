@@ -54,18 +54,11 @@ import rocket from 'assets/lottie/signup.json'
 
 import {
     Button,
-    Card,
-    CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
-    Container,
+
     Row,
     Col,
 } from "reactstrap";
 import "dist/css/style.scss";
-import logoLight from "../dist/images/logo-light.svg";
 import illustration from "../dist/images/header-illustration-light.svg";
 import heroIllustration from "../dist/images/hero-media-illustration-light.svg";
 import heroMedia from "../dist/images/hopital.jpg";

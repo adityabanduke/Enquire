@@ -14,9 +14,8 @@ import {
 // core components
 import UserHeader from "components/Headers/UserProfile";
 // import React from "react";
-import react, { useState, useEffect, Component } from "react";
+import {Component } from "react";
 import firebase from '../../config/firebase-enquire'
-import Link from "react-router-dom/Link";
 
 import blank from "../../assets/images/blankProfilepic.png"
 

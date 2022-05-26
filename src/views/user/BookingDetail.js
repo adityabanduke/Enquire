@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
   FormGroup,
-  Form,
   Input,
   Container,
   Row,
@@ -15,8 +13,6 @@ import {
 
 import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
-import { useHistory, useParams } from 'react-router-dom';
-import UserHeader from 'components/Headers/UserHeader';
 
 
 

@@ -31,9 +31,9 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+// import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
-import react,{useState,useEffect} from "react";
+import {useState,useEffect} from "react";
 import firebase from '../../config/firebase-enquire';
 import { Chip } from "@material-ui/core";
 import Link from "react-router-dom/Link";
