@@ -14,12 +14,10 @@ import {
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
-import react, { useState, useEffect } from "react";
+import react from "react";
 import firebase from '../config/firebase-enquire';
 import { db } from "../config/firebase-enquire";
-import { EndOfLineState } from "typescript";
 import Select from "react-dropdown-select";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 const hospitalRegister = () => {
 

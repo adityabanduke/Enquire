@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
 import * as tt from '@tomtom-international/web-sdk-maps';
-import * as ttapi from '@tomtom-international/web-sdk-services';
 import '../assets/css/location.css';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import {Button} from 'reactstrap';
 import TextField from '@mui/material/TextField';
 import firebase from '../config/firebase-enquire';
+import H from "@here/maps-api-for-javascript";
+
 
 
 
