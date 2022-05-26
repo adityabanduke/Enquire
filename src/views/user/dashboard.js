@@ -21,9 +21,9 @@ import Loader from '../../components/loader/Loader.js';
 // import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 
-import StepProgressBar from 'react-step-progress';
+// import StepProgressBar from 'react-step-progress';
 // import the stylesheet
-import 'react-step-progress/dist/index.css';
+// import 'react-step-progress/dist/index.css';
 // import "../../assets/css/Actionbutton.css"
 
 import {
@@ -416,7 +416,7 @@ export default class dashboard extends Component {
 					<div>
 						<h1>Complete Your Profile</h1>
 
-						<StepProgressBar
+						{/* <StepProgressBar
 							startingStep={0}
 
 							buttonWrapperClass={ulStyle}
@@ -445,7 +445,7 @@ export default class dashboard extends Component {
 
 								}
 							]}
-						/>
+						/> */}
 					</div>
 
 
