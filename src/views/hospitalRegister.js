@@ -64,21 +64,21 @@ const hospitalRegister = () => {
   react.useEffect(() => {
 
 
-    if ("geolocation" in navigator) {
-      console.log("Available");
-      navigator.geolocation.getCurrentPosition(function(position) {
-        console.log(position);
-        console.log("Latitude is :", position.coords.latitude);
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-        console.log("Longitude is :", position.coords.longitude);
+    // if ("geolocation" in navigator) {
+    //   console.log("Available");
+    //   navigator.geolocation.getCurrentPosition(function(position) {
+    //     console.log(position);
+    //     console.log("Latitude is :", position.coords.latitude);
+    //     setLatitude(position.coords.latitude);
+    //     setLongitude(position.coords.longitude);
+    //     console.log("Longitude is :", position.coords.longitude);
   
 
         
-      });
-    } else {
-      console.log("Not Available");
-    }
+    //   });
+    // } else {
+    //   console.log("Not Available");
+    // }
   
 
     firebase

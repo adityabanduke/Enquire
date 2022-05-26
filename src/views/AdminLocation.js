@@ -6,6 +6,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 import {Button} from 'reactstrap';
 import TextField from '@mui/material/TextField';
 import firebase from '../config/firebase-enquire';
+import {db} from '../config/firebase-enquire';
 
 
 
@@ -18,8 +19,25 @@ function UserLocation() {
   const [longitude, setLongitude] = useState(77.33058);
   const [location, setLocation] = useState();
   const [user, setUser] = useState();
-  
+  const [hospital, setHospital] = useState();
+
+
   useEffect(() => {
+    
+    firebase.auth().onAuthStateChanged((user) => {
+        if(user){
+          console.log(user.uid);
+          db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
+            console.log(snapshot.data());
+            var hospitalData = snapshot.data();
+            console.log(hospitalData.name);
+            setHospital(hospitalData);
+            // console.log(userData);
+          })
+        }
+        })
+
+
     
     if ("geolocation" in navigator) {
       console.log("Available");
@@ -137,27 +155,17 @@ function UserLocation() {
  const handleSubmit = (e) => {
     e.preventDefault();
 
-
+    let TempData = hospital;
+    TempData.latitude = latitude;
+    TempData.longitude = longitude;
+    setHospital(TempData);
 
     firebase.auth().onAuthStateChanged((user) => {
-      firebase.database().ref(`users/${user.uid}`).once("value")
-        .then((snap) => {
-         
-          setUser(snap.val());
-
-          const db = firebase.database();
-          db.ref("users/" + user.uid)
-            .update({
-             
-              longitude:longitude,
-              latitude:latitude,
-
-
-            })
-
-
-
-        })
+        db.collection('Admin').doc(user.uid).update(hospital).then((err) => {
+            if(err){
+              console.log(err);
+            }
+          });
     })
 
   };

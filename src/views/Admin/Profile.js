@@ -235,6 +235,14 @@ const Profile = () => {
                     >
                       Edit Profile
                     </Button></Link>
+                 
+                    <Link to="/adminLocation">                      <Button
+                        color="info"
+
+
+                      > Set Location
+                      </Button></Link>
+
                   </Col>
                 </Row>
               </CardHeader>
