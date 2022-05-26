@@ -1,5 +1,5 @@
 import React from "react";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import sandClock from "../../assets/img/Loader.json";
 
 export default function Loader() {
@@ -17,7 +17,7 @@ export default function Loader() {
     <div
      
     >
-      <Lottie options={defaultOptions} height={200} width={200} />
+      {/* <Lottie options={defaultOptions} height={200} width={200} /> */}
     </div>
   );
 }

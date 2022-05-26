@@ -53,7 +53,7 @@ import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
 
 import { nanoid } from 'nanoid';
-import Loader from '../../components/loader/Loader.js';
+// import Loader from '../../components/loader/Loader.js';
 
 
 
@@ -601,7 +601,14 @@ export default class dashboard extends react.Component {
               </Card>
             </div>
           </Row>
-          :<Loader/>}
+          :
+          <>
+        <h1>
+           Loading.....
+        </h1>
+          {/* <Loader/> */}
+          </>
+          }
 
         </Container>
 
