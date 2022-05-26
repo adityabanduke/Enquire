@@ -202,6 +202,25 @@ export default class AddDoctor extends Component {
                                                 />
                                             </FormGroup>
                                         </Col>
+                                        <Col lg="12">
+                                            <FormGroup>
+                                                <label
+                                                    className="form-control-label"
+                                                    htmlFor="input-username"
+                                                >
+                                                    Degree
+                                                </label>
+                                                <Input
+                                                    className="form-control-alternative"
+                                                    defaultValue={this.state.userData.degree}
+                                                    id="input-username"
+                                                    placeholder={this.state.userData.degree}
+                                                    type="text"
+                                                    onChange={e => this.setState({ userData: { ...this.state.userData, degree: e.target.value } })}
+                                                    disabled
+                                                />
+                                            </FormGroup>
+                                        </Col>
                                     </Row>
                                 </CardBody>
                                 <div className='d-flex justify-content-center mb-4'>

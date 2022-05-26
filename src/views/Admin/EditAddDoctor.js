@@ -12,9 +12,16 @@ import {
     Container,
     Row,
     Col,
+    Modal,
 } from "reactstrap";
 import { storage } from '../../config/firebase-enquire'
 import UserHeader from "components/Headers/UserHeader";
+import getCroppedImg from "utils/cropImage";
+import Cropper from "react-easy-crop";
+import hospital from "../../assets/img/hospital.jpg";
+import EditIcon from '@mui/icons-material/Edit';
+
+
 export default class EditAddDoctor extends Component {
     allInputs = { imgUrl: '' }
     constructor(props) {
@@ -27,8 +34,33 @@ export default class EditAddDoctor extends Component {
             DATA: [],
             selectBool: true,
             imageAsFile: '',
-            imageAsUrl: this.allInputs
+            imageAsUrl: this.allInputs ,
+            profilepic: '',
+            newprofilepic: null,
+            mentorModal: false,
+            submitModal: false,
+            Modal: false,
+            profile: '',
+            croppedArea: null,
+            croppedAreaPixels: null,
+            // coords: [],
+            // longitude:'',
+            // latitude:'',
+      
+            crop: {
+              x: 0,
+              y: 0,
+              width: 250,
+              height: 250,
+            },
+            zoom: 1,
         };
+
+        this.setCropFunction = this.setCropFunction.bind(this);
+        this.setZoomFunction = this.setZoomFunction.bind(this);
+        this.onCropCompleteFunction = this.onCropCompleteFunction.bind(this);
+        this.getNewImg = this.getNewImg.bind(this);
+        this.uploadNewProfilePic = this.uploadNewProfilePic.bind(this);
     }
 
     // constructor(props) {
@@ -58,6 +90,46 @@ export default class EditAddDoctor extends Component {
         const image = e.target.files[0]
         this.setState({ imageAsFile: image })
     }
+    getNewImg = (e) => {
+        this.setState({
+          newprofilepic: URL.createObjectURL(e.target.files[0]),
+        });
+        this.setState({ mentorModal: true });
+    
+      };
+    
+      setCropFunction = (newcrop) => {
+        this.setState({
+          crop: newcrop,
+        });
+      };
+      setZoomFunction = (newzoom) => {
+        this.setState({
+          zoom: newzoom,
+        });
+      };
+      onCropCompleteFunction = (croppedArea, croppedAreaPixels) => {
+        this.setState({
+          croppedArea: croppedArea,
+          croppedAreaPixels: croppedAreaPixels,
+        });
+    
+      };
+      uploadNewProfilePic = () => {
+        getCroppedImg(
+          this.state.newprofilepic,
+          this.state.croppedAreaPixels,
+          0
+        ).then((result) => {
+          this.setState({
+            newprofilepic: null,
+            profilepic: result,
+          })
+        }).then(() => {
+          console.log(this.state.profilepic);
+        })
+      };
+    
 
 
     UpdateData = () => {
@@ -69,6 +141,44 @@ export default class EditAddDoctor extends Component {
                     }
                 });
             }
+
+            if (this.state.profilepic !== this.state.prevprofile) {
+                firebase
+                  .storage()
+                  .ref("Admin/" + user.uid + "/profile.jpeg")
+                  .putString(this.state.profilepic, "data_url")
+                  .then((snapshot) => {
+
+
+      
+                    firebase
+                      .storage()
+                      .ref("Admin")
+                      .child(user.uid + "/profile.jpeg")
+                      .getDownloadURL()
+                      .then((urls) => {
+      
+                        db.collection('Admin').doc(user.uid).update({
+                          doctorImg: urls,
+                        })
+                        console.log(urls);
+      
+                        
+      
+                        // db.ref("users/" + user.uid)
+                        //   .update({
+                        //     profilepic: urls,
+                        //   }).then(() => {
+                        //     this.setState({ createloader: false });
+      
+                        //     this.submitmodal();
+                        //   });
+      
+                      }).then(()=>{
+                        window.location.href="/Admin/Profile"
+                      })
+                  })
+              } 
         })
         console.log('start of upload')
         // async magic goes here...
@@ -180,9 +290,119 @@ export default class EditAddDoctor extends Component {
                                 </CardBody>
                             </Card>
                         </Col> */}
+                         {this.state.newprofilepic ?
+                    (
+                      <>
+                        <Modal isOpen={this.state.mentorModal} toggle={this.toggleMentor}>
+                          <Card className="cropperCard" style={{ width: '800px', height: "80vh", alignItems: "center", marginRight: "100px", justifyContent: "center", position: 'relative' }}>
+                            {/* <CardHeader> */}
+                            <Button size="lg" onClick={this.toggleMentor} style={{ position: "absolute", top: "0", left: "0", margin: "5px" }}>
+                              {/* <FontAwesomeIcon
+                            icon={faWindowClose}
+                            style={{
+                                color: "rgb(185, 185, 185)",
+                                marginLeft: "auto",
+                                cursor: "pointer",
+                                fontSize: "20px",
+                                zIndex:'100',
+                            }}
+                        /> */}
+                            </Button>
+                            {/* </CardHeader> */}
+                            <div className="imgCropperParentDiv">
+                              <Cropper
+                                className="cropperClass"
+                                image={this.state.newprofilepic}
+                                crop={this.state.crop}
+                                zoom={this.state.zoom}
+                                aspect={1 / 1}
+                                onCropChange={this.setCropFunction}
+                                onCropComplete={this.onCropCompleteFunction}
+                                onZoomChange={this.setZoomFunction}
+                              />
+
+                            </div>
+                            <Button color="primary" className="cancel" onClick={this.uploadNewProfilePic}>
+                              Upload
+                            </Button>
+                            {/* </CardFooter> */}
+                          </Card>
+                        </Modal>
+                      </>
+                    ) : null}
+
+                  {/* <Form className="py-3" onSubmit={this.handleFireBaseUpload}>
+
+                  <h6 className="heading-small text-muted mb-4">
+                      Profile Image
+                    </h6>
+                    <input
+                      // allows you to reach into your file directory and upload image to the browser
+                      type="file"
+                      onChange={this.handleImageAsFile}
+                    />
+                    <button>Save</button>
+                  </Form> */}
+                 
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">
-                                <Row className="justify-content-center">
+                                <Row>
+                                <div
+                    style={{
+                      display: "flex",
+                      width: "fit-content",
+                      position: "relative",
+                    }}
+                    className="align-items-center"
+                  >
+                    <img
+                      alt="..."
+                      className="rounded-circle"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        margin: "0 20px",
+                      }}
+                      src={
+                        this.state.userData
+                          ? this.state.userData.profilepic
+                          : hospital
+                      }
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: "-10px",
+                        right: "0",
+                        width: "30px",
+                      }}
+                    >
+                      <div className="image-upload">
+                        <label htmlFor="file-input" style={{ display: "block" }}>
+                          {/* <FontAwesomeIcon
+                            icon={faPen}
+                            style={{
+                              fontSize: "30px",
+                              color: "#5E72E4",
+                              backgroundColor: "#DEE1E6",
+                              borderRadius: "50%",
+                              padding: "30%",
+                              cursor: "pointer",
+                            }}
+                          /> */}
+                          <EditIcon />
+                        </label>
+                        <input
+                          id="file-input"
+                          type="file"
+                          style={{ display: "none" }}
+                          onChange={this.getNewImg}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                                </Row>
+                                {/* <Row className="justify-content-center">
                                     <Col className="order-lg-2" lg="3">
                                         <div className="card-profile-image">
                                             <a href="#pablo" onClick={(e) => e.preventDefault()}>
@@ -198,7 +418,7 @@ export default class EditAddDoctor extends Component {
                                             </a>
                                         </div>
                                     </Col>
-                                </Row>
+                                </Row> */}
 
                                 <CardBody className="mt-5 pt-5 pt-md-4">
 
@@ -241,8 +461,27 @@ export default class EditAddDoctor extends Component {
                                                 />
                                             </FormGroup>
                                         </Col>
+                                        <Col lg="12">
+                                            <FormGroup>
+                                                <label
+                                                    className="form-control-label"
+                                                    htmlFor="input-username"
+                                                >
+                                                    Degree
+                                                </label>
+                                                <Input
+                                                    className="form-control-alternative"
+                                                    defaultValue={this.state.userData.degree}
+                                                    id="input-username"
+                                                    placeholder={this.state.userData.degree}
+                                                    type="text"
+                                                    onChange={e => this.setState({ userData: { ...this.state.userData, degree: e.target.value } })}
+                                                    disabled
+                                                />
+                                            </FormGroup>
+                                        </Col>
                                     </Row>
-                                    <Row>
+                                    {/* <Row>
                                         <Col lg="6">
                                             <form>
                                                 <input
@@ -250,9 +489,8 @@ export default class EditAddDoctor extends Component {
                                                     type="file"
                                                     onChange={this.handleImageAsFile}
                                                 />
-                                                {/* <button>upload to firebase</button> */}
                                             </form></Col>
-                                    </Row>
+                                    </Row> */}
                                 </CardBody>
                                 <div className='d-flex justify-content-center mb-4'>
                                     <Button
