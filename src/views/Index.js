@@ -48,9 +48,9 @@
 
 // import Header from "components/Headers/Header.js";
 import React from "react";
-import Lottie from 'react-lottie';
+// import Lottie from 'react-lottie';
 //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
-import rocket from 'assets/lottie/signup.json'
+// import rocket from 'assets/lottie/signup.json'
 
 import {
     Button,
@@ -78,14 +78,14 @@ import logo from "../assets/img/enquirelogo.png";
 
 
 const Index = (props) => {
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: rocket,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
+    // const defaultOptions = {
+    //     loop: true,
+    //     autoplay: true,
+    //     animationData: rocket,
+    //     rendererSettings: {
+    //         preserveAspectRatio: 'xMidYMid slice'
+    //     }
+    // };
     return (
         <>
             <body className="is-boxed has-animations BaapClass">
@@ -238,9 +238,12 @@ const Index = (props) => {
 
                                 </Col>
                                 <Col lg='4'>
-                                    <Lottie options={defaultOptions}
+                                    {/* <Lottie options={defaultOptions}
                                         height={400}
-                                        width={500}></Lottie>
+                                        width={500}></Lottie> */}
+                                        <h1>
+                                            Loading..........
+                                        </h1>
                                 </Col>
                             </Row>
                         </section>
