@@ -18,11 +18,6 @@
 
 import Index from "views/Admin/dashboard.js";
 import Profile from "views/Admin/Profile.js";
-import Maps from "views/Admin/Maps.js";
-import Register from "views/Admin/Register.js";
-import Login from "views/Admin/Login.js";
-import Tables from "views/Admin/Tables.js";
-import Icons from "views/Admin/Icons.js";
 import EditProfile from "views/Admin/EditProfile.js";
 import AddDoctor from "views/Admin/AddDoctor.js";
 import EditAddDoctor from "views/Admin/EditAddDoctor.js";

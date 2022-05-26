@@ -13,7 +13,6 @@ import {
     Row,
     Col,
 } from "reactstrap";
-import { storage } from '../../config/firebase-enquire'
 import UserHeader from "components/Headers/UserHeader";
 export default class AddDoctor extends Component {
     allInputs = { imgUrl: '' }

@@ -1,4 +1,4 @@
-import React, { Component, Redirect } from 'react'
+import React, { Component } from 'react'
 import firebase from '../../config/firebase-enquire'
 
 import {

@@ -34,7 +34,7 @@ import {
 // core components
 import UserHeader from "components/Headers/UserEditProfile";
 // import React from "react";
-import react, { useState, useEffect, Component } from "react";
+import {Component } from "react";
 import firebase from '../../config/firebase-enquire'
 import getCroppedImg from "utils/cropImage";
 import Cropper from "react-easy-crop";
@@ -45,7 +45,6 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Lottie from 'react-lottie';
 //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
 import rocket from '../../assets/lottie/9764-loader.json'
-import Loader from "../../components/loader/Loader.js";
 
 export default class EditProfile extends Component {
   constructor(props) {
