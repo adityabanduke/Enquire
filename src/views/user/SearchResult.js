@@ -122,6 +122,8 @@ export default class SearchResult extends Component {
 				console.log("hi how are you");
 
 				this.setState({dandt:resultsArray});
+				localStorage.setItem('dandt', JSON.stringify(resultsArray));
+
 				console.log(this.state.dandt);
 
 			  })
@@ -184,7 +186,7 @@ export default class SearchResult extends Component {
 
 							this.setState({ hospitalData: tempData });
 							console.log(this.state.hospitalData);
-							// localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
+							 localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
 
 						}
 						this.setState({loading:true});

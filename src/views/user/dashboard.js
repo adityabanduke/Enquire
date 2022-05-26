@@ -397,10 +397,16 @@ export default class dashboard extends Component {
                   {
 					  this.state.dandt.length?
 
+					<>
 					
+					{ window.location.href = "/user/searchresult"}
+					<h1>
+						No  search Results ....
+					</h1>
+					</>
 					  	
 							 
-								  window.location.href = "/user/searchresult"
+								 
 				
 							  :
 	            <>			
