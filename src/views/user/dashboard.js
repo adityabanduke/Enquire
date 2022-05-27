@@ -70,7 +70,7 @@ export default class dashboard extends Component {
 
 			}
 			else {
-				window.location.href = "/login";
+				window.location.href = "/";
 			}
 
 

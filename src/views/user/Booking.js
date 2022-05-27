@@ -28,7 +28,8 @@ import {
 } from "reactstrap";
 import UserHeader from 'components/Headers/UserProfile';
 // import Loader from "../../components/loader/Loader.js";
-
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "assets/lottie/signup.json";
 
 export default class Booking extends Component {
 
@@ -218,9 +219,8 @@ export default class Booking extends Component {
             </Row>
           </Container>
         ) :
-        <h1>
-         Loading.... 
-        </h1>
+        <Lottie animationData={groovyWalkAnimation} />
+
         //  <Loader/>
         }
       </>

@@ -76,7 +76,8 @@ import { Link } from 'react-router-dom';
 
 import logo from "../assets/img/enquirelogo.png";
 
-
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "assets/lottie/signup.json";
 
 const Index = (props) => {
     // const defaultOptions = {
@@ -252,9 +253,7 @@ Keep the track of doctor availbility                                            
                                     {/* <Lottie options={defaultOptions}
                                         height={400}
                                         width={500}></Lottie> */}
-                                        <h1>
-                                            Loading..........
-                                        </h1>
+                                       <Lottie animationData={groovyWalkAnimation} />
                                 </Col>
                             </Row>
                         </section>

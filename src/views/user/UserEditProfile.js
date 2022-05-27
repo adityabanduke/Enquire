@@ -46,6 +46,9 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
 // import rocket from '../../assets/lottie/9764-loader.json'
 
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "assets/lottie/9764-loader.json";
+
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -380,7 +383,8 @@ export default class EditProfile extends Component {
         //  <Lottie options={defaultOptions}
         //   height={300}
         //   width={100}></Lottie> 
-        <> <h1>Loading...</h1></>
+        <>         <Lottie animationData={groovyWalkAnimation} />
+        </>
           :
           <Container className="mt--7" fluid>
             <Row>
