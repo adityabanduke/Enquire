@@ -60,6 +60,7 @@ import {
 } from "reactstrap";
 import "dist/css/style.scss";
 import illustration from "../dist/images/header-illustration-light.svg";
+import globe from "../assets/images/multiple-location.svg";
 import heroIllustration from "../dist/images/hero-media-illustration-light.svg";
 import heroMedia from "../dist/images/hopital.jpg";
 import featureIllustration from "../dist/images/features-illustration-light.svg";
@@ -153,7 +154,7 @@ const Index = (props) => {
 
                                         </div>
                                         <div className="hero-media-container" style={{ 'width': '100%', 'margin': '0' }}>
-                                            <img className=" asset-light" src={heroMedia} style={{ 'width': '80%', 'backgroundSize': '100% 100%', 'borderRadius': '15px' }} alt="Hero media" />
+                                            <img className=" asset-light" src={globe} style={{ 'width': '80%', 'backgroundSize': '100% 100%', 'borderRadius': '15px' }} alt="Hero media" />
                                         </div>
                                     </div>
                                 </div>
@@ -167,12 +168,15 @@ const Index = (props) => {
                                 <div className="features-inner section-inner has-bottom-divider">
                                     <div className="features-header text-center">
                                         <div className="container-sm">
-                                            <h2 className="section-title mt-0">The Product</h2>
-                                            <p className="section-paragraph">Lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation.</p>
+                                            <h2 className="section-title mt-0">Features</h2>
+                                            <p className="section-paragraph">
+                                                It helps you in realtime tracking of the your appointment, easy booking and avalability status
+
+                                            </p>
                                             <div className="features-image">
 
                                                 <img className="features-illustration asset-light" src={featureIllustration} alt="Feature illustration" />
-                                                <img className="features-box asset-light" src={featureBox} alt="Feature box" />
+                                                <img className="features-box asset-light" src={"https://easyflow.tech/wp-content/uploads/2021/05/Queue-Management-1.jpg"} alt="Feature box" />
                                                 <img className="features-illustration asset-light" src={featureTop} alt="Feature illustration top" />
                                             </div>
                                         </div>
@@ -187,8 +191,8 @@ const Index = (props) => {
                                                     <img className="asset-light" src={feature01} alt="Feature 01" />
                                                 </div>
                                                 <div className="feature-content">
-                                                    <h3 className="feature-title mt-0">Discover</h3>
-                                                    <p className="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
+                                                    <h3 className="feature-title mt-0">Realtime Tracking</h3>
+                                                    <p className="text-sm mb-0">Keep track of your number</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -198,8 +202,10 @@ const Index = (props) => {
                                                     <img className="asset-light" src={feature02} alt="Feature 02" />
                                                 </div>
                                                 <div className="feature-content">
-                                                    <h3 className="feature-title mt-0">Discover</h3>
-                                                    <p className="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
+                                                    <h3 className="feature-title mt-0">Nearest Hospital/Clinic</h3>
+                                                    <p className="text-sm mb-0">
+                                                        Get the distance and travel time of every hospital/clinic from your location
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,8 +216,9 @@ const Index = (props) => {
                                                     <img className="asset-dark" src="dist/images/feature-03-dark.svg" alt="Feature 03" />
                                                 </div>
                                                 <div className="feature-content">
-                                                    <h3 className="feature-title mt-0">Discover</h3>
-                                                    <p className="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
+                                                    <h3 className="feature-title mt-0">Availability status of a Doctor</h3>
+                                                    <p className="text-sm mb-0">
+Keep the track of doctor availbility                                                        </p>
                                                 </div>
                                             </div>
                                         </div>

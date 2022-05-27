@@ -76,7 +76,7 @@ export default class BookingDetail extends Component {
             // console.log(hospitalData.name);
             this.setState({ hData: hospitalData });
 
-            // console.log(userData);
+             console.log(hData);
         })
 
           firebase.database().ref("Hospitals/" + this.state.h_id + "/data").once('value').then((snapshot) => {
@@ -252,7 +252,7 @@ export default class BookingDetail extends Component {
                 <CardHeader> <h1>Booking Information</h1></CardHeader>
                 <CardBody>
                 <Row style={{ "padding": '20px' }} className="d-flex justify-content-between">
-                            <Col lg="4"><img src={this.state.hData.imageAsUrl} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} ></img></Col>
+                            <Col lg="4"><img src={this.state.hData.profilepic? this.state.hData.profilepic:  "https://www.blkmaxhospital.com/slider-mobile.jpg"} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} ></img></Col>
                             <Col lg="7" md="10" >
                                 {this.state.hData ? <h1 className="display-2 ">{this.state.hData.name}</h1> : null}
                                 {this.state.hData ? <p className=" mt-0 mb-5">

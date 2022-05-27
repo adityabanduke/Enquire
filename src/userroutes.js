@@ -44,7 +44,7 @@ var userroutes = [
   {
     path: "/Profile",
     name: "Profile",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "ni ni-circle-08 text-primary",
     component: Profile,
     layout: "/user",
     class: "",
@@ -53,7 +53,7 @@ var userroutes = [
   {
     path: "/UserEditProfile",
     name: "userEp",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "ni ni-circle-08 text-primary",
     component: UserEditProfile,
     layout: "/user",
     invisible: true,
@@ -81,7 +81,7 @@ var userroutes = [
   {
     path: "/Booking",
     name: "Your Bookings",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "ni ni-check-bold text-primary",
     component: Booking,
     layout: "/user",
     class: "",
@@ -99,7 +99,7 @@ var userroutes = [
   {
     path: "/History",
     name: "History",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "ni ni-archive-2 text-primary",
     component: BookHistory,
     layout: "/user",
     class: "",
