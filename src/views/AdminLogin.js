@@ -45,11 +45,13 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        var uid = res.user.uid;
-        console.log(uid);
-        db.collection('Admin').doc(uid).get().then((snapshot)=>{
-          console.log(snapshot);
-          if (snapshot.exists) {
+        var user = res.user;
+        var id = user.uid;
+        console.log(user);
+        // firebase
+        db.collection('Admin').doc(id).get().then((Childsnapshot)=>{
+          if (Childsnapshot) {
+            console.log("REdirerct")
               window.location.href = "/admin/dashboard";
 
           } else {
