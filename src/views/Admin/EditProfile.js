@@ -274,13 +274,14 @@ export default class EditProfile extends react.Component {
                   //   });
 
                 }).then(()=>{
+                  alert("Profile Updated")
                   window.location.href="/Admin/Profile"
                 })
             })
         } else {
           this.submitmodal();
           this.setState({ createloader: false });
-alert("Profile Updated")
+
         }
       }
     })
