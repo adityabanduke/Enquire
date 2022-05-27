@@ -20,6 +20,8 @@ import {
   Col,
 } from "reactstrap";
 import google from "../assets/img/google.png"
+ import backg from "../assets/img/background.png"
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -140,15 +142,17 @@ class Login extends React.Component {
   };
   render() {
     return (
-      <>
-        <div className="main-content login-back">
+      <div >
+        <div className="main-content login-back" style={{backgroundImage:`url(${backg})` , backgroundSize:'100% 100%'}}>
           {/* <AuthNavbar /> */}
-          <div className="header py-7 py-lg-8"></div>
+          {/* <img src={backg} style={{width:"100vw", height:"100vh", position:"relative"}}></img> */}
+
+          <div className="header py-7 py-lg-8 bg-transparent" >  </div>
           {/* Page content */}
-          <Container className="mt--8 pb-5">
-            <Row className="justify-content-start">
+          <Container className="mt--9 pb-5 ml-5 bg-transparent" >
+            <Row className="justify-content-start bg-transparent">
               <Col lg="5" md="7">
-                <Card className="bg-secondary shadow border-0">
+                <Card className="bg-secondary shadow border-0" >
                   <CardHeader className="bg-transparent pb-5">
                     <div className="text-muted text-center mt-2 mb-3">
                       <small>Sign in with</small>
@@ -272,7 +276,7 @@ class Login extends React.Component {
           </Container>
         </div>
         {/* <AuthFooter /> */}
-      </>
+      </div>
     );
   }
 }

@@ -112,15 +112,17 @@ const Index = (props) => {
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="hotel.html" className="nav-link">Services</a>
+                                        <a href="#about" className="nav-link">About</a>
                                     </li>
 
                                     <li className="nav-item">
-                                        <a href="contact.html" className="nav-link">Contact</a>
+                                        <a href="#contact" className="nav-link">Contact</a>
                                     </li>
 
 
                                 </ul>
+
+                                <div>
                                 <Link to="/login">
                                     <Button className=" nav-button button-text" color="primary" type="button">
                                         Login
@@ -130,6 +132,7 @@ const Index = (props) => {
                                     <Button className=" nav-button button-text" color="primary" type="button" >
                                         Sign Up
                                     </Button></Link>
+                                    </div>
 
                             </nav>
 
@@ -141,9 +144,9 @@ const Index = (props) => {
                             <div className="container">
                                 <div className="hero-inner">
                                     <div className="hero-copy">
-                                        <h1 className="hero-title mt-0" style={{ 'color': 'DarkBlue' }}>Enquire</h1>
-                                        <p className="hero-paragraph" style={{ 'color': 'Blue' }}>Book Appointments with Easy.</p>
-                                        <p className="hero-paragraph" style={{ 'color': 'Blue' }}>With our Online Booking feature, your clients can make bookings 24x7. All you have to do is signup and add your data then you are ready to go
+                                        <h1 className="hero-title mt-0" style={{ 'color': '#4663be', fontWeight:'600' }}>Enquire</h1>
+                                        <p className="hero-paragraph" style={{ 'color': '#8dbafe' , fontWeight:'400'}}>Book Appointments with Easy.</p>
+                                        <p className="hero-paragraph" style={{ 'color': '#8dbafe', fontWeight:'400' }}>With our Online Booking feature, your clients can make bookings 24x7. All you have to do is signup and add your data then you are ready to go
 
 </p>
 
@@ -168,7 +171,7 @@ const Index = (props) => {
 
 
 
-                        <section className="features section">
+                        <section id="about" className="features section">
                             <div className="container">
                                 <div className="features-inner section-inner has-bottom-divider">
                                     <div className="features-header text-center">
