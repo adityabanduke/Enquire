@@ -17,8 +17,7 @@
 */
 
 // reactstrap components
-import react , {useState , useEffect} from 'react';
-import { Button, Container, Row, Col } from "reactstrap";
+import {Container, Row, Col } from "reactstrap";
 
 const UserHeader = ({adminData,bool}) => {
  
@@ -44,7 +43,7 @@ const UserHeader = ({adminData,bool}) => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="8" md="10">
-              {adminData? <h1 className="display-2 text-white">{adminData.name}</h1>:null}
+              {adminData? <h1 className="display-2 text-white" style={{color:'#fff'}}>{adminData.name}</h1>:null}
 {adminData?<p className="text-white mt-0 mb-5">
               {adminData.about}
             </p>:null}

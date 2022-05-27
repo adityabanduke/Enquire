@@ -1,25 +1,25 @@
-import React, { useState, Component, Link } from 'react'
+import React, {Component} from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import firebase from '../../config/firebase-enquire';
-import { Navbar, NavbarBrand, Container, Row, Col, NavbarToggler, Collapse, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText } from 'reactstrap';
-import { green, pink } from '@mui/material/colors';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import FolderIcon from '@mui/icons-material/Folder';
-import PageviewIcon from '@mui/icons-material/Pageview';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Navbar, Container, Row, Col} from 'reactstrap';
+// import { green, pink } from '@mui/material/colors';
+// import Avatar from '@mui/material/Avatar';
+// import Stack from '@mui/material/Stack';
+// import FolderIcon from '@mui/icons-material/Folder';
+// import PageviewIcon from '@mui/icons-material/Pageview';
+// import AssignmentIcon from '@mui/icons-material/Assignment';
 import { db } from '../../config/firebase-enquire';
 import * as ttapi from '@tomtom-international/web-sdk-services';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Typography from '@mui/material/Typography';
+// import Card from '@mui/material/Card';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+// import Button from '@mui/material/Button';
+// import ButtonGroup from '@mui/material/ButtonGroup';
+// import Typography from '@mui/material/Typography';
 import "../../assets/css/card.css";
-import Loader from "../../components/loader/Loader.js";
+// import Loader from "../../components/loader/Loader.js";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
@@ -34,8 +34,8 @@ export default class SearchResult extends Component {
 			myOptions: [],
 			hospitalData: [],
 			loading:false,
-			userLongitude:23.11,
-			userLatitude:77.94,
+			userLongitude:'',
+			userLatitude:'',
 			dandt:[],
 			destinations: [],
 
@@ -57,12 +57,14 @@ export default class SearchResult extends Component {
 
 		// const { myOptions, hospitalData } = this.state;
 		const temp = localStorage.getItem("hospitalData");
-		if (temp) {
-
+		const detail = localStorage.getItem("dandt");
+	
 			this.setState({ hospitalData: JSON.parse(temp) });
-			this.setState({loading:true});
-			localStorage.clear();
-		}
+			this.setState({dandt:JSON.parse(detail)});
+			console.log(this.state.dandt);
+			
+			
+	
 
 		firebase.auth().onAuthStateChanged((user) => {
 			console.log("HI111111");
@@ -83,6 +85,8 @@ export default class SearchResult extends Component {
 				window.location.href = "/login";
 			}
 		})
+
+		this.setState({loading:true});
 	}
 
 	    
@@ -118,6 +122,8 @@ export default class SearchResult extends Component {
 				console.log("hi how are you");
 
 				this.setState({dandt:resultsArray});
+				localStorage.setItem('dandt', JSON.stringify(resultsArray));
+
 				console.log(this.state.dandt);
 
 			  })
@@ -132,6 +138,7 @@ export default class SearchResult extends Component {
 
 		let mytags;
 		if (e.key === 'Enter') {
+			localStorage.clear();
 			this.setState({loading:false});
 			console.log("you hit enter...................");
 			console.log(e.target.value);
@@ -179,7 +186,7 @@ export default class SearchResult extends Component {
 
 							this.setState({ hospitalData: tempData });
 							console.log(this.state.hospitalData);
-							// localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
+							 localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
 
 						}
 						this.setState({loading:true});
@@ -401,7 +408,16 @@ export default class SearchResult extends Component {
 	</div>
 </>
 
-					)) :<Loader/> ) : <Loader/>}
+					)) :
+					<h1>Loading....</h1>
+					// <Loader/>
+					 ) :
+					//   <Loader/>
+					<h1>
+						Loading....
+					</h1>
+
+					  }
 
 
 

@@ -34,7 +34,7 @@ import {
 // core components
 import UserHeader from "components/Headers/UserEditProfile";
 // import React from "react";
-import react, { useState, useEffect, Component } from "react";
+import {Component } from "react";
 import firebase from '../../config/firebase-enquire'
 import getCroppedImg from "utils/cropImage";
 import Cropper from "react-easy-crop";
@@ -42,10 +42,9 @@ import Cropper from "react-easy-crop";
 import defaultIcon from "../../assets/images/blankProfilepic.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import Lottie from 'react-lottie';
+// import Lottie from 'react-lottie';
 //  import rocket  from '../../assets/lottie/72284-rocket-animation.json'
-import rocket from '../../assets/lottie/9764-loader.json'
-import Loader from "../../components/loader/Loader.js";
+// import rocket from '../../assets/lottie/9764-loader.json'
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -67,8 +66,10 @@ export default class EditProfile extends Component {
       profile: '',
       croppedArea: null,
       croppedAreaPixels: null,
-      longitude: '',
-      latitude: '',
+      // coords: [],
+      // longitude:'',
+      // latitude:'',
+     
       crop: {
         x: 0,
         y: 0,
@@ -94,36 +95,36 @@ export default class EditProfile extends Component {
 
 
 
-  componentDidMount() {
-    if ("geolocation" in navigator) {
-      console.log("Available");
-      navigator.geolocation.getCurrentPosition(function (position) {
-        console.log(position);
-        console.log("Latitude is :", position.coords.latitude);
-        this.setState({ latituude: position.coords.latitude });
-        this.setState({ longitude: position.coords.longitude });
-        console.log("Longitude is :", position.coords.longitude);
-
-
-
-      });
-    } else {
-      console.log("Not Available");
-    }
+  componentDidMount() 
+  {
+    let temp = [];
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        if ("geolocation" in navigator) {
-          console.log("Available");
-          navigator.geolocation.getCurrentPosition(function (position) {
-            console.log(position);
-            console.log("Latitude is :", position.coords.latitude);
-            this.setState({ latitude: position.coords.latitude });
-            this.setState({ longitude: position.coords.longitude });
-            console.log("Longitude is :", position.coords.longitude);
-          });
-        } else {
-          console.log("Not Available");
-        }
+        // if ("geolocation" in navigator) {
+        //   console.log("Available");
+        //   navigator.geolocation.getCurrentPosition(function (position) {
+        //     console.log(position);
+        //     console.log("Latitude is :", position.coords.latitude);
+
+        //     // this.setState({ latitude: position.coords.latitude});
+            
+        //     temp.push(position.coords.latitude);
+        //     temp.push(position.coords.longitude);
+
+          
+           
+
+        //     // this.setState({ longitude: position.coords.longitude });
+
+        //     console.log("Longitude is :", position.coords.longitude);
+        //   });
+        // } else {
+        //   console.log("Not Available");
+        // }
+
+        // this.setState({coords: temp});
+        // console.log(this.state.coords);
+
         firebase
           .database()
           .ref("users/" + user.uid)
@@ -133,7 +134,7 @@ export default class EditProfile extends Component {
             console.log(data);
             this.setState({
               userData: data, name: data.username, contact: data.contact, city: data.city, state: data.state, address: data.address, postalCode: data.postalCode, profilepic: data.profilepic,
-              prevprofile: data.profilepic, longitude: this.state.longitude, latitude: this.state.latitude
+              prevprofile: data.profilepic, longitude: data.username, latitude: data.latitude
             });
           })
 
@@ -258,6 +259,8 @@ export default class EditProfile extends Component {
               city: this.state.city,
               state: this.state.state,
               postalCode: this.state.postalCode,
+              // longitude:this.state.coords[1],
+              // latitude:this.state.coords[0],
 
 
             }).then(() => {
@@ -311,14 +314,14 @@ export default class EditProfile extends Component {
 
 
   render() {
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: rocket,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
+    // const defaultOptions = {
+    //   loop: true,
+    //   autoplay: true,
+    //   animationData: rocket,
+    //   rendererSettings: {
+    //     preserveAspectRatio: 'xMidYMid slice'
+    //   }
+    // };
     return (
       <>   {this.state.newprofilepic ?
         (
@@ -373,9 +376,12 @@ export default class EditProfile extends Component {
         <UserHeader userData={this.state.userData} />
         {/* Page content */}
 
-        {this.state.createloader ? <Lottie options={defaultOptions}
-          height={300}
-          width={100}></Lottie> :
+        {this.state.createloader ?
+        //  <Lottie options={defaultOptions}
+        //   height={300}
+        //   width={100}></Lottie> 
+        <> <h1>Loading...</h1></>
+          :
           <Container className="mt--7" fluid>
             <Row>
               {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">

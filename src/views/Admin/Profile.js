@@ -31,13 +31,14 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+// import UserHeader from "components/Headers/UserHeader.js";
 // import React from "react";
-import react,{useState,useEffect} from "react";
+import react, { useState, useEffect } from "react";
 import firebase from '../../config/firebase-enquire';
 import { Chip } from "@material-ui/core";
 import Link from "react-router-dom/Link";
-import {db} from "../../config/firebase-enquire"
+import { db } from "../../config/firebase-enquire"
+import SchoolIcon from '@mui/icons-material/School';
 const Profile = () => {
   // constructor(props) {
   //   super(props);
@@ -70,59 +71,60 @@ const Profile = () => {
   // }
   const [userData, setUserData] = useState({});
   const [adminData, setAdminData] = useState({});
-  const data ="https://firebasestorage.googleapis.com/v0/b/enquire-3bea9.appspot.com/o/images%2FScreenshot%20(4).png?alt=media&token=f035f28a-2a0c-44b4-8ccc-714c6b190cbf";
+  const data = "https://firebasestorage.googleapis.com/v0/b/enquire-3bea9.appspot.com/o/images%2FScreenshot%20(4).png?alt=media&token=f035f28a-2a0c-44b4-8ccc-714c6b190cbf";
   useEffect(() => {
-  // firebase.auth().onAuthStateChanged((user) => {
-     // if (user) {
-        // firebase
-        //   .database()
-        //   .ref("users/" + 'user1')
-        //   .once("value")
-        //   .then((snapshot) => {
-        //     var data = snapshot.val();
-        //     console.log(data.username);
-        //     setUserData(data);
-        //   })
-        //   .then(() => { 
-        //     document.getElementById("userHeaderNameId").innerHTML =userData.username;
-        //   });
-      // } else {
-      //   window.location.href = "/";
-      // }
+    // firebase.auth().onAuthStateChanged((user) => {
+    // if (user) {
+    // firebase
+    //   .database()
+    //   .ref("users/" + 'user1')
+    //   .once("value")
+    //   .then((snapshot) => {
+    //     var data = snapshot.val();
+    //     console.log(data.username);
+    //     setUserData(data);
+    //   })
+    //   .then(() => { 
+    //     document.getElementById("userHeaderNameId").innerHTML =userData.username;
+    //   });
+    // } else {
+    //   window.location.href = "/";
+    // }
     // });
     firebase.auth().onAuthStateChanged((user) => {
-      if(user){
+      if (user) {
         console.log(user.uid);
-        db.collection("Admin").doc(user.uid).get().then((snapshot)=>{
+        db.collection("Admin").doc(user.uid).get().then((snapshot) => {
           console.log(snapshot.data());
           var hospitalData = snapshot.data();
           console.log(hospitalData.name);
-           setUserData(hospitalData);
-           setAdminData(hospitalData);
+          setUserData(hospitalData);
+          setAdminData(hospitalData);
           // console.log(userData);
         })
       }
     }
-    // db.collection("Admin").
-  )}, [])
-  
+      // db.collection("Admin").
+    )
+  }, [])
+
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8"
-      style={{
-        backgroundImage:`url(${data})`
-      }}
+        style={{
+          backgroundImage: `url(${data})`
+        }}
       >
         <Container fluid>
           <div className="header-body">
             {/* Card stats */}
             <Row>
-       
-             <h1>
-               {userData.name}{
-                 console.log(userData.imageAsUrl)
-               }
-             </h1>
+
+              <h1 className="px-3" style={{ color: '#fff', fontSize: '2.5rem' }}>
+                {userData.name}{
+                  console.log(userData.imageAsUrl)
+                }
+              </h1>
             </Row>
           </div>
         </Container>
@@ -130,7 +132,7 @@ const Profile = () => {
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
-           {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+          {/*<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
@@ -226,15 +228,23 @@ const Profile = () => {
                   <Col xs="8">
                     <h3 className="mb-0">My account</h3>
                   </Col>
-                  
+
                   <Col className="text-right" xs="4">
-                  <Link to="/admin/edit-profile"><Button 
+                    <Link to="/admin/edit-profile"><Button
                       color="info"
                     // href="/admin/editProfile"
                     // onClick={(e) => e.preventDefault()}
                     >
                       Edit Profile
                     </Button></Link>
+
+                    <Link to="/adminLocation">                      <Button
+                      color="info"
+
+
+                    > Set Location
+                    </Button></Link>
+
                   </Col>
                 </Row>
               </CardHeader>
@@ -253,13 +263,13 @@ const Profile = () => {
                           >
                             Hospital Name
                           </label>
-                        <Input disabled
-                          className="form-control-alternative"
-                          defaultValue={userData.name}
-                          id="input-username"
-                          placeholder={userData.name}
-                          type="text"
-                        />
+                          <Input disabled
+                            className="form-control-alternative"
+                            defaultValue={userData.name}
+                            id="input-username"
+                            placeholder={userData.name}
+                            type="text"
+                          />
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -397,14 +407,14 @@ const Profile = () => {
                   <hr className="my-4" />
                   {/* Description */}
                   <h6 className="heading-small text-muted mb-4">Specialities</h6>
-                  
+
                   <div className="pl-lg-4 ">
                     <Row>
-                    
-                    { userData.tags && userData.tags.map((tag)=>(
-                      
-                    <Chip className="ml-2" label={tag} color="primary" />
-                 ) )}
+
+                      {userData.tags && userData.tags.map((tag) => (
+
+                        <Chip className="ml-2" label={tag} color="primary" />
+                      ))}
                     </Row>
                   </div>
                   <hr className="my-4" />
@@ -419,10 +429,30 @@ const Profile = () => {
                         rows="4"
                         defaultValue={userData.about}
                         type="textarea"
-                       
+
                       />
                     </FormGroup>
                   </div>
+
+                  
+<div>
+                    <h1 >Featured Doctor</h1>
+                    <hr style={{ width: '100px', backgroundColor: '#3972C1', marginLeft: '0' }}></hr>
+                    <Row>
+                      <Col lg={8}>
+                  <Card className='shadow p-3 m-5 bg-white rounded '>
+                    <CardBody>
+                      <Row><Col lg={4} md={8}><img src={userData.doctorImg} className='rounded-circle' style={{ width: '150px', height: '150px' }} /></Col>
+                        <Col style={{ borderLeft: '1px solid grey' }} lg={6} md={8} className='text-center align-items-center'><h1>{userData.doctorName}</h1> <h3>{userData.doctorSpec}</h3>
+                        <h3><SchoolIcon/> {userData.degree}</h3>
+
+
+                        
+                        </Col></Row>
+                    </CardBody></Card>
+                    </Col>
+                    </Row>
+                    </div>    
                 </Form>
               </CardBody>
             </Card>

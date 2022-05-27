@@ -21,28 +21,20 @@ import {
   Badge,
   Card,
   CardHeader,
-  CardFooter,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
   Table,
   CardTitle,
   Container,
   Row,
   Col,
   CardBody,
-  UncontrolledTooltip,
   InputGroupAddon,
   InputGroupText,
   InputGroup,
   FormGroup,
-  Form,
   Input,
 
 
@@ -55,15 +47,13 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 // core components
-import Header from "components/Headers/Header.js";
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
-import { useHistory, useParams } from 'react-router-dom';
 
 import { nanoid } from 'nanoid';
-import Loader from '../../components/loader/Loader.js';
+// import Loader from '../../components/loader/Loader.js';
 
 
 
@@ -611,7 +601,14 @@ export default class dashboard extends react.Component {
               </Card>
             </div>
           </Row>
-          :<Loader/>}
+          :
+          <>
+        <h1>
+           Loading.....
+        </h1>
+          {/* <Loader/> */}
+          </>
+          }
 
         </Container>
 

@@ -18,11 +18,6 @@
 
 import Index from "views/Admin/dashboard.js";
 import Profile from "views/Admin/Profile.js";
-import Maps from "views/Admin/Maps.js";
-import Register from "views/Admin/Register.js";
-import Login from "views/Admin/Login.js";
-import Tables from "views/Admin/Tables.js";
-import Icons from "views/Admin/Icons.js";
 import EditProfile from "views/Admin/EditProfile.js";
 import AddDoctor from "views/Admin/AddDoctor.js";
 import EditAddDoctor from "views/Admin/EditAddDoctor.js";
@@ -32,28 +27,28 @@ import EditAddDoctor from "views/Admin/EditAddDoctor.js";
 var routes = [
   {
     path: "/dashboard",
-    name: "dashboard",
+    name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/admin",
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "ni ni-planet text-blue",
+  //   component: Icons,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin",
+  // },
   {
     path: "/user-profile",
-    name: "Hospital Profile",
+    name: "Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
     layout: "/admin",
@@ -64,14 +59,16 @@ var routes = [
     icon: "ni ni-single-02 text-yellow",
     component: EditProfile,
     layout: "/admin",
+    invisible: true,
+
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
-  },  
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   icon: "ni ni-bullet-list-67 text-red",
+  //   component: Tables,
+  //   layout: "/admin",
+  // },  
   {
     path: "/add-doctor",
     name: "Add Doctor",
@@ -85,20 +82,22 @@ var routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: EditAddDoctor,
     layout: "/admin",
+    invisible: true,
+
   },
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: Login,
-    layout: "/auth",
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
-    layout: "/auth",
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   icon: "ni ni-key-25 text-info",
+  //   component: Login,
+  //   layout: "/auth",
+  // },
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: "ni ni-circle-08 text-pink",
+  //   component: Register,
+  //   layout: "/auth",
+  // },
 ];
 export default routes;

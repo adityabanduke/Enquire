@@ -10,6 +10,9 @@ import FolderIcon from '@mui/icons-material/Folder';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { db } from '../../config/firebase-enquire';
+import * as ttapi from '@tomtom-international/web-sdk-services';
+import Loader from '../../components/loader/Loader.js';
+
 
 // import Card from '@mui/material/Card';
 // import CardActions from '@mui/material/CardActions';
@@ -18,9 +21,9 @@ import { db } from '../../config/firebase-enquire';
 // import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 
-import StepProgressBar from 'react-step-progress';
+// import StepProgressBar from 'react-step-progress';
 // import the stylesheet
-import 'react-step-progress/dist/index.css';
+// import 'react-step-progress/dist/index.css';
 // import "../../assets/css/Actionbutton.css"
 
 import {
@@ -41,10 +44,16 @@ export default class dashboard extends Component {
 			hospitalData: [],
 			userData: {},
 			pModal: false,
+			dandt: [],
+			destinations: [],
+			userLongitude: 0,
+			userLatitude: 0,
+			loading:true,
 		}
 
 		this.getDataFromAPI = this.getDataFromAPI.bind(this);
 		this.handleKeyPress = this.handleKeyPress.bind(this);
+		this.getInfo = this.getInfo.bind(this);
 
 
 	}
@@ -57,23 +66,67 @@ export default class dashboard extends Component {
 					console.log(userData);
 					this.setState({ userData: userData })
 
-				}).then(()=>{
 				})
 
-				
 			}
 			else {
 				window.location.href = "/login";
 			}
 
-		
+
 		})
 	}
+
+
+	getInfo =  async (destination) => {
+
+		const callParameters = {
+			key: "CE2fnCEGHeTVTeEERrtbhIeVXn7mPsnI",
+			destinations: destination,
+			origins: [{
+				point: {
+					latitude: this.state.userData.latitude,
+					longitude: this.state.userData.longitude,
+				}
+			}]
+		}
+
+		return new Promise((resolve, reject) => {
+			ttapi.services
+				.matrixRouting(callParameters).then((matrixApIResults) => {
+					const results = matrixApIResults.matrix[0];
+					console.log(results);
+					const resultsArray = results.map((result, index) => {
+						console.log(result);
+
+
+						return {
+							// location: locations[index],
+							drivingtime: result.response.routeSummary.travelTimeInSeconds,
+							drivingdistance: result.response.routeSummary.lengthInMeters,
+
+						}
+					})
+					console.log("hi how are you");
+
+					this.setState({ dandt: resultsArray });
+					console.log(this.state.dandt);
+                    localStorage.setItem('dandt', JSON.stringify(resultsArray));
+
+
+
+				})
+		})
+
+
+	}
+
 
 	handleKeyPress = (e) => {
 		let mytags;
 		// const { myOptions, hospitalData } = this.state;
 		if (e.key === 'Enter') {
+			this.setState({loading:false})
 			console.log("you hit enter...................");
 			console.log(e.target.value);
 			if (e.target.value != null) {
@@ -91,9 +144,46 @@ export default class dashboard extends Component {
 								tempData.push(doc.data());
 
 							})
+
+
 							this.setState({ hospitalData: tempData });
 							console.log(this.state.hospitalData);
 							localStorage.setItem('hospitalData', JSON.stringify(this.state.hospitalData));
+
+							var arr = [];
+							for (let i = 0; i < tempData.length; i++) {
+								arr.push({
+									point: {
+										latitude: tempData[i].latitude,
+										longitude: tempData[i].longitude,
+									}
+								})
+							}
+
+							this.setState({ destinations: arr });
+							console.log(this.state.destinations);
+
+							console.log(this.state.userLatitude);
+							console.log(this.state.userLongitude);
+
+							localStorage.setItem('destination', JSON.stringify(arr));
+
+							this.getInfo(this.state.destinations).then( () => {
+								this.setState({loading:true})
+								
+								this.setState({loading:false})
+							
+							});
+
+
+
+                            
+
+
+
+
+
+
 
 						}
 					}).then(err => {
@@ -101,8 +191,9 @@ export default class dashboard extends Component {
 							console.log(err);
 						} else {
 							console.log("Success");
-							window.location.href = "/user/searchresult"
-							// localStorage.getItem("hospitalData");
+
+							
+
 						}
 					})
 			}
@@ -201,12 +292,12 @@ export default class dashboard extends Component {
 		}
 	};
 
-	
-	step2Validator= ()=> {
+
+	step2Validator = () => {
 		if (this.state.userData.contact && this.state.userData.address) {
 			this.step3Validator();
 			return true
-			
+
 		} else {
 			this.setState({ pModal: true })
 		}
@@ -221,8 +312,8 @@ export default class dashboard extends Component {
 
 	render() {
 
-		
-		const ulStyle = {display:'none'}
+
+		const ulStyle = { display: 'none' }
 
 
 		const step1Content = <h1>UserName</h1>;
@@ -234,7 +325,7 @@ export default class dashboard extends Component {
 
 			// Navbar
 			<>
-			
+
 
 				<div
 					className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
@@ -246,13 +337,13 @@ export default class dashboard extends Component {
 					}}
 				>
 					<Modal isOpen={this.state.pModal} toggle={this.toggleSubmit}>
-          <Card style={{ width: '100%', height: "30vh", alignItems: "center", justifyContent: 'center', position: 'relative' }}>
+						<Card style={{ width: '100%', height: "30vh", alignItems: "center", justifyContent: 'center', position: 'relative' }}>
 
-            <h2>Complete Your Profile</h2>
+							<h2>Complete Your Profile</h2>
 
-            <a href="/user/Profile"><Button color="info">View Profile</Button></a>
-          </Card>
-        </Modal>
+							<a href="/user/Profile"><Button color="info">View Profile</Button></a>
+						</Card>
+					</Modal>
 					{/* Mask */}
 					<span className="mask bg-gradient-default opacity-8" />
 					<img src={"https://images.unsplash.com/photo-1629909613654-28e377c37b09?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1168"} style={{ 'position': 'absolute', 'opacity': '0.3', 'height': "500px", 'width': '100%', 'backgroundSize': "100% 100%" }} ></img>
@@ -303,16 +394,32 @@ export default class dashboard extends Component {
 
 
 				</div>
+                  {
+					  this.state.dandt.length?
+
+					<>
+					
+					{ window.location.href = "/user/searchresult"}
+					<h1>
+						No  search Results ....
+					</h1>
+					</>
+					  	
+							 
+								 
+				
+							  :
+	            <>			
 				<Container fluid className='mt-5 p-3'>
 
 
 					<div>
 						<h1>Complete Your Profile</h1>
 
-						<StepProgressBar
+						{/* <StepProgressBar
 							startingStep={0}
-							
-							 buttonWrapperClass={ulStyle}
+
+							buttonWrapperClass={ulStyle}
 							// onSubmit={onFormSubmit}
 							steps={[
 								{
@@ -338,7 +445,7 @@ export default class dashboard extends Component {
 
 								}
 							]}
-						/>
+						/> */}
 					</div>
 
 
@@ -428,6 +535,10 @@ BOOK NOW
 
 
 				</Container>
+				</>
+                
+				
+	}
 
 			</>
 		);

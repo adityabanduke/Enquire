@@ -26,15 +26,16 @@ import "assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 import UserLayout from "layouts/User.js";
-// import UserLocation from 'views/UserLocation';
+import UserLocation from 'views/UserLocation';
 import Index from "views/Index";
 import UserLogin from "views/userLogin.js"
 import UserRegister from "views/userRegister.js";
 // import MyProvider from "./context/MyProvider.js"
 import HospitalRegister from "views/hospitalRegister"
 import UserEditProfile from "views/user/UserEditProfile.js";
-import HospitalDetail from "views/user/HospitalDetail.js"
-
+import HospitalDetail from "views/user/HospitalDetail.js";
+import AdminLocation from "views/AdminLocation.js";
+import AdminLogin from "views/AdminLogin";
 
 
 
@@ -70,9 +71,19 @@ ReactDOM.render(
         <UserEditProfile/>
       </Route>
 
+      <Route path="/userLocation" exact >
+        <UserLocation/>
+      </Route>
+
+      <Route path="/adminLocation" exact >
+        <AdminLocation/>
+</Route>
+
       <Route path="/HospitalDetail" exact >
         <HospitalDetail/>
 </Route>
+
+
 
 {/* // ************ Admin Routing *********** */}
 
@@ -85,6 +96,9 @@ ReactDOM.render(
 
       <Route path="/admin-register" exact >
         <HospitalRegister/>
+      </Route>
+      <Route path="/AdminLogin" exact >
+        <AdminLogin/>
       </Route>
       {/* <Redirect to="/" /> */}
 

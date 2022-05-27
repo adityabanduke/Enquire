@@ -15,10 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React , {useEffect , useState} from "react";
+import React , {useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
-import { Container, Navbar } from "reactstrap";
+import { Container } from "reactstrap";
 // core compone
 import Sidebar from "components/Sidebar/Sidebar.js";
 import UserNavbar from "components/Navbars/UserNavbar.js";

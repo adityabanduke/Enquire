@@ -1,6 +1,6 @@
-import React, { Component,Redirect}from 'react'
+import React, { Component}from 'react'
 import firebase from '../../config/firebase-enquire';
-import Loader from "../../components/loader/Loader.js";
+// import Loader from "../../components/loader/Loader.js";
 
 
 import {
@@ -224,7 +224,12 @@ export default class Booking extends Component {
           </div>
         </Row>
       </Container>
-      ): <Loader/>}
+      ):
+      <h1>
+        Loading....
+      </h1>
+      // <Loader/>
+      }
     </>
   );
 }}

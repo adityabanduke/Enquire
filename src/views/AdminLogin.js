@@ -1,8 +1,9 @@
 import React from "react";
 import firebase from "config/firebase-enquire";
-import AuthNavbar from "components/Navbars/AuthNavbar.js";
-import AuthFooter from "components/Footers/AuthFooter.js";
+// import AuthNavbar from "components/Navbars/AuthNavbar.js";
+// import AuthFooter from "components/Footers/AuthFooter.js";
 // reactstrap components
+import {db} from "../config/firebase-enquire"
 import {
   Button,
   Card,
@@ -43,30 +44,22 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        console.log(res.user.uid);
         var uid = res.user.uid;
-        firebase
-        .database()
-        .ref("users/" + uid)
-        .once("value")
-        .then((snapshot) => {
+        db.collection('Admin').doc(uid).get((snapshot)=>{
           if (snapshot.exists()) {
-             window.location.href = "/user/dashboard";
+              window.location.href = "/admin/dashboard";
 
-
+          } else {
+              alert("Not a Valid User");
+          //   window.location.href = "/"
           }
-          else{
-            alert("Login Unsuccessful")
-          }
-        // window.location.href = "/user/dashboard";
+      } )
       })
-     
-  }).catch((error) => {
-    alert("Login Unsuccessful");
-    console.log(error)
-  });
-} 
-
+      .catch((error) => {
+        alert("Login Unsuccessful");
+        console.log(error)
+      });
+  };
   // googleLogin(){
   //   var provider = new firebase.auth.GoogleAuthProvider();
   //   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -124,36 +117,27 @@ class Login extends React.Component {
         var user = result.user;
         var id = user.uid;
         console.log(user);
-        firebase
-          .database()
-          .ref("users/" + id)
-          .once("value")
-          .then((snapshot) => {
+        // firebase
+        //   .database()
+        //   .ref("admin/" + id)
+        //   .once("value")
+        db.collection('Admin').doc(id).get((snapshot)=>{
             if (snapshot.exists()) {
-              // window.location.href = "/user/dashboard";
-
+                window.location.href = "/admin/dashboard";
 
             } else {
-              firebase
-                .database()
-                .ref("users/" + id)
-                .set({
-                  username: user.displayName,
-                  email: user.email,
-                  user_uid: id,
-                  profilepic: user.photoURL,
-                });
+                alert("Not a Valid User");
+            //   window.location.href = "/"
             }
-          })
-          
-      })
-      .catch((error) => {});
+        } )
+     
+    })
   };
   render() {
     return (
       <>
         <div className="main-content login-back">
-          <AuthNavbar />
+          {/* <AuthNavbar /> */}
           <div className="header py-7 py-lg-8"></div>
           {/* Page content */}
           <Container className="mt--8 pb-5">
@@ -282,7 +266,7 @@ class Login extends React.Component {
             </Row>
           </Container>
         </div>
-        <AuthFooter />
+        {/* <AuthFooter /> */}
       </>
     );
   }
