@@ -43,13 +43,30 @@ class Login extends React.Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        window.location.href = "/user/dashboard";
+        console.log(res.user.uid);
+        var uid = res.user.uid;
+        firebase
+        .database()
+        .ref("users/" + uid)
+        .once("value")
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+             window.location.href = "/user/dashboard";
+
+
+          }
+          else{
+            alert("Login Unsuccessful")
+          }
+        // window.location.href = "/user/dashboard";
       })
-      .catch((error) => {
-        alert("Login Unsuccessful");
-        console.log(error)
-      });
-  };
+     
+  }).catch((error) => {
+    alert("Login Unsuccessful");
+    console.log(error)
+  });
+} 
+
   // googleLogin(){
   //   var provider = new firebase.auth.GoogleAuthProvider();
   //   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -113,6 +130,9 @@ class Login extends React.Component {
           .once("value")
           .then((snapshot) => {
             if (snapshot.exists()) {
+               window.location.href = "/user/dashboard";
+
+
             } else {
               firebase
                 .database()
@@ -125,9 +145,7 @@ class Login extends React.Component {
                 });
             }
           })
-          .then(() => {
-            window.location.href = "/user/dashboard";
-          });
+          
       })
       .catch((error) => {});
   };
