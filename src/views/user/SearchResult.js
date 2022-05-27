@@ -19,7 +19,7 @@ import * as ttapi from '@tomtom-international/web-sdk-services';
 // import ButtonGroup from '@mui/material/ButtonGroup';
 // import Typography from '@mui/material/Typography';
 import "../../assets/css/card.css";
-import Loader from "../../components/loader/Loader.js";
+// import Loader from "../../components/loader/Loader.js";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
@@ -408,7 +408,16 @@ export default class SearchResult extends Component {
 	</div>
 </>
 
-					)) :<Loader/> ) : <Loader/>}
+					)) :
+					<h1>Loading....</h1>
+					// <Loader/>
+					 ) :
+					//   <Loader/>
+					<h1>
+						Loading....
+					</h1>
+
+					  }
 
 
 

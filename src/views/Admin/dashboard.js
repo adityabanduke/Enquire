@@ -604,7 +604,8 @@ export default class dashboard extends react.Component {
               </Card>
             </div>
           </Row>
-          {/* : <Lottie animationData={groovyWalkAnimation} loop={'infinite'}/>} */}
+          
+          
 
         </Container>
 
