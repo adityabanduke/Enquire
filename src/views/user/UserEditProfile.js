@@ -100,7 +100,6 @@ export default class EditProfile extends Component {
 
   componentDidMount() 
   {
-    let temp = [];
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // if ("geolocation" in navigator) {

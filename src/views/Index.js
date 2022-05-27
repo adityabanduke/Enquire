@@ -99,9 +99,9 @@ const Index = (props) => {
                                 <div className="site-header-inner">
                                     <div className="brand header-brand">
                                         <h1 className="m-0">
-                                            <a href="#">
-                                                {/* <img className="header-logo-image asset-light" src={logoLight} alt="Logo"/> */}
-                                            </a>
+                                            {/* <a href="#">
+                                                {/* <img className="header-logo-image asset-light" src={logoLight} alt="Logo"/> 
+                                            </a> */}
                                         </h1>
                                     </div>
                                 </div>

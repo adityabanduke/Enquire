@@ -1,8 +1,8 @@
-import React, { useState, Component } from 'react'
+import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import firebase from '../../config/firebase-enquire';
-import { Navbar, NavbarBrand, Container, Row, Col, NavbarToggler, Collapse, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText } from 'reactstrap';
+import { Navbar, Container, Row, Col, } from 'reactstrap';
 // import { green, pink } from '@mui/material/colors';
 // import Avatar from '@mui/material/Avatar';
 // import Stack from '@mui/material/Stack';
@@ -11,7 +11,6 @@ import PageviewIcon from '@mui/icons-material/Pageview';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { db } from '../../config/firebase-enquire';
 import * as ttapi from '@tomtom-international/web-sdk-services';
-import Loader from '../../components/loader/Loader.js';
 
 
 // import Card from '@mui/material/Card';
@@ -313,12 +312,6 @@ export default class dashboard extends Component {
 	render() {
 
 
-		const ulStyle = { display: 'none' }
-
-
-		const step1Content = <h1>UserName</h1>;
-		const step2Content = <h1>Personal Info</h1>;
-		const step3Content = <h1>Profile Image</h1>;
 		return (
 
 

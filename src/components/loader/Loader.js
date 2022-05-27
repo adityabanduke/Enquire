@@ -1,17 +1,17 @@
 import React from "react";
 // import Lottie from "react-lottie";
-import sandClock from "../../assets/img/Loader.json";
+// import sandClock from "../../assets/img/Loader.json";
 
 export default function Loader() {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: sandClock,
+  // const defaultOptions = {
+  //   loop: true,
+  //   autoplay: true,
+  //   animationData: sandClock,
     
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+  //   rendererSettings: {
+  //     preserveAspectRatio: "xMidYMid slice",
+  //   },
+  // };
 
   return (
     <div

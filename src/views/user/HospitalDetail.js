@@ -178,7 +178,7 @@ patientName:'',
                     {/* Header container */}
                     <Container className="d-flex align-items-center justify-content-between" fluid>
                         <Row style={{ "padding": '20px' }} className="d-flex justify-content-between">
-                            <Col lg="4"><img src={this.state.profilepic} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} ></img></Col>
+                            <Col lg="4"><img src={this.state.profilepic} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} alt="profile Image"></img></Col>
                             <Col lg="7" md="10" >
                                 {this.state.hData ? <h1 className="display-2 text-white">{this.state.hospitalName}</h1> : null}
                                 {this.state.hData ? <p className="text-white mt-0 mb-5">
