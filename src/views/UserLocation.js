@@ -158,9 +158,15 @@ function UserLocation() {
 
 
 
+        }).then( (err) => {
+          if(err){
+            console.log(err);
+          }else{
+            alert("Success!!!")
+          }
         })
+    
     })
-
   };
 
 

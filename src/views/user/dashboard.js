@@ -401,7 +401,7 @@ export default class dashboard extends Component {
 					
 					{ window.location.href = "/user/searchresult"}
 					<h1>
-						No  search Results ....
+					 Search Results ....
 					</h1>
 					</>
 					  	

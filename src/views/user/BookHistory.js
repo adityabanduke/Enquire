@@ -171,11 +171,11 @@ export default class Booking extends Component {
                           />
                         </div>
                       </div> */}
-                      <a href={'/user/BookingDetail?Booking_id=' + items.bookingId}>
+                      {/* <a href={'/user/BookingDetail?Booking_id=' + items.bookingId}>
                       <Button color="primary" >
                         View Details
                         </Button>
-                        </a>
+                        </a> */}
 
                     </td>
                     <td className="text-right">
