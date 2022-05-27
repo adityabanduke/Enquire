@@ -141,7 +141,11 @@ const Index = (props) => {
                                 <div className="hero-inner">
                                     <div className="hero-copy">
                                         <h1 className="hero-title mt-0" style={{ 'color': 'DarkBlue' }}>Enquire</h1>
-                                        <p className="hero-paragraph" style={{ 'color': 'Blue' }}>Book Appointments Easy.</p>
+                                        <p className="hero-paragraph" style={{ 'color': 'Blue' }}>Book Appointments with Easy.</p>
+                                        <p className="hero-paragraph" style={{ 'color': 'Blue' }}>With our Online Booking feature, your clients can make bookings 24x7. All you have to do is signup, create your online booking page, set your booking Rules and share it with your clients.
+
+</p>
+
 
                                     </div>
                                     <div className="hero-media" style={{ 'width': '40%' }}>
