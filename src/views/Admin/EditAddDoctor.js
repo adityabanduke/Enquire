@@ -173,6 +173,7 @@ export default class EditAddDoctor extends Component {
                         //   });
       
                       }).then(()=>{
+                          alert("Doctor Edited");
                         window.location.href="/Admin/Profile"
                       })
                   })

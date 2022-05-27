@@ -36,15 +36,14 @@ import {
   InputGroup,
   FormGroup,
   Input,
-
-
+Button
 } from "reactstrap";
 import Switch from '@mui/material/Switch';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 // core components
 import AddIcon from '@mui/icons-material/Add';
@@ -90,6 +89,7 @@ export default class dashboard extends react.Component {
       loading: false,
       value: true,
 currentNo:0,
+profileComp:false,
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.bookAppointment = this.bookAppointment.bind(this);
@@ -130,7 +130,16 @@ currentNo:0,
           })
 
         
+        }).then(()=>{
+          if(!this.state.hData.latitude || !this.state.hData.longitude){
+            setTimeout(() => {
+                this.setState({profileComp:true})
+              }, 1000)
+              
+            }
         }).then((err) => {
+
+
           if (err) {
             console.log(err);
           } else {
@@ -138,6 +147,8 @@ currentNo:0,
 
           }
         })
+
+    
 
       }
       else {
@@ -198,6 +209,24 @@ currentNo:0,
 
       <>
         {/* Modal */}
+
+       
+        <Modal open={this.state.profileComp} >
+       
+        <Card className='text-center' style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: '50%', backgroundColor: 'white', boxShadow: '24', padding: '30px' }}>
+        <CardHeader><h1>Complete Your Profile</h1></CardHeader>
+     
+          
+          <CardBody>
+            <h2>Set Your Address</h2>
+            <a href='/admin/user-profile'><Button color="primary" >Set Location</Button></a>
+            </CardBody>
+       
+      
+           </Card>
+          
+        </Modal>
+       
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"

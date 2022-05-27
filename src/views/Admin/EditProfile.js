@@ -280,7 +280,7 @@ export default class EditProfile extends react.Component {
         } else {
           this.submitmodal();
           this.setState({ createloader: false });
-
+alert("Profile Updated")
         }
       }
     })
