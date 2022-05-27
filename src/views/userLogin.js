@@ -130,7 +130,7 @@ class Login extends React.Component {
           .once("value")
           .then((snapshot) => {
             if (snapshot.exists()) {
-              // window.location.href = "/user/dashboard";
+               window.location.href = "/user/dashboard";
 
 
             } else {
