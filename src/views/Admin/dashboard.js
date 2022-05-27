@@ -55,9 +55,9 @@ import firebase from '../../config/firebase-enquire';
 import { nanoid } from 'nanoid';
 // import Loader from '../../components/loader/Loader.js';
 
+import Clock from 'react-live-clock';
+import moment from 'moment';
 
-import Lottie from "lottie-react";
-import groovyWalkAnimation from "../../assets/lottie/9764-loader.json";
 
 export default class dashboard extends react.Component {
   constructor(props) {
@@ -89,7 +89,7 @@ export default class dashboard extends react.Component {
       PatientInProcess: "",
       loading: false,
       value: true,
-
+currentNo:0,
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.bookAppointment = this.bookAppointment.bind(this);
@@ -121,8 +121,15 @@ export default class dashboard extends react.Component {
             this.setState({ Hbooking: Data.data });
             // this.setState({loading:true})
             console.log(Data.data);
+            this.state.Hbooking.map((items , index)=>{
+                 if(items.status == 1){
+            this.setState({currentNo : index +1})
+                 }  
+            })
             // this.DATA=Data.data;
           })
+
+        
         }).then((err) => {
           if (err) {
             console.log(err);
@@ -134,7 +141,7 @@ export default class dashboard extends react.Component {
 
       }
       else {
-        window.location.href = "/Login";
+        window.location.href = "/";
       }
     })
 
@@ -235,8 +242,8 @@ export default class dashboard extends react.Component {
             <div className="header-body">
               {/* Card stats */}
               <Row>
-                <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                <Col lg="6" xl="3" >
+                  <Card className="card-stats mb-4 mb-xl-0" style={{height:'130px'}}>
                     <CardBody>
                       <Row>
                         <div className="col">
@@ -263,7 +270,7 @@ export default class dashboard extends react.Component {
                   </Card>
                 </Col>
                 <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                  <Card className="card-stats mb-4 mb-xl-0" style={{height:'130px'}}>
                     <CardBody>
                       <Row>
                         <div className="col">
@@ -291,7 +298,7 @@ export default class dashboard extends react.Component {
                   </Card>
                 </Col>
                 <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                  <Card className="card-stats mb-4 mb-xl-0" style={{height:'130px'}}>
                     <CardBody>
                       <Row>
                         <div className="col">
@@ -299,9 +306,10 @@ export default class dashboard extends react.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            Current Number                          </CardTitle>
+                           Clock                          </CardTitle>
                           <span className="h2 font-weight-bold mb-0">  
-                                                  
+                          <Clock format={'HH:mm:ss'} ticking={true} timezone={'Asia'} /> <br/>
+                         { moment().format('MMMM Do YYYY') }
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -320,7 +328,7 @@ export default class dashboard extends react.Component {
                   </Card>
                 </Col>
                 <Col lg="6" xl="3">
-                  <Card className="card-stats mb-4 mb-xl-0">
+                  <Card className="card-stats mb-4 mb-xl-0" style={{height:'130px'}}>
                     <CardBody>
                       <Row>
                         <div className="col">
@@ -387,7 +395,13 @@ export default class dashboard extends react.Component {
                   <tbody>
                     {this.state.Hbooking && this.state.Hbooking.map((item, index) => (
 
+
                       <>
+                      
+                     {(item.bookingDate == this.state.today) ? 
+
+
+                      
                         <tr>
                           <th scope="row">
                             <span className="mb-0 text-sm">
@@ -527,7 +541,10 @@ export default class dashboard extends react.Component {
                                     for (let i = 0; i < this.state.Hbooking.length; i++) {
                                       if (item.bookingId == this.state.Hbooking[i].bookingId)
                                         data[i].status = 1;
-                                      this.setState({ PatientInProcess: data[i].patientname })
+                                        if(index == 0){
+                                          this.setState({PatientInProcess : item.patientname})
+                                        }
+                                      // this.setState({ PatientInProcess: data[i].patientname })
                                       this.setState({ Hbooking: data });
                                       firebase.database().ref("Hospitals/" + this.state.h_id).set({
                                         data: data
@@ -593,7 +610,8 @@ export default class dashboard extends react.Component {
                               </DropdownMenu>
                             </UncontrolledDropdown>
                           </td>
-                        </tr></>
+                        </tr>
+                     : null}</>
                     ))}
 
                   </tbody>
@@ -606,6 +624,8 @@ export default class dashboard extends react.Component {
           </Row>
           
           
+
+
 
         </Container>
 

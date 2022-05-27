@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React , {useState} from "react";
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -25,10 +25,32 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import { db } from "config/firebase-enquire";
+import firebase from '../config/firebase-enquire';
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
+const [name, setName] = useState("Hospital");
+const [profile, setProfile] = useState("")
+
+
+
+  React.useEffect(()=>{
+    firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				db.collection('Admin').doc(user.uid).get().then((snapshot) => {
+					var userData = snapshot.data();
+					console.log(userData);
+          setName(userData.name);
+          setProfile(userData.profilepic);
+				})
+			}
+			else {
+				window.location.href = "/Login";
+			}
+		}) 
+  })
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -78,7 +100,7 @@ const Admin = (props) => {
       />
       <div className="main-content" ref={mainContent}>
         <AdminNavbar
-          {...props}
+          {...props} name={name} profile={profile}
           // brandText={getBrandText(props.location.pathname)}
         />
         <Switch>
