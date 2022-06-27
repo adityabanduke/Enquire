@@ -382,7 +382,7 @@ profileComp:false,
                             onChange={
                               this.changeStatus}
 
-                            defaultChecked color="success" />
+                            defaultChecked color="success"/>
                         </span>{" "}
                         <span className="text-nowrap">Toggle Availability</span>
                       </p>

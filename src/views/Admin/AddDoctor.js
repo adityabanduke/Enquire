@@ -46,7 +46,7 @@ export default class AddDoctor extends Component {
                   var hospitalData = snapshot.data();
                   console.log(hospitalData.name);
                   
-                   this.setState({userData:hospitalData,adminData:hospitalData});
+                 this.setState({userData:hospitalData,adminData:hospitalData});
                 })
             }
 
@@ -58,7 +58,6 @@ export default class AddDoctor extends Component {
         return (
             <>
                 <UserHeader adminData={{}} />
-
                 <Container className="mt--7" fluid >
                     <Row className='justify-content-center'>
 
