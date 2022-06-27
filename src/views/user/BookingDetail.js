@@ -178,8 +178,33 @@ export default class BookingDetail extends Component {
         }
       })
 
+      this.setState({cancel:false});
 
 
+
+    }).then(()=>{
+      firebase.database().ref("users/" + user.uid + "/YourBookings/bookings").once('value').then((snapshot) => {
+        var Data = snapshot.val();
+        this.setState({ user_id: user.uid });
+  
+        Data.map((items, index) => {
+          if (items.bookingId == this.state.b_id) {
+           
+
+            let huData = Data.splice(index , 1);
+            console.log(Data);
+ 
+ 
+            firebase.database().ref("users/" + user.uid + "/YourBookings").set({
+             bookings:Data,
+           })
+          }
+        })
+  
+  
+      })
+    }).then(()=>{
+      window.location.href="/user/dashboard"
     })
 
   
