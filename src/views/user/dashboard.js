@@ -12,6 +12,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import { db } from '../../config/firebase-enquire';
 import * as ttapi from '@tomtom-international/web-sdk-services';
 
+import "../../assets/css/contact.css"
 
 // import Card from '@mui/material/Card';
 // import CardActions from '@mui/material/CardActions';
@@ -407,7 +408,7 @@ export default class dashboard extends Component {
 
 
 					<div>
-						<h1>Complete Your Profile</h1>
+						{/* <h1>Complete Your Profile</h1> */}
 
 						{/* <StepProgressBar
 							startingStep={0}

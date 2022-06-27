@@ -70,11 +70,12 @@ import feature01 from "../dist/images/feature-01-light.svg";
 import feature02 from "../dist/images/feature-02-light.svg";
 
 import feature03 from "../dist/images/feature-03-light.svg";
-
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import { Link } from 'react-router-dom';
 
 
 import logo from "../assets/img/enquirelogo.png";
+import map from "../assets/img/map.png";
 
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "assets/lottie/signup.json";
@@ -145,8 +146,9 @@ const Index = (props) => {
                                 <div className="hero-inner">
                                     <div className="hero-copy">
                                         <h1 className="hero-title mt-0" style={{ 'color': '#4663be', fontWeight:'600' }}>Enquire</h1>
-                                        <p className="hero-paragraph" style={{ 'color': '#8dbafe' , fontWeight:'400'}}>Book Appointments with Easy.</p>
-                                        <p className="hero-paragraph" style={{ 'color': '#8dbafe', fontWeight:'400' }}>With our Online Booking feature, your clients can make bookings 24x7. All you have to do is signup and add your data then you are ready to go
+                                        <p className="hero-paragraph" style={{ 'color': '#21aee4' , fontWeight:'400'}}>Book Appointments with Easy.</p>
+                                        <hr style={{backgroundColor:"#21aee4", width:'20%',height:"1px"}}></hr>
+                                        <p className="hero-paragraph" style={{ 'color': '#21aee4', fontWeight:'400' }}>With our Online Booking feature, your clients can make bookings 24x7. All you have to do is signup and add your data then you are ready to go
 
 </p>
 
@@ -167,6 +169,8 @@ const Index = (props) => {
                                     </div>
                                 </div>
                             </div>
+
+                            <img src={map} style={{position:'absolute', "left":'0',bottom:'-35%', height:"45%",width:'50%'}}/>
                         </section>
 
 
@@ -176,7 +180,9 @@ const Index = (props) => {
                                 <div className="features-inner section-inner has-bottom-divider">
                                     <div className="features-header text-center">
                                         <div className="container-sm">
-                                            <h2 className="section-title mt-0">Features</h2>
+                                            <h2 className="section-title mt-0" style={{ 'color': '#21aee4' }}>Features</h2>
+                                            <hr style={{backgroundColor:"#21aee4", width:'20%',height:"1px"}}></hr>
+
                                             <p className="section-paragraph">
                                                 It helps you in realtime tracking of the your appointment, easy booking and avalability status
 
@@ -265,12 +271,40 @@ Keep the track of doctor availbility                                            
                             <div className="container-sm">
                                 <div className="cta-inner section-inner">
                                     <div className="cta-header text-center">
-                                        <h2 className="section-title mt-0">Get it and Switch</h2>
-                                        <p className="section-paragraph">Lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation.</p>
+                                        <h2 className="section-title mt-0">Get it and Book Now</h2>
+                                        <p className="section-paragraph">Book Appointment Easily and Faster from Anywhere and Anytime.</p>
 
                                     </div>
                                 </div>
                             </div>
+                        </section>
+                        <section id="#contact">
+                        <div  class="contact-cards">
+        <div class="card-item">
+            <div class="logo"><i class="fas fa-paper-plane"></i></div>
+            <h3>Contact</h3>
+            <p>devTeamEnquire@gmail.com</p>
+
+        </div>
+        <div class="card-item">
+            <div class="logo"> <i class="fas fa-phone-alt"></i></div>
+            <h3>Number</h3>
+            <p>91+ 9878312761</p>
+
+        </div>
+        <div class="card-item">
+            <div class="logo"><i class="fas fa-map-marker-alt"></i></div>
+            <h3>Address</h3>
+            <p>New Boys Hostel UIT RGPV Bhopal</p>
+
+        </div>
+        <div class="card-item">
+            <div class="logo"><i class="fas fa-headset"></i></div>
+            <h3>Talk To Our Agent</h3>
+            <p>Available 24/7</p>
+
+        </div>
+    </div>
                         </section>
                     </main>
 

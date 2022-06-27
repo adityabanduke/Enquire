@@ -185,15 +185,23 @@ profileComp:false,
     await this.setState({ booking_id: model });
     console.log(this.state.h_id);
     console.log(this.state.booking_id);
-    this.state.Hbooking.push({
-      user_id: this.state.booking_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
-      bookingTime: this.state.time, bookingId: this.state.booking_id, status: this.state.status, patientname: this.state.patientname
-    })
 
-    firebase.database().ref("Hospitals/" + this.state.h_id).set({
+    firebase.database().ref("Hospitals/" + this.state.h_id).once('value').then((snapshot) => {
+      var Data = snapshot.val();
+      this.setState({ Hbooking: Data.data });
+    }).then(()=>{
+      this.state.Hbooking.push({
+        user_id: this.state.booking_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
+        bookingTime: this.state.time, bookingId: this.state.booking_id, status: this.state.status, patientname: this.state.patientname
+      })
+    }).then(()=>{
 
-      data: this.state.Hbooking
 
+      firebase.database().ref("Hospitals/" + this.state.h_id).set({
+
+        data: this.state.Hbooking
+  
+      })
     }).then(() => {
       this.setState({
         open: false

@@ -174,7 +174,7 @@ export default class EditAddDoctor extends Component {
       
                       }).then(()=>{
                           alert("Doctor Edited");
-                        window.location.href="/Admin/Profile"
+                        window.location.href="/admin/user-profile"
                       })
                   })
               } 
@@ -211,6 +211,7 @@ export default class EditAddDoctor extends Component {
                 <Container className="mt--7" fluid >
                     <Row className='justify-content-center'>
 
+                      
                         {/* <Col className="order-xl-1" xl="12">
                             <Card className="bg-secondary shadow">
                                 <CardHeader className="bg-white border-0">
