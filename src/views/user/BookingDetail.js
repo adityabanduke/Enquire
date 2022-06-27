@@ -8,12 +8,17 @@ import {
   Container,
   Row,
   Col,
-  CardTitle
+  CardTitle,
+  Button,
+  Modal
 } from "reactstrap";
 
 import { db } from '../../config/firebase-enquire';
 import firebase from '../../config/firebase-enquire';
 
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import doctor from "../../assets/img/doctor.jpg"
+import ForumIcon from '@mui/icons-material/Forum';
 
 
 
@@ -36,6 +41,7 @@ export default class BookingDetail extends Component {
       CurrentP: 1,
       Extime: '',
       hData:{},
+      cancel:false,
 
     }
   }
@@ -53,7 +59,6 @@ export default class BookingDetail extends Component {
 
         firebase.database().ref("users/" + user.uid + "/YourBookings/bookings").once('value').then((snapshot) => {
           var Data = snapshot.val();
-          console.log(Data);
           this.setState({ user_id: user.uid });
 
           Data.map((items) => {
@@ -80,6 +85,7 @@ export default class BookingDetail extends Component {
         })
 
           firebase.database().ref("Hospitals/" + this.state.h_id + "/data").once('value').then((snapshot) => {
+
             var hData = snapshot.val();
             console.log(hData);
             hData.map((items) => {
@@ -98,6 +104,8 @@ export default class BookingDetail extends Component {
               } else if (items.status == 2) {
                 this.setState({ c_no: this.state.c_no + 1 })
 
+              }else{
+                this.setState({c_no:"Appointment Cancelled"})
               }
 
 
@@ -132,13 +140,69 @@ export default class BookingDetail extends Component {
 
   }
 
+  openCancel=()=>{
+
+  this.setState({cancel:true});
+
+  }
+
+   toggleMentor = () => {
+    if (this.state.cancel) {
+      console.log("Modal Close");
+      this.setState({
+        cancel: false,
+      });
+    } else {
+      console.log("Modal Open");
+      this.setState({
+        cancel: true,
+
+      });
+    }
+  };
+
+  cancelAppointment = ()=>{
+    firebase.database().ref("Hospitals/" + this.state.h_id + "/data").once('value').then((snapshot) => {
+
+      var hData = snapshot.val();
+      hData.map((items,index) => {
+        if (items.bookingId == this.state.b_id) {
+
+          let huData = hData.splice(index , 1);
+           console.log(hData);
+
+
+           firebase.database().ref("Hospitals/" + this.state.h_id).set({
+            data:hData,
+          })
+        }
+      })
+
+
+
+    })
+
+  
+
+
+
+  }
+
 
   render() {
     return (
       <>
 
+      {this.state.cancel ? <> <Modal isOpen={this.state.cancel} toggle={this.toggleMentor}> <Card className="cropperCard" style={{ width: '50vw', height: "40vh", alignItems: "center", marginRight: "100px", justifyContent: "center", position: 'relative' }}>
+        <h2>Are you sure you want to cancel your Appointment?</h2>
+        
+       <div className='d-flex'> <Button color='primary' onClick={this.cancelAppointment}>Yes</Button><Button color='danger' onClick={()=>{this.setState({cancel:false})}}>Cancel</Button></div>
+        </Card></Modal> </>: null}
+
       {this.state.hData ? 
       <div>
+    
+
 
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
           <Container fluid>
@@ -270,7 +334,8 @@ export default class BookingDetail extends Component {
 
                         </Row>
 
-                        <Row className='pt-lg-5'> <Col lg="6">
+                        <Row className='pt-lg-5 text-center mx-3 justify-space-between'> 
+                        <Col lg="4">
                           <FormGroup>
                             <label
                               className="form-control-label"
@@ -287,7 +352,7 @@ export default class BookingDetail extends Component {
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg='6'>
+                        <Col lg='4'>
                           <FormGroup>
                             <label
                               className="form-control-label"
@@ -305,9 +370,32 @@ export default class BookingDetail extends Component {
                           </FormGroup>
                         </Col>
                       </Row>
+<br/>
+<br/>
+                      <Card className='shadow p-3 mb-5 mx-4 bg-white rounded '>
+                        <CardBody>
+                        <Row><Col lg={4} md={8} className="text-center "><img src={doctor} className='rounded-circle' style={{width:'150px',height:'150px' }}/></Col>
+                         <Col style={{borderLeft:'1px solid grey'}} lg={4} md={8} className='text-center align-items-center'><h1>{this.state.hData.doctorName}</h1> <h3>{this.state.hData.doctorSpec}</h3>
+
+
+                         <br></br>
+                         <p><AddLocationIcon/> {this.state.hData.name}</p>
+                         <p><ForumIcon/> Hindi , English</p>
+                       </Col><Col lg={4}>
+                           
+                           <h2 color='#3972C1'>Mon - Fri</h2>
+                           <p color='#4FA9E2'>(10.00 AM-5.00 PM)</p>
+                           </Col></Row>
+                        </CardBody></Card>
+
+
+                      
                 </CardBody>
+                <div className='mx-auto mb-5'><Button className='btn' color='primary'> Reschedule Appointment</Button> <Button className='btn' color='danger' onClick={this.openCancel}> Cancel Appointment</Button></div>
               </Card>
+             
             </Container >
+        
 
             </div>
 
