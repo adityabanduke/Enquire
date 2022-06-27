@@ -21,7 +21,7 @@ import {
 import UserHeader from 'components/Headers/UserProfile';
 // import Loader from "../../components/loader/Loader.js";
 import Lottie from "lottie-react";
-import groovyWalkAnimation from "assets/lottie/signup.json";
+import groovyWalkAnimation from "assets/lottie/9764-loader.json";
 
 export default class Booking extends Component {
 
