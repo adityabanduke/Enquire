@@ -42,7 +42,7 @@ export default class BookingDetail extends Component {
       Extime: '',
       hData:{},
       cancel:false,
-
+      user_id:'',
     }
   }
 
@@ -161,6 +161,7 @@ export default class BookingDetail extends Component {
     }
   };
 
+  
   cancelAppointment = ()=>{
     firebase.database().ref("Hospitals/" + this.state.h_id + "/data").once('value').then((snapshot) => {
 
@@ -183,9 +184,8 @@ export default class BookingDetail extends Component {
 
 
     }).then(()=>{
-      firebase.database().ref("users/" + user.uid + "/YourBookings/bookings").once('value').then((snapshot) => {
+      firebase.database().ref("users/" + this.state.user_id + "/YourBookings/bookings").once('value').then((snapshot) => {
         var Data = snapshot.val();
-        this.setState({ user_id: user.uid });
   
         Data.map((items, index) => {
           if (items.bookingId == this.state.b_id) {
@@ -195,7 +195,7 @@ export default class BookingDetail extends Component {
             console.log(Data);
  
  
-            firebase.database().ref("users/" + user.uid + "/YourBookings").set({
+            firebase.database().ref("users/" + this.state.user_id + "/YourBookings").set({
              bookings:Data,
            })
           }
@@ -212,6 +212,8 @@ export default class BookingDetail extends Component {
 
 
   }
+
+
 
 
   render() {
@@ -416,7 +418,7 @@ export default class BookingDetail extends Component {
 
                       
                 </CardBody>
-                <div className='mx-auto mb-5'><Button className='btn' color='primary'> Reschedule Appointment</Button> <Button className='btn' color='danger' onClick={this.openCancel}> Cancel Appointment</Button></div>
+                <div className='mx-auto mb-5'> <Button className='btn' color='danger' onClick={this.openCancel}> Cancel Appointment</Button></div>
               </Card>
              
             </Container >
