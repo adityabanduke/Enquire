@@ -1,0 +1,45 @@
+.contact-cards{
+    margin:4rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding:20px;
+}
+
+.card-item{
+    /* padding:10px; */
+    text-align: center;
+    justify-content: center;
+    display: block;
+    width:20%;
+}
+
+.logo{
+    background:#21aee4;
+    border-radius: 50px;
+    width:80px;
+    height:80px;
+    padding:25px;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin:auto;
+
+}
+
+.logo i{
+    
+   
+    color:#fff ;
+    font-size: 2rem;
+}
+
+.card-item h2{
+    padding:20px 0;
+    font-size: 1.5rem;
+}
+
+.card-item p{
+    padding:10px 0;
+    font-size: 1rem;
+}

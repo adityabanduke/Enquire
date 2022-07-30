@@ -224,7 +224,10 @@ export default class EditProfile extends react.Component {
   UpdateData = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        db.collection('Admin').doc(user.uid).update(this.state.userData).then((err) => {
+        db.collection('Admin').doc(user.uid).update(this.state.userData).then(()=>{
+     alert("Profile Updated")
+     window.location.href="/admin/user-profile"
+        }).then((err) => {
           if (err) {
             console.log(err);
           }
@@ -274,7 +277,8 @@ export default class EditProfile extends react.Component {
                   //   });
 
                 }).then(()=>{
-                  window.location.href="/Admin/Profile"
+                  alert("Profile Updated")
+                  window.location.href="/admin/user-profile"
                 })
             })
         } else {

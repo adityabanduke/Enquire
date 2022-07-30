@@ -6,27 +6,18 @@ import firebase from '../../config/firebase-enquire';
 import {
   Badge,
 
-    Button,
     Card,
     CardHeader,
-    CardBody,
-    FormGroup,
-    Form,
-    Input,
+   
     Container,
     Row,
-    Col,
     DropdownMenu,
     DropdownItem,
     UncontrolledDropdown,
     DropdownToggle,
     Media,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
-    Progress,
+   
     Table,
-    UncontrolledTooltip,
 } from "reactstrap";
 import UserHeader from 'components/Headers/UserProfile';
 
@@ -171,11 +162,11 @@ export default class Booking extends Component {
                           />
                         </div>
                       </div> */}
-                      <a href={'/user/BookingDetail?Booking_id=' + items.bookingId}>
+                      {/* <a href={'/user/BookingDetail?Booking_id=' + items.bookingId}>
                       <Button color="primary" >
                         View Details
                         </Button>
-                        </a>
+                        </a> */}
 
                     </td>
                     <td className="text-right">

@@ -60,6 +60,7 @@ import {
 } from "reactstrap";
 import "dist/css/style.scss";
 import illustration from "../dist/images/header-illustration-light.svg";
+import globe from "../assets/images/multiple-location.svg";
 import heroIllustration from "../dist/images/hero-media-illustration-light.svg";
 import heroMedia from "../dist/images/hopital.jpg";
 import featureIllustration from "../dist/images/features-illustration-light.svg";
@@ -69,13 +70,15 @@ import feature01 from "../dist/images/feature-01-light.svg";
 import feature02 from "../dist/images/feature-02-light.svg";
 
 import feature03 from "../dist/images/feature-03-light.svg";
-
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import { Link } from 'react-router-dom';
 
 
 import logo from "../assets/img/enquirelogo.png";
+import map from "../assets/img/map.png";
 
-
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "assets/lottie/signup.json";
 
 const Index = (props) => {
     // const defaultOptions = {
@@ -97,9 +100,9 @@ const Index = (props) => {
                                 <div className="site-header-inner">
                                     <div className="brand header-brand">
                                         <h1 className="m-0">
-                                            <a href="#">
-                                                {/* <img className="header-logo-image asset-light" src={logoLight} alt="Logo"/> */}
-                                            </a>
+                                            {/* <a href="#">
+                                                {/* <img className="header-logo-image asset-light" src={logoLight} alt="Logo"/> 
+                                            </a> */}
                                         </h1>
                                     </div>
                                 </div>
@@ -110,15 +113,17 @@ const Index = (props) => {
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href="hotel.html" className="nav-link">Services</a>
+                                        <a href="#about" className="nav-link">About</a>
                                     </li>
 
                                     <li className="nav-item">
-                                        <a href="contact.html" className="nav-link">Contact</a>
+                                        <a href="#contact" className="nav-link">Contact</a>
                                     </li>
 
 
                                 </ul>
+
+                                <div>
                                 <Link to="/login">
                                     <Button className=" nav-button button-text" color="primary" type="button">
                                         Login
@@ -128,6 +133,7 @@ const Index = (props) => {
                                     <Button className=" nav-button button-text" color="primary" type="button" >
                                         Sign Up
                                     </Button></Link>
+                                    </div>
 
                             </nav>
 
@@ -139,8 +145,13 @@ const Index = (props) => {
                             <div className="container">
                                 <div className="hero-inner">
                                     <div className="hero-copy">
-                                        <h1 className="hero-title mt-0" style={{ 'color': 'DarkBlue' }}>Enquire</h1>
-                                        <p className="hero-paragraph" style={{ 'color': 'Blue' }}>Book Appointments Easy.</p>
+                                        <h1 className="hero-title mt-0" style={{ 'color': '#4663be', fontWeight:'600' }}>Enquire</h1>
+                                        <p className="hero-paragraph" style={{ 'color': '#21aee4' , fontWeight:'400'}}>Book Appointments with Easy.</p>
+                                        <hr style={{backgroundColor:"#21aee4", width:'20%',height:"1px"}}></hr>
+                                        <p className="hero-paragraph" style={{ 'color': '#21aee4', fontWeight:'400' }}>With our Online Booking feature, your clients can make bookings 24x7. All you have to do is signup and add your data then you are ready to go
+
+</p>
+
 
                                     </div>
                                     <div className="hero-media" style={{ 'width': '40%' }}>
@@ -153,26 +164,33 @@ const Index = (props) => {
 
                                         </div>
                                         <div className="hero-media-container" style={{ 'width': '100%', 'margin': '0' }}>
-                                            <img className=" asset-light" src={heroMedia} style={{ 'width': '80%', 'backgroundSize': '100% 100%', 'borderRadius': '15px' }} alt="Hero media" />
+                                            <img className=" asset-light" src={globe} style={{ 'width': '80%', 'backgroundSize': '100% 100%', 'borderRadius': '15px' }} alt="Hero media" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <img src={map} style={{position:'absolute', "left":'0',bottom:'-35%', height:"45%",width:'50%'}}/>
                         </section>
 
 
 
-                        <section className="features section">
+                        <section id="about" className="features section">
                             <div className="container">
                                 <div className="features-inner section-inner has-bottom-divider">
                                     <div className="features-header text-center">
                                         <div className="container-sm">
-                                            <h2 className="section-title mt-0">The Product</h2>
-                                            <p className="section-paragraph">Lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation.</p>
+                                            <h2 className="section-title mt-0" style={{ 'color': '#21aee4' }}>Features</h2>
+                                            <hr style={{backgroundColor:"#21aee4", width:'20%',height:"1px"}}></hr>
+
+                                            <p className="section-paragraph">
+                                                It helps you in realtime tracking of the your appointment, easy booking and avalability status
+
+                                            </p>
                                             <div className="features-image">
 
                                                 <img className="features-illustration asset-light" src={featureIllustration} alt="Feature illustration" />
-                                                <img className="features-box asset-light" src={featureBox} alt="Feature box" />
+                                                <img className="features-box asset-light" src={"https://easyflow.tech/wp-content/uploads/2021/05/Queue-Management-1.jpg"} alt="Feature box" />
                                                 <img className="features-illustration asset-light" src={featureTop} alt="Feature illustration top" />
                                             </div>
                                         </div>
@@ -187,8 +205,8 @@ const Index = (props) => {
                                                     <img className="asset-light" src={feature01} alt="Feature 01" />
                                                 </div>
                                                 <div className="feature-content">
-                                                    <h3 className="feature-title mt-0">Discover</h3>
-                                                    <p className="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
+                                                    <h3 className="feature-title mt-0">Realtime Tracking</h3>
+                                                    <p className="text-sm mb-0">Keep track of your number</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -198,8 +216,10 @@ const Index = (props) => {
                                                     <img className="asset-light" src={feature02} alt="Feature 02" />
                                                 </div>
                                                 <div className="feature-content">
-                                                    <h3 className="feature-title mt-0">Discover</h3>
-                                                    <p className="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
+                                                    <h3 className="feature-title mt-0">Nearest Hospital/Clinic</h3>
+                                                    <p className="text-sm mb-0">
+                                                        Get the distance and travel time of every hospital/clinic from your location
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -210,8 +230,9 @@ const Index = (props) => {
                                                     <img className="asset-dark" src="dist/images/feature-03-dark.svg" alt="Feature 03" />
                                                 </div>
                                                 <div className="feature-content">
-                                                    <h3 className="feature-title mt-0">Discover</h3>
-                                                    <p className="text-sm mb-0">Lorem ipsum dolor sit amet, consecte adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua dui.</p>
+                                                    <h3 className="feature-title mt-0">Availability status of a Doctor</h3>
+                                                    <p className="text-sm mb-0">
+Keep the track of doctor availbility                                                        </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -241,9 +262,7 @@ const Index = (props) => {
                                     {/* <Lottie options={defaultOptions}
                                         height={400}
                                         width={500}></Lottie> */}
-                                        <h1>
-                                            Loading..........
-                                        </h1>
+                                       <Lottie animationData={groovyWalkAnimation} />
                                 </Col>
                             </Row>
                         </section>
@@ -252,12 +271,40 @@ const Index = (props) => {
                             <div className="container-sm">
                                 <div className="cta-inner section-inner">
                                     <div className="cta-header text-center">
-                                        <h2 className="section-title mt-0">Get it and Switch</h2>
-                                        <p className="section-paragraph">Lorem ipsum is common placeholder text used to demonstrate the graphic elements of a document or visual presentation.</p>
+                                        <h2 className="section-title mt-0">Get it and Book Now</h2>
+                                        <p className="section-paragraph">Book Appointment Easily and Faster from Anywhere and Anytime.</p>
 
                                     </div>
                                 </div>
                             </div>
+                        </section>
+                        <section id="#contact">
+                        <div  class="contact-cards">
+        <div class="card-item">
+            <div class="logo"><i class="fas fa-paper-plane"></i></div>
+            <h3>Contact</h3>
+            <p>devTeamEnquire@gmail.com</p>
+
+        </div>
+        <div class="card-item">
+            <div class="logo"> <i class="fas fa-phone-alt"></i></div>
+            <h3>Number</h3>
+            <p>91+ 9878312761</p>
+
+        </div>
+        <div class="card-item">
+            <div class="logo"><i class="fas fa-map-marker-alt"></i></div>
+            <h3>Address</h3>
+            <p>New Boys Hostel UIT RGPV Bhopal</p>
+
+        </div>
+        <div class="card-item">
+            <div class="logo"><i class="fas fa-headset"></i></div>
+            <h3>Talk To Our Agent</h3>
+            <p>Available 24/7</p>
+
+        </div>
+    </div>
                         </section>
                     </main>
 

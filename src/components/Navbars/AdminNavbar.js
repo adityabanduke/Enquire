@@ -37,7 +37,7 @@ import {
 const AdminNavbar = (props) => {
   return (
     <>
-      <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
+      <Navbar className="navbar-top navbar-dark mt-0" expand="md" id="navbar-main">
         <Container fluid>
           <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
@@ -65,16 +65,14 @@ const AdminNavbar = (props) => {
                     <img
                       alt="..."
                       src={
-                        require("../../assets/img/theme/team-4-800x800.jpg")
-                          .default
+                        props.profile
                       }
                     />
                   </span>
-                  {/* <Media className="ml-2 d-none d-lg-block">
+                  <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
-                    </span>
-                  </Media> */}
+{props.name}                    </span>
+                  </Media>
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>

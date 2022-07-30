@@ -46,7 +46,7 @@ export default class AddDoctor extends Component {
                   var hospitalData = snapshot.data();
                   console.log(hospitalData.name);
                   
-                   this.setState({userData:hospitalData,adminData:hospitalData});
+                 this.setState({userData:hospitalData,adminData:hospitalData});
                 })
             }
 
@@ -58,7 +58,6 @@ export default class AddDoctor extends Component {
         return (
             <>
                 <UserHeader adminData={{}} />
-
                 <Container className="mt--7" fluid >
                     <Row className='justify-content-center'>
 
@@ -173,11 +172,11 @@ export default class AddDoctor extends Component {
                                                 </label>
                                                 <Input
                                                     className="form-control-alternative"
-                                                    defaultValue={this.state.userData.name}
+                                                    defaultValue={this.state.userData.doctorName}
                                                     id="input-username"
-                                                    placeholder={this.state.userData.name}
+                                                    placeholder={this.state.userData.doctorName}
                                                     type="text"
-                                                    onChange={e => this.setState({ userData: { ...this.state.userData, name: e.target.value } })}
+                                                    // onChange={e => this.setState({ userData: { ...this.state.userData, name: e.target.value } })}
                                                     disabled
                                                 />
                                             </FormGroup>
@@ -192,11 +191,11 @@ export default class AddDoctor extends Component {
                                                 </label>
                                                 <Input
                                                     className="form-control-alternative"
-                                                    defaultValue={this.state.userData.name}
+                                                    defaultValue={this.state.userData.doctorSpec}
                                                     id="input-username"
-                                                    placeholder={this.state.userData.name}
+                                                    placeholder={this.state.userData.doctorSpec}
                                                     type="text"
-                                                    onChange={e => this.setState({ userData: { ...this.state.userData, name: e.target.value } })}
+                                                    // onChange={e => this.setState({ userData: { ...this.state.userData, name: e.target.value } })}
                                                     disabled
                                                 />
                                             </FormGroup>

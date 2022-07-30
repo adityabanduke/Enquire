@@ -44,7 +44,7 @@ export default class HospitalDetails extends Component {
             hospitalName: '',
             booking_id: '',
             status: 0,
-
+patientName:'',
 
         }
         this.bookAppointment = this.bookAppointment.bind(this);
@@ -59,7 +59,7 @@ export default class HospitalDetails extends Component {
                 firebase.database().ref("users/" + user.uid).once('value').then((snapshot) => {
                     var Data = snapshot.val();
                     console.log(Data);
-                    this.setState({ user_id: user.uid });
+                    this.setState({ user_id: user.uid , patientName: Data.username});
 
 
                     var currenturl = window.location.search;
@@ -136,6 +136,7 @@ export default class HospitalDetails extends Component {
             this.state.Hbooking.push({
                 user_id: this.state.user_id, hospitalName: this.state.hospitalName, bookingDate: this.state.today,
                 bookingTime: this.state.time, bookingId: this.state.booking_id, status: this.state.status, h_id: this.state.h_id,
+                patientname:this.state.patientName
             })
 
             firebase.database().ref("Hospitals/" + this.state.h_id).set({
@@ -177,7 +178,7 @@ export default class HospitalDetails extends Component {
                     {/* Header container */}
                     <Container className="d-flex align-items-center justify-content-between" fluid>
                         <Row style={{ "padding": '20px' }} className="d-flex justify-content-between">
-                            <Col lg="4"><img src={this.state.profilepic} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} ></img></Col>
+                            <Col lg="4"><img src={this.state.profilepic} className="img-fluid img-responsive product-image shadow  bg-white rounded" style={{ 'position': 'absolute', 'height': '200px' }} alt="profile Image"></img></Col>
                             <Col lg="7" md="10" >
                                 {this.state.hData ? <h1 className="display-2 text-white">{this.state.hospitalName}</h1> : null}
                                 {this.state.hData ? <p className="text-white mt-0 mb-5">

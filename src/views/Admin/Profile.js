@@ -102,6 +102,10 @@ const Profile = () => {
           setAdminData(hospitalData);
           // console.log(userData);
         })
+
+
+      }else{
+        window.location.href="/"
       }
     }
       // db.collection("Admin").

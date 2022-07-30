@@ -7,28 +7,21 @@ import {
   Button,
   Card,
   CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
   Container,
   Row,
-  Col,
+  
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
   Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
+  
   Table,
-  UncontrolledTooltip,
 } from "reactstrap";
 import UserHeader from 'components/Headers/UserProfile';
 // import Loader from "../../components/loader/Loader.js";
-
+import Lottie from "lottie-react";
+import groovyWalkAnimation from "assets/lottie/9764-loader.json";
 
 export default class Booking extends Component {
 
@@ -218,9 +211,8 @@ export default class Booking extends Component {
             </Row>
           </Container>
         ) :
-        <h1>
-         Loading.... 
-        </h1>
+        <Lottie style={{width:'250px', marginLeft:'auto', marginRight:'auto'}}  animationData={groovyWalkAnimation} />
+
         //  <Loader/>
         }
       </>
